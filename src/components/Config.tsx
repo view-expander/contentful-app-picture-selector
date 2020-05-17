@@ -25,7 +25,7 @@ const onConfigure = async (
 > => {
   if (
     !Array.from(Object.values(parameters)).every(
-      (val) => typeof val === 'string'
+      (val) => typeof val === 'string' && val.length > 0
     )
   ) {
     sdk.notifier.error('Every parameters are required')
