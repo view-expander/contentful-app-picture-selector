@@ -40,7 +40,9 @@ const onConfigure = async (
     targetState: {
       EditorInterface: contentTypeIds.reduce((acc, id) => ({
         ...acc,
-        [id]: { controls: parameters.fieldId }
+        [id]: {
+          controls: { fieldId: parameters.fieldId }
+        }
       }), {}),
     },
   }
