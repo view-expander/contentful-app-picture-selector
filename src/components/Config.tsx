@@ -41,9 +41,11 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
 
   useEffect(() => {
     const fetchParameters = async () => {
+      const newParameters = await sdk.app.getParameters()
+      console.log('fetchParameters', parameters, newParameters)
       return setParameters({
         ...parameters,
-        ...((await sdk.app.getParameters()) || {}),
+        ...(newParameters || {}),
       })
     }
   
@@ -55,8 +57,6 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
   useEffect(() => {
     sdk.app.setReady()
   })
-
-  console.log('<Config />', parameters)
 
   return (
     <Form id="app-config">
