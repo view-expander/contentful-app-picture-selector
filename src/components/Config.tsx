@@ -15,7 +15,7 @@ const onConfigure = async (
       parameters: AppConfig
       targetState: {
         EditorInterface: {
-          ct3: {
+          [k: string]: {
             controls: { fieldId: typeof parameters.fieldId }[]
           }
         }
@@ -32,14 +32,16 @@ const onConfigure = async (
     return false
   }
 
+  const { items } = await sdk.space.getContentTypes<{ sys: { id: string }}>()
+  const contentTypeIds = items.map(({ sys }) => sys.id)
+
   return {
     parameters,
     targetState: {
-      EditorInterface: {
-        ct3: {
-          controls: [{ fieldId: parameters.fieldId }],
-        },
-      },
+      EditorInterface: contentTypeIds.reduce((acc, id) => ({
+        ...acc,
+        [id]: { controls: parameters.fieldId }
+      }), {}),
     },
   }
 }
