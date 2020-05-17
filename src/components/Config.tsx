@@ -48,7 +48,7 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
     }
   
     fetchParameters()  
-  }, [parameters])
+  }, [parameters.apiPath])
   useEffect(() => {
     sdk.app.onConfigure(() => onConfigure(sdk, parameters))
   })
