@@ -4,6 +4,7 @@ import React, { useEffect, useState } from 'react'
 
 type AppConfig = {
   apiPath: string | undefined
+  contentTypeId: string | undefined
   fieldId: string | undefined
 }
 
@@ -16,34 +17,33 @@ const onConfigure = async (
       targetState: {
         EditorInterface: {
           [k: string]: {
-            controls: { fieldId: typeof parameters.fieldId }[]
+            controls: { fieldId: string }[]
           }
         }
       }
     }
   | false
 > => {
-  if (
-    !Array.from(Object.values(parameters)).every(
+  const isValid = (
+    p: typeof parameters
+  ): p is { [k in keyof typeof parameters]: string } =>
+    Array.from(Object.values(parameters)).every(
       (val) => typeof val === 'string' && val.length > 0
     )
-  ) {
+
+  if (!isValid(parameters)) {
     sdk.notifier.error('Every parameters are required')
     return false
   }
 
-  const { items } = await sdk.space.getContentTypes<{ sys: { id: string }}>()
-  const contentTypeIds = items.map(({ sys }) => sys.id)
-
   return {
     parameters,
     targetState: {
-      EditorInterface: contentTypeIds.reduce((acc, id) => ({
-        ...acc,
-        [id]: {
-          controls: { fieldId: parameters.fieldId }
-        }
-      }), {}),
+      EditorInterface: {
+        [parameters.contentTypeId]: {
+          controls: [{ fieldId: parameters.fieldId }],
+        },
+      },
     },
   }
 }
@@ -51,12 +51,18 @@ const onConfigure = async (
 export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
   const [parameters, setParameters] = useState<AppConfig>({
     apiPath: undefined,
+    contentTypeId: undefined,
     fieldId: undefined,
   })
   const onChangeApiPath = (ev: React.ChangeEvent<HTMLInputElement>) =>
     setParameters({
       ...parameters,
       apiPath: ev.target.value,
+    })
+  const onChnageContentTypeId = (ev: React.ChangeEvent<HTMLInputElement>) =>
+    setParameters({
+      ...parameters,
+      contentTypeId: ev.target.value,
     })
   const onChangeFieldId = (ev: React.ChangeEvent<HTMLInputElement>) =>
     setParameters({
@@ -93,6 +99,15 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
         required
         value={parameters.apiPath}
         onChange={onChangeApiPath}
+      />
+      <TextField
+        id="app-config-content-type-id"
+        name="contentTypeId"
+        labelText="Content Type ID"
+        helpText="Please enter Content Type ID"
+        required
+        value={parameters.contentTypeId}
+        onChange={onChnageContentTypeId}
       />
       <TextField
         id="app-config-field-id"
