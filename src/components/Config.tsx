@@ -4,39 +4,60 @@ import React, { useEffect, useState } from 'react'
 
 type AppConfig = {
   apiPath: string | undefined
+  fieldId: string | undefined
 }
 
 const onConfigure = async (
   sdk: AppExtensionSDK,
   parameters: AppConfig
-): Promise<{
-  parameters: AppConfig
-  targetState: {
-    EditorInterface: unknown[]
+): Promise<
+  | {
+      parameters: AppConfig
+      targetState: {
+        EditorInterface: {
+          ct3: {
+            controls: { fieldId: typeof parameters.fieldId }[]
+          }
+        }
+      }
+    }
+  | false
+> => {
+  if (
+    !Array.from(Object.values(parameters)).every(
+      (val) => typeof val === 'string'
+    )
+  ) {
+    sdk.notifier.error('Every parameters are required')
+    return false
   }
-}> => {
-  const { items: contentTypes } = await sdk.space.getContentTypes()
-  const contentTypeIds = contentTypes.map((ct: any) => ct.sys.id)
-  const EditorInterface = contentTypeIds.reduce((acc, id) => {
-    return { ...acc, [id]: { sidebar: { position: 0 } } }
-  }, {})
-  console.log('onConfigure:contentTypeIds', contentTypeIds)
-  console.log('onConfigure:EditorInterface', EditorInterface)
 
   return {
     parameters,
-    targetState: { EditorInterface },
+    targetState: {
+      EditorInterface: {
+        ct3: {
+          controls: [{ fieldId: parameters.fieldId }],
+        },
+      },
+    },
   }
 }
 
 export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
   const [parameters, setParameters] = useState<AppConfig>({
     apiPath: undefined,
+    fieldId: undefined,
   })
   const onChangeApiPath = (ev: React.ChangeEvent<HTMLInputElement>) =>
     setParameters({
       ...parameters,
       apiPath: ev.target.value,
+    })
+  const onChangeFieldId = (ev: React.ChangeEvent<HTMLInputElement>) =>
+    setParameters({
+      ...parameters,
+      fieldId: ev.target.value,
     })
 
   useEffect(() => {
@@ -47,9 +68,9 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
         ...(instlationParameters || {}),
       })
     }
-  
-    fetchParameters()  
-  }, [parameters.apiPath])
+
+    fetchParameters()
+  }, [parameters.apiPath, parameters.fieldId])
   useEffect(() => {
     sdk.app.onConfigure(() => onConfigure(sdk, parameters))
   })
@@ -68,6 +89,15 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
         required
         value={parameters.apiPath}
         onChange={onChangeApiPath}
+      />
+      <TextField
+        id="app-config-field-id"
+        name="fieldId"
+        labelText="Field ID"
+        helpText="Please enter Field ID"
+        required
+        value={parameters.fieldId}
+        onChange={onChangeFieldId}
       />
     </Form>
   )
