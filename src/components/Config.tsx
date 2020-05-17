@@ -27,12 +27,12 @@ const onConfigure = async (
   const isValid = (
     p: typeof parameters
   ): p is { [k in keyof typeof parameters]: string } =>
-    Array.from(Object.values(parameters)).every(
+    Array.from(Object.values(p)).every(
       (val) => typeof val === 'string' && val.length > 0
     )
 
   if (!isValid(parameters)) {
-    sdk.notifier.error('Every parameters are required')
+    sdk.notifier.error('All parameters are required')
     return false
   }
 
@@ -91,33 +91,33 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
   return (
     <Form>
       <Heading>Picture selector</Heading>
-      <TextField
-        id="app-config-api-path"
-        name="apiPath"
-        labelText="API Path"
-        helpText="Please enter API path"
-        required
-        value={parameters.apiPath}
-        onChange={onChangeApiPath}
-      />
-      <TextField
-        id="app-config-content-type-id"
-        name="contentTypeId"
-        labelText="Content Type ID"
-        helpText="Please enter Content Type ID"
-        required
-        value={parameters.contentTypeId}
-        onChange={onChnageContentTypeId}
-      />
-      <TextField
-        id="app-config-field-id"
-        name="fieldId"
-        labelText="Field ID"
-        helpText="Please enter Field ID"
-        required
-        value={parameters.fieldId}
-        onChange={onChangeFieldId}
-      />
+      {[
+        {
+          id: 'app-config-api-path',
+          name: 'apiPath',
+          labelText: 'API Path',
+          value: parameters.apiPath,
+          onChange: onChangeApiPath,
+        },
+        {
+          id: 'app-config-content-type-id',
+          name: 'contentTypeId',
+          labelText: 'Content Type ID',
+          helpText: 'Please enter Content Type ID',
+          value: parameters.contentTypeId,
+          onChange: onChnageContentTypeId,
+        },
+        {
+          id: 'app-config-field-id',
+          name: 'fieldId',
+          labelText: 'Field ID',
+          helpText: 'Please enter Field ID',
+          value: parameters.fieldId,
+          onChange: onChangeFieldId,
+        },
+      ].map((props) => (
+        <TextField {...props} required />
+      ))}
     </Form>
   )
 }
