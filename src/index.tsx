@@ -16,7 +16,6 @@ const Root: React.FC<{ sdk: KnownSDK }> = ({ sdk }) =>
   isConfig(sdk) ? <Config sdk={sdk} /> : <HelloWord sdk={sdk} />
 
 init((sdk) => {
-  console.log('init', sdk)
   render(<Root sdk={sdk} />, document.getElementById('root'))
 
   if (isDialog(sdk)) {
