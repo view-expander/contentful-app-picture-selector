@@ -72,10 +72,10 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
 
   useEffect(() => {
     const fetchParameters = async () => {
-      const instlationParameters = await sdk.app.getParameters()
+      const definedParameters = await sdk.app.getParameters()
       return setParameters({
         ...parameters,
-        ...(instlationParameters || {}),
+        ...(definedParameters || {}),
       })
     }
 
