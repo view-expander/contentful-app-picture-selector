@@ -59,7 +59,7 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
       ...parameters,
       apiPath: ev.target.value,
     })
-  const onChnageContentTypeId = (ev: React.ChangeEvent<HTMLInputElement>) =>
+  const onChangeContentTypeId = (ev: React.ChangeEvent<HTMLInputElement>) =>
     setParameters({
       ...parameters,
       contentTypeId: ev.target.value,
@@ -105,7 +105,7 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
           labelText: 'Content Type ID',
           helpText: 'Please enter Content Type ID',
           value: parameters.contentTypeId,
-          onChange: onChnageContentTypeId,
+          onChange: onChangeContentTypeId,
         },
         {
           id: 'app-config-field-id',
