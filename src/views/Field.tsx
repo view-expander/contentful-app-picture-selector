@@ -5,15 +5,24 @@ import { useAutoResize } from '../hooks/useAutoResize'
 
 export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
   const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
+  const onClickDialogOpener = (): Promise<void> =>
+    sdk.field.setValue({ items: selectedItemList }).then(() =>
+      sdk.dialogs.openCurrentApp({
+        title: 'Picture Selector',
+        width: 'large',
+      })
+    )
 
   useEffect(() => {
-    const value = sdk.field.getValue() as SelectedItemList | undefined
+    const value = sdk.field.getValue() as
+      | { items: SelectedItemList }
+      | undefined
 
     if (value === undefined) {
       return
     }
 
-    setSelectedItemList(value)
+    setSelectedItemList(value.items)
   }, [selectedItemList, sdk.field])
 
   useAutoResize(sdk)
@@ -25,16 +34,7 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
           <li key={key}>{key}</li>
         ))}
       </ul>
-      <Button
-        buttonType="muted"
-        size="small"
-        onClick={() =>
-          sdk.dialogs.openCurrentApp({
-            title: 'Picture Selector',
-            width: 'large',
-          })
-        }
-      >
+      <Button buttonType="muted" size="small" onClick={onClickDialogOpener}>
         Add pictures
       </Button>
     </React.Fragment>
