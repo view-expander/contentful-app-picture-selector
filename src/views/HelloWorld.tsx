@@ -1,4 +1,3 @@
-import { KnownSDK } from 'contentful-ui-extensions-sdk'
 import React from 'react'
 
-export const HelloWord: React.FC<{ sdk: KnownSDK }> = () => <div>HelloWord</div>
+export const HelloWord: React.FC = () => <div>HelloWord</div>
