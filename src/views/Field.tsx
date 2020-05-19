@@ -1,8 +1,27 @@
 import { FieldExtensionSDK } from 'contentful-ui-extensions-sdk'
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { Dump } from './Dump'
 
 export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
-  console.log(sdk.field.getValue())
+  const [pictureList, setPictureList] = useState<PictureList>({ items: [] })
+
+  useEffect(() => {
+    const value = sdk.field.getValue() as PictureList | undefined
+
+    if (value === undefined) {
+      return
+    }
+
+    setPictureList({
+      ...pictureList,
+      ...value,
+    })
+  })
+
+  useEffect(() => {
+    sdk.window.startAutoResizer()
+    return () => sdk.window.stopAutoResizer()
+  })
+
   return <Dump sdk={sdk} />
 }
