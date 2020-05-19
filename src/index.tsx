@@ -1,11 +1,11 @@
 import '@contentful/forma-36-fcss/dist/styles.css'
 import '@contentful/forma-36-react-components/dist/styles.css'
-import { AppExtensionSDK, init, locations } from 'contentful-ui-extensions-sdk'
 import type { DialogExtensionSDK, KnownSDK } from 'contentful-ui-extensions-sdk'
+import { AppExtensionSDK, init, locations } from 'contentful-ui-extensions-sdk'
 import React from 'react'
 import { render } from 'react-dom'
-import { Config } from './components/Config'
-import { HelloWord } from './components/HelloWorld'
+import { Config } from './views/Config'
+import { HelloWord } from './views/HelloWorld'
 
 const isConfig = (sdk: KnownSDK): sdk is AppExtensionSDK =>
   sdk.location.is(locations.LOCATION_APP_CONFIG)
