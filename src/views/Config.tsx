@@ -64,7 +64,7 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
     }
 
     fetchParameters()
-  }, [parameters.apiPath, parameters.fieldId])
+  }, [parameters, sdk.app])
   useEffect(() => {
     sdk.app.onConfigure(() => onConfigure(sdk, parameters))
   })
@@ -100,7 +100,7 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
           onChange: onChangeFieldId,
         },
       ].map((props) => (
-        <TextField {...props} required />
+        <TextField key={props.id} {...props} required />
       ))}
     </Form>
   )
