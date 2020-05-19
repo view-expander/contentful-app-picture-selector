@@ -2,31 +2,15 @@ import { Form, Heading, TextField } from '@contentful/forma-36-react-components'
 import type { AppExtensionSDK } from 'contentful-ui-extensions-sdk'
 import React, { useEffect, useState } from 'react'
 
-type AppConfig = {
-  apiPath: string | undefined
-  contentTypeId: string | undefined
-  fieldId: string | undefined
+type DraftAppConfig = {
+  [K in keyof AppConfig]: AppConfig[K] | undefined
 }
 
 const onConfigure = async (
   sdk: AppExtensionSDK,
-  parameters: AppConfig
-): Promise<
-  | {
-      parameters: AppConfig
-      targetState: {
-        EditorInterface: {
-          [k: string]: {
-            controls: { fieldId: string }[]
-          }
-        }
-      }
-    }
-  | false
-> => {
-  const isValid = (
-    p: typeof parameters
-  ): p is { [k in keyof typeof parameters]: string } =>
+  parameters: DraftAppConfig
+): Promise<ConfiguringResponse | false> => {
+  const isValid = (p: DraftAppConfig): p is AppConfig =>
     Array.from(Object.values(p)).every(
       (val) => typeof val === 'string' && val.length > 0
     )
@@ -49,7 +33,7 @@ const onConfigure = async (
 }
 
 export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
-  const [parameters, setParameters] = useState<AppConfig>({
+  const [parameters, setParameters] = useState<DraftAppConfig>({
     apiPath: undefined,
     contentTypeId: undefined,
     fieldId: undefined,
