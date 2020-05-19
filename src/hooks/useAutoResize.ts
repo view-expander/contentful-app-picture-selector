@@ -4,8 +4,10 @@ import {
 } from 'contentful-ui-extensions-sdk'
 import { useEffect } from 'react'
 
-export const useAutoResize = (sdk: DialogExtensionSDK | FieldExtensionSDK) =>
+export const useAutoResize = (
+  sdk: DialogExtensionSDK | FieldExtensionSDK
+): React['useEffect'] =>
   useEffect(() => {
     sdk.window.startAutoResizer()
-    return () => sdk.window.stopAutoResizer()
+    return (): void => sdk.window.stopAutoResizer()
   })
