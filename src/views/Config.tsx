@@ -60,11 +60,20 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
     const fetchParameters = async (): Promise<void> => {
       console.log('fetchParameters')
       const definedParameters = await sdk.app.getParameters()
-      return setParameters(definedParameters || parameters)
+      return setParameters({
+        ...parameters,
+        ...(definedParameters || {}),
+      })
     }
 
     fetchParameters()
-  }, [parameters, sdk.app])
+  }, [
+    parameters,
+    parameters.apiPath,
+    parameters.contentTypeId,
+    parameters.fieldId,
+    sdk.app,
+  ])
   useEffect(() => {
     sdk.app.onConfigure(() => onConfigure(sdk, parameters))
   })
