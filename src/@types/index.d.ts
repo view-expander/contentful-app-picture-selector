@@ -15,8 +15,8 @@ type ConfiguringResponse = {
   }
 }
 
-type PictureItem = {
+type SelectedItem = {
   key: string
 }
 
-type PictureList = { items: PictureItem[] }
+type SelectedItemList = SelectedItem[]

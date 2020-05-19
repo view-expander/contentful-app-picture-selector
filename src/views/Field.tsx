@@ -1,30 +1,41 @@
+import { Button } from '@contentful/forma-36-react-components'
 import { FieldExtensionSDK } from 'contentful-ui-extensions-sdk'
 import React, { useEffect, useState } from 'react'
+import AppDefinition from '../../AppDefinition.json'
 import { useAutoResize } from '../hooks/useAutoResize'
 
 export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
-  const [pictureList, setPictureList] = useState<PictureList>({ items: [] })
+  const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
 
   useEffect(() => {
-    const value = sdk.field.getValue() as PictureList | undefined
+    const value = sdk.field.getValue() as SelectedItemList | undefined
 
     if (value === undefined) {
       return
     }
 
-    setPictureList({
-      ...pictureList,
-      ...value,
-    })
-  }, [pictureList, pictureList.items, sdk.field])
+    setSelectedItemList(value)
+  }, [selectedItems, sdk.field])
 
   useAutoResize(sdk)
 
   return (
-    <ul>
-      {pictureList.items.map(({ key }) => (
-        <li key={key}>{key}</li>
-      ))}
-    </ul>
+    <React.Fragment>
+      <ul>
+        {selectedItemList.map(({ key }) => (
+          <li key={key}>{key}</li>
+        ))}
+      </ul>
+      <Button
+        buttonType="muted"
+        size="small"
+        onClick={sdk.dialogs.openCurrentApp({
+          title: AppDefinition.name,
+          width: 'large'
+        })}
+      >
+        Add pictures
+      </Button>
+    </React.Fragment>
   )
 }
