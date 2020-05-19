@@ -1,6 +1,6 @@
 import { FieldExtensionSDK } from 'contentful-ui-extensions-sdk'
 import React, { useEffect, useState } from 'react'
-import { Dump } from './Dump'
+import { useAutoResize } from '../hooks/useAutoResize'
 
 export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
   const [pictureList, setPictureList] = useState<PictureList>({ items: [] })
@@ -16,12 +16,15 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
       ...pictureList,
       ...value,
     })
-  })
+  }, [pictureList, sdk.field])
 
-  useEffect(() => {
-    sdk.window.startAutoResizer()
-    return () => sdk.window.stopAutoResizer()
-  })
+  useAutoResize(sdk)
 
-  return <Dump sdk={sdk} />
+  return (
+    <ul>
+      {pictureList.items.map(({ key }) => (
+        <li key={key}>{key}</li>
+      ))}
+    </ul>
+  )
 }
