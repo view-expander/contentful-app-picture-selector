@@ -35,47 +35,38 @@ const onConfigure = async (
 }
 
 export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
-  const [parameters, setParameters] = useState<DraftAppConfig>({
-    apiPath: undefined,
-    contentTypeId: undefined,
-    fieldId: undefined,
-  })
-  const onChangeApiPath: InputEventHandler = (ev) =>
-    setParameters({
-      ...parameters,
-      apiPath: ev.target.value,
-    })
+  const [apiPath, setApiPath] = useState<DraftAppConfig['apiPath']>()
+  const [contentTypeId, setContentTypeId] = useState<
+    DraftAppConfig['contentTypeId']
+  >()
+  const [fieldId, setFieldId] = useState<DraftAppConfig['fieldId']>()
+  const onChangeApiPath: InputEventHandler = (ev) => setApiPath(ev.target.value)
   const onChangeContentTypeId: InputEventHandler = (ev) =>
-    setParameters({
-      ...parameters,
-      contentTypeId: ev.target.value,
-    })
-  const onChangeFieldId: InputEventHandler = (ev) =>
-    setParameters({
-      ...parameters,
-      fieldId: ev.target.value,
-    })
+    setContentTypeId(ev.target.value)
+  const onChangeFieldId: InputEventHandler = (ev) => setFieldId(ev.target.value)
 
   useEffect(() => {
     const fetchParameters = async (): Promise<void> => {
       console.log('fetchParameters')
-      const definedParameters = await sdk.app.getParameters()
-      return setParameters({
-        ...parameters,
-        ...(definedParameters || {}),
-      })
+      const definedParameters: AppConfig | null = await sdk.app.getParameters()
+      if (definedParameters !== null) {
+        const { apiPath, contentTypeId, fieldId } = definedParameters
+        setApiPath(apiPath)
+        setContentTypeId(contentTypeId)
+        setFieldId(fieldId)
+      }
     }
 
     fetchParameters()
-  }, [
-    parameters,
-    parameters.apiPath,
-    parameters.contentTypeId,
-    parameters.fieldId,
-    sdk.app,
-  ])
+  }, [apiPath, contentTypeId, fieldId, sdk.app])
   useEffect(() => {
-    sdk.app.onConfigure(() => onConfigure(sdk, parameters))
+    sdk.app.onConfigure(() =>
+      onConfigure(sdk, {
+        apiPath,
+        contentTypeId,
+        fieldId,
+      })
+    )
   })
   useEffect(() => {
     sdk.app.setReady()
@@ -89,7 +80,7 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
           id: 'app-config-api-path',
           name: 'apiPath',
           labelText: 'API Path',
-          value: parameters.apiPath,
+          value: apiPath,
           onChange: onChangeApiPath,
         },
         {
@@ -97,7 +88,7 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
           name: 'contentTypeId',
           labelText: 'Content Type ID',
           helpText: 'Please enter Content Type ID',
-          value: parameters.contentTypeId,
+          value: contentTypeId,
           onChange: onChangeContentTypeId,
         },
         {
@@ -105,7 +96,7 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
           name: 'fieldId',
           labelText: 'Field ID',
           helpText: 'Please enter Field ID',
-          value: parameters.fieldId,
+          value: fieldId,
           onChange: onChangeFieldId,
         },
       ].map((props) => (
