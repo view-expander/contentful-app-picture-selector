@@ -6,7 +6,7 @@ import { useEffect } from 'react'
 
 export const useAutoResize = (
   sdk: DialogExtensionSDK | FieldExtensionSDK
-): React['useEffect'] =>
+): void =>
   useEffect(() => {
     sdk.window.startAutoResizer()
     return (): void => sdk.window.stopAutoResizer()
