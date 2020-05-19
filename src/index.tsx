@@ -8,6 +8,7 @@ import type {
 import { AppExtensionSDK, init, locations } from 'contentful-ui-extensions-sdk'
 import React from 'react'
 import { render } from 'react-dom'
+import { useAutoResize } from './hooks/useAutoResize'
 import { Config } from './views/Config'
 import { Field } from './views/Field'
 import { Dump } from './views/Dump'
@@ -32,6 +33,6 @@ init((sdk) => {
   render(<Root sdk={sdk} />, document.getElementById('root'))
 
   if (isDialog(sdk)) {
-    sdk.window.startAutoResizer()
+    useAutoResize(sdk)
   }
 })
