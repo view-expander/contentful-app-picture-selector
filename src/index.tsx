@@ -8,10 +8,10 @@ import type {
 import { AppExtensionSDK, init, locations } from 'contentful-ui-extensions-sdk'
 import React from 'react'
 import { render } from 'react-dom'
-import { useAutoResize } from './hooks/useAutoResize'
 import { Config } from './views/Config'
-import { Field } from './views/Field'
+import { Dialog } from './views/Dialog'
 import { Dump } from './views/Dump'
+import { Field } from './views/Field'
 
 const isConfig = (sdk: KnownSDK): sdk is AppExtensionSDK =>
   sdk.location.is(locations.LOCATION_APP_CONFIG)
@@ -23,16 +23,12 @@ const isField = (sdk: KnownSDK): sdk is FieldExtensionSDK =>
 const Root: React.FC<{ sdk: KnownSDK }> = ({ sdk }) =>
   isConfig(sdk) ? (
     <Config sdk={sdk} />
+  ) : isDialog(sdk) ? (
+    <Dialog sdk={sdk} />
   ) : isField(sdk) ? (
     <Field sdk={sdk} />
   ) : (
     <Dump sdk={sdk} />
   )
 
-init((sdk) => {
-  render(<Root sdk={sdk} />, document.getElementById('root'))
-
-  if (isDialog(sdk)) {
-    useAutoResize(sdk)
-  }
-})
+init((sdk) => render(<Root sdk={sdk} />, document.getElementById('root')))
