@@ -28,10 +28,12 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
       <Button
         buttonType="muted"
         size="small"
-        onClick={() => sdk.dialogs.openCurrentApp({
-          title: 'Picture Selector',
-          width: 'large',
-        })}
+        onClick={() =>
+          sdk.dialogs.openCurrentApp({
+            title: 'Picture Selector',
+            width: 'large',
+          })
+        }
       >
         Add pictures
       </Button>
