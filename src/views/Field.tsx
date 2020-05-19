@@ -16,7 +16,7 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
       ...pictureList,
       ...value,
     })
-  }, [pictureList, sdk.field])
+  }, [pictureList, pictureList.items, sdk.field])
 
   useAutoResize(sdk)
 
