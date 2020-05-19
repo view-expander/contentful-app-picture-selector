@@ -6,6 +6,8 @@ type DraftAppConfig = {
   [K in keyof AppConfig]: AppConfig[K] | undefined
 }
 
+type InputEventHandler = (ev: React.ChangeEvent<HTMLInputElement>) => void
+
 const onConfigure = async (
   sdk: AppExtensionSDK,
   parameters: DraftAppConfig
@@ -38,24 +40,24 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
     contentTypeId: undefined,
     fieldId: undefined,
   })
-  const onChangeApiPath = (ev: React.ChangeEvent<HTMLInputElement>) =>
+  const onChangeApiPath: InputEventHandler = (ev) =>
     setParameters({
       ...parameters,
       apiPath: ev.target.value,
     })
-  const onChangeContentTypeId = (ev: React.ChangeEvent<HTMLInputElement>) =>
+  const onChangeContentTypeId: InputEventHandler = (ev) =>
     setParameters({
       ...parameters,
       contentTypeId: ev.target.value,
     })
-  const onChangeFieldId = (ev: React.ChangeEvent<HTMLInputElement>) =>
+  const onChangeFieldId: InputEventHandler = (ev) =>
     setParameters({
       ...parameters,
       fieldId: ev.target.value,
     })
 
   useEffect(() => {
-    const fetchParameters = async () => {
+    const fetchParameters = async (): Promise<void> => {
       const definedParameters = await sdk.app.getParameters()
       return setParameters({
         ...parameters,
