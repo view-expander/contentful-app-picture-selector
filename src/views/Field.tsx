@@ -1,8 +1,8 @@
 import { FieldExtensionSDK } from 'contentful-ui-extensions-sdk'
 import React from 'react'
-import { HelloWord } from './HelloWorld'
+import { Dump } from './Dump'
 
 export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
   console.log(sdk.field.getValue())
-  return <HelloWord />
+  return <Dump sdk={sdk} />
 }

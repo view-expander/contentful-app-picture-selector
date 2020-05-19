@@ -10,7 +10,7 @@ import React from 'react'
 import { render } from 'react-dom'
 import { Config } from './views/Config'
 import { Field } from './views/Field'
-import { HelloWord } from './views/HelloWorld'
+import { Dump } from './views/Dump'
 
 const isConfig = (sdk: KnownSDK): sdk is AppExtensionSDK =>
   sdk.location.is(locations.LOCATION_APP_CONFIG)
@@ -25,7 +25,7 @@ const Root: React.FC<{ sdk: KnownSDK }> = ({ sdk }) =>
   ) : isField(sdk) ? (
     <Field sdk={sdk} />
   ) : (
-    <HelloWord />
+    <Dump sdk={sdk} />
   )
 
 init((sdk) => {
