@@ -1,7 +1,6 @@
 import { Button } from '@contentful/forma-36-react-components'
 import { FieldExtensionSDK } from 'contentful-ui-extensions-sdk'
 import React, { useEffect, useState } from 'react'
-import AppDefinition from '../../AppDefinition.json'
 import { useAutoResize } from '../hooks/useAutoResize'
 
 export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
@@ -15,7 +14,7 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
     }
 
     setSelectedItemList(value)
-  }, [selectedItems, sdk.field])
+  }, [selectedItemList, sdk.field])
 
   useAutoResize(sdk)
 
@@ -29,9 +28,9 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
       <Button
         buttonType="muted"
         size="small"
-        onClick={sdk.dialogs.openCurrentApp({
-          title: AppDefinition.name,
-          width: 'large'
+        onClick={() => sdk.dialogs.openCurrentApp({
+          title: 'Picture Selector',
+          width: 'large',
         })}
       >
         Add pictures

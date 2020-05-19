@@ -3,7 +3,7 @@ const HTMLPlugin = require('html-webpack-plugin')
 
 module.exports = {
   devServer: {
-    port: 8000
+    port: 8000,
   },
   module: {
     rules: [
@@ -27,7 +27,7 @@ module.exports = {
   },
   plugins: [
     new HTMLPlugin({
-      template: path.join(__dirname, "src/index.html"),
+      template: path.join(__dirname, 'src/index.html'),
     }),
-  ]
+  ],
 }
