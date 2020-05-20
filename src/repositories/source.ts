@@ -7,7 +7,6 @@ export class SourceRepository extends Repository {
   list<T = SourceRepository.ListResponse>(
     params: SourceRepository.ListParams
   ): PromisifiedAxiosResponse<T> {
-    console.log('SourceRepository.list()', process.env)
     return this.http.get<T>(this.PATH, { params })
   }
 }
