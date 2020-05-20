@@ -7,6 +7,7 @@ import { useAutoResize } from '../hooks/useAutoResize'
 const ButtonLabel = styled.div`
   display: inline-flex;
   align-items: center;
+  vertical-align: top;
 `
 
 export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
