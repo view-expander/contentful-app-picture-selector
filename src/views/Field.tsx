@@ -16,6 +16,7 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
     sdk.dialogs.openCurrentApp({
       title: 'Picture Selector',
       width: 'large',
+      parameters: { items: selectedItemList },
     })
 
   useEffect(() => {
@@ -41,8 +42,9 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
       </ul>
       <Button buttonType="muted" size="small" onClick={onClickDialogOpener}>
         <ButtonLabel>
-          <Icon color="muted" icon="Asset" />&nbsp;
-          <span>Add pictures</span>
+          <Icon color="muted" icon="Asset" />
+          &nbsp;
+          <span>Select pictures</span>
         </ButtonLabel>
       </Button>
     </React.Fragment>
