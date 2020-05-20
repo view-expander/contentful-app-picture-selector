@@ -23,6 +23,7 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
     const value = sdk.field.getValue() as
       | { items: SelectedItemList }
       | undefined
+    console.log('Field', value)
 
     if (value === undefined) {
       return

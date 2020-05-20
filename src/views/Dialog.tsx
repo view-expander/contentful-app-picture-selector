@@ -1,12 +1,23 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import { DialogExtensionSDK } from 'contentful-ui-extensions-sdk'
 import { useAutoResize } from '../hooks/useAutoResize'
 import { Dump } from './Dump'
 
 export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
-  useAutoResize(sdk)
+  const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
+
   useEffect(() => {
-    console.log('Dialog', sdk.parameters.invocation)
+    const value = sdk.parameters.invocation as { items?: SelectedItemList }
+    console.log('Dialog', value)
+
+    if (value.items == undefined) {
+      return
+    }
+
+    setSelectedItemList(value.items)
   }, [sdk.parameters])
+
+  useAutoResize(sdk)
+
   return <Dump sdk={sdk} />
 }
