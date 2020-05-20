@@ -20,20 +20,16 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
     })
 
   useEffect(() => {
-    sdk.field.removeValue().then(() => console.log(sdk.field.getValue()))
-  })
+    const value = sdk.field.getValue() as
+      | { items: SelectedItemList }
+      | undefined
 
-  // useEffect(() => {
-  //   const value = sdk.field.getValue() as
-  //     | { items: SelectedItemList }
-  //     | undefined
-  //
-  //   if (value === undefined) {
-  //     return
-  //   }
-  //
-  //   setSelectedItemList(value.items)
-  // }, [selectedItemList, sdk.field])
+    if (value === undefined) {
+      return
+    }
+
+    setSelectedItemList(value.items)
+  }, [selectedItemList, sdk.field])
 
   useAutoResize(sdk)
 
