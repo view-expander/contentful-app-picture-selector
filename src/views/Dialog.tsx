@@ -8,7 +8,6 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
 
   useEffect(() => {
     const value = sdk.parameters.invocation as { items?: SelectedItemList }
-    console.log('Dialog', value)
 
     if (value.items == undefined) {
       return
