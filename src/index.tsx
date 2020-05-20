@@ -8,12 +8,10 @@ import type {
 import { AppExtensionSDK, init, locations } from 'contentful-ui-extensions-sdk'
 import React from 'react'
 import { render } from 'react-dom'
-import { RepositoryFactory } from './repositories'
 import { Config } from './views/Config'
 import { Dialog } from './views/Dialog'
 import { Dump } from './views/Dump'
 import { Field } from './views/Field'
-const sourceRepository = RepositoryFactory.get('source')
 
 const isConfig = (sdk: KnownSDK): sdk is AppExtensionSDK =>
   sdk.location.is(locations.LOCATION_APP_CONFIG)
@@ -34,5 +32,3 @@ const Root: React.FC<{ sdk: KnownSDK }> = ({ sdk }) =>
   )
 
 init((sdk) => render(<Root sdk={sdk} />, document.getElementById('root')))
-
-sourceRepository.list().then(res => console.log('hoge', res.data))
