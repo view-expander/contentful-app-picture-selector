@@ -16,7 +16,7 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
     }
 
     fetch()
-  }, [itemList.length])
+  }, [])
 
   useEffect(() => {
     const value = sdk.parameters.invocation as { items?: SelectedItemList }
@@ -33,7 +33,7 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
   return (
     <ul>
       {itemList.map(({ Key }) => (
-        <li key={Key}>Key</li>
+        <li key={Key}>{Key}</li>
       ))}
     </ul>
   )
