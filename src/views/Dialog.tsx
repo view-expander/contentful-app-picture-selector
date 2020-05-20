@@ -6,7 +6,7 @@ import { Dump } from './Dump'
 export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
   useAutoResize(sdk)
   useEffect(() => {
-    console.log('params', sdk.parameters.invocation)
+    console.log('Dialog', sdk.parameters.invocation)
   }, [sdk.parameters])
   return <Dump sdk={sdk} />
 }

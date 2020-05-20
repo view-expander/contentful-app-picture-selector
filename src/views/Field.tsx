@@ -1,4 +1,4 @@
-import { Button } from '@contentful/forma-36-react-components'
+import { Button, Icon } from '@contentful/forma-36-react-components'
 import { FieldExtensionSDK } from 'contentful-ui-extensions-sdk'
 import React, { useEffect, useState } from 'react'
 import { useAutoResize } from '../hooks/useAutoResize'
@@ -6,12 +6,15 @@ import { useAutoResize } from '../hooks/useAutoResize'
 export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
   const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
   const onClickDialogOpener = (): Promise<void> =>
-    sdk.field.setValue({ items: selectedItemList }).then(() =>
-      sdk.dialogs.openCurrentApp({
-        title: 'Picture Selector',
-        width: 'large',
-      })
-    )
+    sdk.field
+      .setValue({ items: selectedItemList })
+      .then(() => console.log('Field.onClickDialogOpener()', sdk.field.getValue()))
+      .then(() =>
+        sdk.dialogs.openCurrentApp({
+          title: 'Picture Selector',
+          width: 'large',
+        })
+      )
 
   useEffect(() => {
     const value = sdk.field.getValue() as
@@ -35,6 +38,7 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
         ))}
       </ul>
       <Button buttonType="muted" size="small" onClick={onClickDialogOpener}>
+        <Icon icon="Asset" />
         Add pictures
       </Button>
     </React.Fragment>
