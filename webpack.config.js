@@ -1,5 +1,6 @@
 const path = require('path')
 const HTMLPlugin = require('html-webpack-plugin')
+const webpack = require('webpack')
 
 module.exports = {
   devServer: {
@@ -28,6 +29,10 @@ module.exports = {
   plugins: [
     new HTMLPlugin({
       template: path.join(__dirname, 'src/index.html'),
+    }),
+    new webpack.DefinePlugin({
+      'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
+      'process.env.API_PATH': JSON.stringify(process.env.API_PATH),
     }),
   ],
 }
