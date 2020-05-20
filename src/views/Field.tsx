@@ -16,7 +16,7 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
     sdk.dialogs.openCurrentApp({
       title: 'Picture Selector',
       width: 'large',
-      parameters: { items: selectedItemList },
+      parameters: sdk.field.getValue(),
     })
 
   useEffect(() => {
