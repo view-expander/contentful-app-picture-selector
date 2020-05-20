@@ -1,15 +1,27 @@
-import React, { useEffect, useState } from 'react'
 import { DialogExtensionSDK } from 'contentful-ui-extensions-sdk'
+import React, { useEffect, useState } from 'react'
 import { useAutoResize } from '../hooks/useAutoResize'
-import { Dump } from './Dump'
+import { RepositoryFactory } from '../repositories'
+const sourceRepository = RepositoryFactory.get('source')
 
 export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
-  const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
+  const [itemList, setItemList] = useState<SourceRepository.ListItem[]>([])
+  const [, setSelectedItemList] = useState<SelectedItemList>([])
+
+  useEffect(() => {
+    const fetch = async (): Promise<void> => {
+      const res = await sourceRepository.list()
+      console.log('res', res)
+      setItemList(res.data.Contents)
+    }
+
+    fetch()
+  }, [itemList])
 
   useEffect(() => {
     const value = sdk.parameters.invocation as { items?: SelectedItemList }
 
-    if (value.items == undefined) {
+    if (value.items === undefined) {
       return
     }
 
@@ -18,5 +30,11 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
 
   useAutoResize(sdk)
 
-  return <Dump sdk={sdk} />
+  return (
+    <ul>
+      {itemList.map(({ Key }) => (
+        <li key={Key}>Key</li>
+      ))}
+    </ul>
+  )
 }
