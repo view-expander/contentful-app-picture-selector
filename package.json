@@ -26,13 +26,15 @@
     "@contentful/forma-36-react-components": "^3.37.3",
     "contentful-ui-extensions-sdk": "^3.14.3",
     "react": "^16.13.1",
-    "react-dom": "^16.13.1"
+    "react-dom": "^16.13.1",
+    "styled-components": "^5.1.0"
   },
   "devDependencies": {
     "@maboroshi/eslint-config": "^2.0.9",
     "@maboroshi/prettier-config": "^1.0.0",
     "@types/react": "^16.9.35",
     "@types/react-dom": "^16.9.8",
+    "@types/styled-components": "^5.1.0",
     "css-loader": "^3.5.3",
     "eslint": "^7.0.0",
     "eslint-plugin-react": "^7.20.0",
