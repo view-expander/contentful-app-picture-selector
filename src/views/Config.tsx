@@ -1,6 +1,6 @@
 import { Form, Heading, TextField } from '@contentful/forma-36-react-components'
 import type { AppExtensionSDK } from 'contentful-ui-extensions-sdk'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 type DraftAppConfig = {
@@ -15,32 +15,6 @@ const ConfigForm = styled(Form)`
   margin-left: auto;
   margin-right: auto;
 `
-
-const onConfigure = async (
-  sdk: AppExtensionSDK,
-  parameters: DraftAppConfig
-): Promise<ConfiguringResponse | false> => {
-  const isValid = (p: DraftAppConfig): p is AppConfig =>
-    Array.from(Object.values(p)).every(
-      (val) => typeof val === 'string' && val.length > 0
-    )
-
-  if (!isValid(parameters)) {
-    sdk.notifier.error('All parameters are required')
-    return false
-  }
-
-  return {
-    parameters,
-    targetState: {
-      EditorInterface: {
-        [parameters.contentTypeId]: {
-          controls: [{ fieldId: parameters.fieldId }],
-        },
-      },
-    },
-  }
-}
 
 export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
   const [parameters, setParameters] = useState<DraftAppConfig>({
@@ -64,6 +38,28 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
       ...parameters,
       fieldId: ev.target.value,
     })
+  const onConfigure = useCallback((): ConfiguringResponse | false => {
+    const isValid = (p: DraftAppConfig): p is AppConfig =>
+      Array.from(Object.values(p)).every(
+        (val) => typeof val === 'string' && val.length > 0
+      )
+
+    if (!isValid(parameters)) {
+      sdk.notifier.error('All parameters are required')
+      return false
+    }
+
+    return {
+      parameters,
+      targetState: {
+        EditorInterface: {
+          [parameters.contentTypeId]: {
+            controls: [{ fieldId: parameters.fieldId }],
+          },
+        },
+      },
+    }
+  }, [sdk.notifier, parameters])
 
   useEffect(() => {
     const fetchParameters = async (): Promise<void> => {
@@ -75,10 +71,10 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
   }, [sdk])
 
   useEffect(() => {
-    sdk.app.onConfigure(() => onConfigure(sdk, parameters))
+    sdk.app.onConfigure(() => onConfigure())
     sdk.app.setReady()
     console.log('onConfigure, setReady')
-  }, [sdk, parameters])
+  }, [onConfigure, sdk])
 
   return (
     <ConfigForm className="f36-content-width--text">
