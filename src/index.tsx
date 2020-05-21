@@ -8,6 +8,7 @@ import type {
 import { AppExtensionSDK, init, locations } from 'contentful-ui-extensions-sdk'
 import React from 'react'
 import { render } from 'react-dom'
+import './styles.css'
 import { Config } from './views/Config'
 import { Dialog } from './views/Dialog'
 import { Dump } from './views/Dump'
