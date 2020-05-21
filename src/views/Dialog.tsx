@@ -1,16 +1,20 @@
 import { DialogExtensionSDK } from 'contentful-ui-extensions-sdk'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { PictureList } from '../components/PicturesList'
+import { PromisifiedAxiosResponse } from '../@types/repositories'
+import { FlexWrapper } from '../components'
+import { PictureList } from '../components/PictureList'
 import { useAutoResize } from '../hooks/useAutoResize'
 import { RepositoryFactory } from '../repositories'
-import { FlexWrapper } from '../components'
 
 const sourceRepository = RepositoryFactory.get('source')
 
 const SelectedPictureOnRight = styled(FlexWrapper)`
   flex: 0 0 160px;
 `
+
+const fetchThumb = (key: string): PromisifiedAxiosResponse<ArrayBuffer> =>
+  sourceRepository.getThumb(key)
 
 export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
   const [itemList, setItemList] = useState<SourceRepository.ListItem[]>([])
@@ -40,7 +44,7 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
 
   return (
     <FlexWrapper>
-      <PictureList items={itemList} />
+      <PictureList fetchThumb={fetchThumb} items={itemList} />
       <SelectedPictureOnRight>
         <ul>
           {selectedItemList.map(({ key }) => (

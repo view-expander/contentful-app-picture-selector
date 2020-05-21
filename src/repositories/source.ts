@@ -9,4 +9,13 @@ export class SourceRepository extends Repository {
   ): PromisifiedAxiosResponse<T> {
     return this.http.get<T>(this.PATH, { params })
   }
+
+  getThumb<T = SourceRepository.GetThumbResponse>(
+    key: SourceRepository.GetThumbParams
+  ): PromisifiedAxiosResponse<T> {
+    return this.http.get<T>(`${this.PATH}/${key}`, {
+      params: { size: 'thumb' },
+      responseType: 'arraybuffer',
+    })
+  }
 }

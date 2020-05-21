@@ -1,4 +1,8 @@
 declare namespace SourceRepository {
+  type GetThumbParams = string
+
+  type GetThumbResponse = ArrayBuffer
+
   type ListItem = {
     Key: string
     LastModified: string
