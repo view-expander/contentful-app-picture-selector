@@ -47,7 +47,6 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
     }
     fetchParameters()
     sdk.app.setReady()
-    console.log('sdk.app.setReady()')
   }, [sdk])
 
   useEffect(() => {
@@ -73,7 +72,6 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
         },
       }
     })
-    console.log('sdk.app.onConfigure()')
   }, [parameters, sdk.app, sdk.notifier])
 
   return (
