@@ -1,12 +1,20 @@
 import { Form, Heading, TextField } from '@contentful/forma-36-react-components'
 import type { AppExtensionSDK } from 'contentful-ui-extensions-sdk'
 import React, { useEffect, useState } from 'react'
+import styled from 'styled-components'
 
 type DraftAppConfig = {
   [K in keyof AppConfig]: AppConfig[K] | undefined
 }
 
 type InputEventHandler = (ev: React.ChangeEvent<HTMLInputElement>) => void
+
+const ConfigForm = styled(Form)`
+  margin-top: 1rem;
+  margin-bottom: 1rem;
+  margin-left: auto;
+  margin-right: auto;
+`
 
 const onConfigure = async (
   sdk: AppExtensionSDK,
@@ -72,7 +80,7 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
   })
 
   return (
-    <Form>
+    <ConfigForm className="f36-content-width--text">
       <Heading>Picture selector</Heading>
       {[
         {
@@ -101,6 +109,6 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
       ].map((props) => (
         <TextField key={props.id} {...props} required />
       ))}
-    </Form>
+    </ConfigForm>
   )
 }
