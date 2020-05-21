@@ -67,16 +67,18 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
 
   useEffect(() => {
     const fetchParameters = async (): Promise<void> => {
-      const definedParameters: DraftAppConfig =
-        (await sdk.app.getParameters()) || parameters
+      const definedParameters: AppConfig | null = await sdk.app.getParameters()
       console.log('fetchParameters', definedParameters)
-      setParameters(definedParameters)
+      setParameters((parameters) => definedParameters || parameters)
     }
-
     fetchParameters()
+  }, [sdk])
+
+  useEffect(() => {
     sdk.app.onConfigure(() => onConfigure(sdk, parameters))
     sdk.app.setReady()
-  }, [])
+    console.log('onConfigure, setReady')
+  }, [sdk, parameters])
 
   return (
     <ConfigForm className="f36-content-width--text">
