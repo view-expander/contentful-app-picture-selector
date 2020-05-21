@@ -1,6 +1,6 @@
 import { Form, Heading, TextField } from '@contentful/forma-36-react-components'
 import type { AppExtensionSDK } from 'contentful-ui-extensions-sdk'
-import React, { useCallback, useEffect, useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 type DraftAppConfig = {
@@ -38,43 +38,43 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
       ...parameters,
       fieldId: ev.target.value,
     })
-  const onConfigure = useCallback((): ConfiguringResponse | false => {
-    const isValid = (p: DraftAppConfig): p is AppConfig =>
-      Array.from(Object.values(p)).every(
-        (val) => typeof val === 'string' && val.length > 0
-      )
-
-    if (!isValid(parameters)) {
-      sdk.notifier.error('All parameters are required')
-      return false
-    }
-
-    return {
-      parameters,
-      targetState: {
-        EditorInterface: {
-          [parameters.contentTypeId]: {
-            controls: [{ fieldId: parameters.fieldId }],
-          },
-        },
-      },
-    }
-  }, [sdk.notifier, parameters])
 
   useEffect(() => {
     const fetchParameters = async (): Promise<void> => {
       const definedParameters: AppConfig | null = await sdk.app.getParameters()
-      console.log('fetchParameters', definedParameters)
+      console.log('fetchParameters()', definedParameters)
       setParameters((parameters) => definedParameters || parameters)
     }
     fetchParameters()
+    sdk.app.setReady()
+    console.log('sdk.app.setReady()')
   }, [sdk])
 
   useEffect(() => {
-    sdk.app.onConfigure(() => onConfigure())
-    sdk.app.setReady()
-    console.log('onConfigure, setReady')
-  }, [onConfigure, sdk])
+    sdk.app.onConfigure((): ConfiguringResponse | false => {
+      const isValid = (p: DraftAppConfig): p is AppConfig =>
+        Array.from(Object.values(p)).every(
+          (val) => typeof val === 'string' && val.length > 0
+        )
+
+      if (!isValid(parameters)) {
+        sdk.notifier.error('All parameters are required')
+        return false
+      }
+
+      return {
+        parameters,
+        targetState: {
+          EditorInterface: {
+            [parameters.contentTypeId]: {
+              controls: [{ fieldId: parameters.fieldId }],
+            },
+          },
+        },
+      }
+    })
+    console.log('sdk.app.onConfigure()')
+  }, [parameters, sdk.app, sdk.notifier])
 
   return (
     <ConfigForm className="f36-content-width--text">
