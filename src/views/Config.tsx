@@ -65,20 +65,18 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
       fieldId: ev.target.value,
     })
 
-  const fetchParameters = async (): Promise<void> => {
-    const definedParameters: AppConfig | null = await sdk.app.getParameters()
-    console.log('fetchParameters', definedParameters)
-    if (definedParameters !== null) {
-      const { apiPath, contentTypeId, fieldId } = definedParameters
-      setParameters({ apiPath, contentTypeId, fieldId })
-    }
-  }
-
   useEffect(() => {
+    const fetchParameters = async (): Promise<void> => {
+      const definedParameters: DraftAppConfig =
+        (await sdk.app.getParameters()) || parameters
+      console.log('fetchParameters', definedParameters)
+      setParameters(definedParameters)
+    }
+
     fetchParameters()
     sdk.app.onConfigure(() => onConfigure(sdk, parameters))
     sdk.app.setReady()
-  }, [])
+  }, [parameters, sdk])
 
   return (
     <ConfigForm className="f36-content-width--text">
