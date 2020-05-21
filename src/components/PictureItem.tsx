@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react'
+import React, { useState } from 'react'
 import styled from 'styled-components'
 import { PromisifiedAxiosResponse } from '../@types/repositories'
 
@@ -18,14 +18,6 @@ export const PictureItem: React.FC<{
   const [src, setSrc] = useState<string>(
     'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
   )
-  useEffect(() => {
-    const _fetchThumb = async (): Promise<void> => {
-      const res = await fetchThumb(pictureKey)
-      const blob = new Blob([res.data], { type: 'application/octet-binary' })
-      setSrc(URL.createObjectURL(blob))
-    }
-    _fetchThumb()
-  }, [fetchThumb, pictureKey, src])
 
   return (
     <ListItem>
