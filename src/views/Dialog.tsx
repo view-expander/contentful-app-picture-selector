@@ -24,7 +24,7 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
     }
 
     fetch()
-  })
+  }, [itemList])
 
   useEffect(() => {
     const value = sdk.parameters.invocation as { items?: SelectedItemList }
