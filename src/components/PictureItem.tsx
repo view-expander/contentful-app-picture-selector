@@ -14,14 +14,16 @@ const Image = styled.img`
 export const PictureItem: React.FC<{
   fetchThumb: (key: string) => PromisifiedAxiosResponse<ArrayBuffer>
   pictureKey: string
-}> = ({ fetchThumb, pictureKey }) => {
-  const [src, setSrc] = useState<string>(
+}> = ({ pictureKey }) => {
+  const [src] = useState<string>(
     'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
   )
 
   return (
     <ListItem>
-      <Image src={src} alt="" />
+      {pictureKey}
+      <br />
+      {src}
     </ListItem>
   )
 }
