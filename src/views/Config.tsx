@@ -76,7 +76,7 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
     fetchParameters()
     sdk.app.onConfigure(() => onConfigure(sdk, parameters))
     sdk.app.setReady()
-  }, [parameters, sdk])
+  }, [])
 
   return (
     <ConfigForm className="f36-content-width--text">
