@@ -13,5 +13,5 @@ export const PictureItem: React.FC<{
     _fetchThumb()
   }, [fetchThumb, pictureKey])
 
-  return <li>{{ pictureKey }}</li>
+  return <li>{pictureKey}</li>
 }
