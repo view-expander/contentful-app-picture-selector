@@ -43,41 +43,42 @@ const onConfigure = async (
 }
 
 export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
-  const [apiPath, setApiPath] = useState<DraftAppConfig['apiPath']>()
-  const [contentTypeId, setContentTypeId] = useState<
-    DraftAppConfig['contentTypeId']
-  >()
-  const [fieldId, setFieldId] = useState<DraftAppConfig['fieldId']>()
-  const onChangeApiPath: InputEventHandler = (ev) => setApiPath(ev.target.value)
+  const [parameters, setParameters] = useState<DraftAppConfig>({
+    apiPath: undefined,
+    contentTypeId: undefined,
+    fieldId: undefined,
+  })
+
+  const onChangeApiPath: InputEventHandler = (ev) =>
+    setParameters({
+      ...parameters,
+      apiPath: ev.target.value,
+    })
   const onChangeContentTypeId: InputEventHandler = (ev) =>
-    setContentTypeId(ev.target.value)
-  const onChangeFieldId: InputEventHandler = (ev) => setFieldId(ev.target.value)
+    setParameters({
+      ...parameters,
+      contentTypeId: ev.target.value,
+    })
+  const onChangeFieldId: InputEventHandler = (ev) =>
+    setParameters({
+      ...parameters,
+      fieldId: ev.target.value,
+    })
 
-  useEffect(() => {
-    const fetchParameters = async (): Promise<void> => {
-      const definedParameters: AppConfig | null = await sdk.app.getParameters()
-      if (definedParameters !== null) {
-        const { apiPath, contentTypeId, fieldId } = definedParameters
-        setApiPath(apiPath)
-        setContentTypeId(contentTypeId)
-        setFieldId(fieldId)
-      }
+  const fetchParameters = async (): Promise<void> => {
+    const definedParameters: AppConfig | null = await sdk.app.getParameters()
+    console.log('fetchParameters', definedParameters)
+    if (definedParameters !== null) {
+      const { apiPath, contentTypeId, fieldId } = definedParameters
+      setParameters({ apiPath, contentTypeId, fieldId })
     }
+  }
 
+  useEffect(() => {
     fetchParameters()
-  }, [apiPath, contentTypeId, fieldId, sdk.app])
-  useEffect(() => {
-    sdk.app.onConfigure(() =>
-      onConfigure(sdk, {
-        apiPath,
-        contentTypeId,
-        fieldId,
-      })
-    )
-  })
-  useEffect(() => {
+    sdk.app.onConfigure(() => onConfigure(sdk, parameters))
     sdk.app.setReady()
-  })
+  }, [])
 
   return (
     <ConfigForm className="f36-content-width--text">
@@ -87,7 +88,7 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
           id: 'app-config-api-path',
           name: 'apiPath',
           labelText: 'API Path',
-          value: apiPath,
+          value: parameters.apiPath,
           onChange: onChangeApiPath,
         },
         {
@@ -95,7 +96,7 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
           name: 'contentTypeId',
           labelText: 'Content Type ID',
           helpText: 'Please enter Content Type ID',
-          value: contentTypeId,
+          value: parameters.contentTypeId,
           onChange: onChangeContentTypeId,
         },
         {
@@ -103,7 +104,7 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
           name: 'fieldId',
           labelText: 'Field ID',
           helpText: 'Please enter Field ID',
-          value: fieldId,
+          value: parameters.fieldId,
           onChange: onChangeFieldId,
         },
       ].map((props) => (
