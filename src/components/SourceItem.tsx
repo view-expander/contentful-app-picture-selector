@@ -1,5 +1,8 @@
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
+import { DIALOG_REDUCER_ACTION_TYPES } from '../reducers/dialog/action-types'
+import { NSDialogReducer } from '../reducers/dialog/types'
+import { sourceRepository } from '../repositories'
 
 const THUMB = {
   height: 128,
@@ -26,11 +29,20 @@ const Skeleton: React.FC<{ height?: number; width?: number }> = ({
 )
 
 export const SourceItem: React.FC<{
+  dispatch: React.Dispatch<NSDialogReducer.Action>
   objectKey: string
-  onMount: onMountPictureItem
   src: string | void
-}> = ({ objectKey, onMount, src }) => {
-  useEffect(() => onMount(objectKey), [objectKey])
+}> = ({ dispatch, objectKey, src }) => {
+  useEffect(() => {
+    const fetchThumb = async (): Promise<void> => {
+      const response = await sourceRepository.getObjectThumb(objectKey)
+      dispatch({
+        type: DIALOG_REDUCER_ACTION_TYPES.MOUNT_THUMB,
+        payload: { objectKey, response },
+      })
+    }
+    fetchThumb()
+  }, [dispatch, objectKey])
   useEffect(() => console.log('<SourceItem />', 'src:', src), [src])
 
   return (

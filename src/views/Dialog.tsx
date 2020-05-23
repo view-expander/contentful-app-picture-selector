@@ -16,9 +16,6 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
   const [state, dispatch] = useDialogReducer()
   const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
 
-  const onMountItem: onMountPictureItem = (key: string) =>
-    console.log('<Dialog />', 'onMountItem() =>', key)
-
   useEffect(() => {
     const fetchList = async (): Promise<void> => {
       const res = await sourceRepository.list()
@@ -42,7 +39,7 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
 
   return (
     <FlexWrapper>
-      <SourceList onMountItem={onMountItem} items={state.items} />
+      <SourceList dispatch={dispatch} items={state.items} />
       <SelectedPictureOnRight>
         <ul>
           {selectedItemList.map(({ key }) => (

@@ -1,3 +1,4 @@
 export const DIALOG_REDUCER_ACTION_TYPES = {
+  MOUNT_THUMB: 'MOUNT_THUMB',
   RECEIVE: 'RECEIVE',
 } as const
