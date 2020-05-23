@@ -46,14 +46,14 @@ export const SourceItem: React.FC<{
           const blob = new Blob([arrayBuffer], { type })
           const reader = new FileReader()
 
-          reader.onload = () => {
+          reader.onload = (): void => {
             if (typeof reader.result === 'string') {
               resolve(reader.result)
               return
             }
             reject(new Error('unexpected file'))
           }
-          reader.onerror = (err) => reject(err)
+          reader.onerror = (err): void => reject(err)
 
           reader.readAsDataURL(blob)
         })
