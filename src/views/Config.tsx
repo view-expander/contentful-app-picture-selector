@@ -3,10 +3,6 @@ import type { AppExtensionSDK } from 'contentful-ui-extensions-sdk'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
-type DraftAppConfig = {
-  [K in keyof AppConfig]: AppConfig[K] | undefined
-}
-
 type InputEventHandler = (ev: React.ChangeEvent<HTMLInputElement>) => void
 
 const ConfigForm = styled(Form)`
@@ -17,10 +13,10 @@ const ConfigForm = styled(Form)`
 `
 
 export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
-  const [parameters, setParameters] = useState<DraftAppConfig>({
-    apiPath: undefined,
-    contentTypeId: undefined,
-    fieldId: undefined,
+  const [parameters, setParameters] = useState<AppConfig>({
+    apiPath: '',
+    contentTypeId: '',
+    fieldId: '',
   })
 
   const onChangeApiPath: InputEventHandler = (ev) =>
@@ -43,19 +39,16 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
     const fetchParameters = async (): Promise<void> => {
       const definedParameters: AppConfig | null = await sdk.app.getParameters()
       await sdk.app.setReady()
-      if (definedParameters !== null) {
-        setParameters(definedParameters)
-      }
+      console.log('fetchParameters()', definedParameters)
+      setParameters((parameters) => definedParameters || parameters)
     }
     fetchParameters()
   }, [sdk])
 
   useEffect(() => {
     sdk.app.onConfigure((): ConfiguringResponse | false => {
-      const isValid = (p: DraftAppConfig): p is AppConfig =>
-        Array.from(Object.values(p)).every(
-          (val) => typeof val === 'string' && val.length > 0
-        )
+      const isValid = (p: AppConfig): p is AppConfig =>
+        Array.from(Object.values(p)).every((val) => val.length > 0)
 
       if (!isValid(parameters)) {
         sdk.notifier.error('All parameters are required')
