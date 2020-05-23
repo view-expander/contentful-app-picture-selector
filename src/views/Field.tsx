@@ -14,7 +14,6 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
   const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
   const onClickDialogOpener = (): Promise<void> =>
     sdk.dialogs.openCurrentApp({
-      allowHeightOverflow: true,
       title: 'Picture Selector',
       width: 'fullWidth',
       parameters: sdk.field.getValue(),
