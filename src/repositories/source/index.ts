@@ -1,5 +1,5 @@
-import { Repository } from './__internal__'
-import { PromisifiedAxiosResponse } from './index'
+import { Repository } from '../__internal__'
+import { PromisifiedAxiosResponse } from '../index'
 
 export class SourceRepository extends Repository {
   private readonly PATH = '/source'
