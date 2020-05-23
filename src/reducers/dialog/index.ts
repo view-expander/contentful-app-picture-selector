@@ -1,5 +1,5 @@
 import { Reducer, useReducer } from 'react'
-import { NSDialogReducer } from '../../@types/types'
+import { NSDialogReducer } from './types'
 import { DIALOG_REDUCER_ACTION_TYPES } from './action-types'
 
 const initialState: NSDialogReducer.State = {

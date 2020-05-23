@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { NSDialogReducer } from '../@types/types'
+import { NSDialogReducer } from '../reducers/dialog/types'
 import { FlexWrapper } from './index'
 import { SourceItem } from './SourceItem'
 

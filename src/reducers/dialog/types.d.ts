@@ -1,5 +1,5 @@
-import { DIALOG_REDUCER_ACTION_TYPES } from '../reducers/dialog/action-types'
-import { NSSourceRepository } from '../repositories/source/types'
+import { DIALOG_REDUCER_ACTION_TYPES } from './action-types'
+import { NSSourceRepository } from '../../repositories/source/types'
 
 export declare namespace NSDialogReducer {
   type Action = {
