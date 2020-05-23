@@ -1,9 +1,9 @@
-declare namespace SourceRepository {
-  type GetThumbParams = string
+export declare namespace NSSourceRepository {
+  export type GetThumbParams = string
 
-  type GetThumbResponse = ArrayBuffer
+  export type GetThumbResponse = ArrayBuffer
 
-  type ListItem = {
+  export type ListItem = {
     Key: string
     LastModified: string
     ETag: string
@@ -11,12 +11,12 @@ declare namespace SourceRepository {
     StorageClass: string
   }
 
-  type ListParams = {
+  export type ListParams = {
     ContinuationToken?: string
     MaxKeys?: number
   } | void
 
-  type ListResponse = {
+  export type ListResponse = {
     IsTruncated: boolean
     Contents: ListItem[]
     Name: string

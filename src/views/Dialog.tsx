@@ -5,7 +5,8 @@ import { FlexWrapper } from '../components'
 import { PictureList } from '../components/PictureList'
 import { useAutoResize } from '../hooks/useAutoResize'
 import { RepositoryFactory } from '../repositories'
-import { PromisifiedAxiosResponse } from '../repositories/types'
+import type { NSSourceRepository } from '../repositories/source/types'
+import type { PromisifiedAxiosResponse } from '../repositories/types'
 
 const sourceRepository = RepositoryFactory.get('source')
 
@@ -17,7 +18,7 @@ const fetchThumb = (key: string): PromisifiedAxiosResponse<ArrayBuffer> =>
   sourceRepository.getThumb(key)
 
 export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
-  const [itemList, setItemList] = useState<SourceRepository.ListItem[]>([])
+  const [itemList, setItemList] = useState<NSSourceRepository.ListItem[]>([])
   const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
 
   useEffect(() => {

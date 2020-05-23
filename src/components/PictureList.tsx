@@ -1,6 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
-import { PromisifiedAxiosResponse } from '../repositories/types'
+import type { NSSourceRepository } from '../repositories/source/types'
+import type { PromisifiedAxiosResponse } from '../repositories/types'
 import { FlexWrapper } from './index'
 import { PictureItem } from './PictureItem'
 
@@ -14,7 +15,7 @@ const List = styled.ul`
 
 export const PictureList: React.FC<{
   fetchThumb: (key: string) => PromisifiedAxiosResponse<ArrayBuffer>
-  items: SourceRepository.ListItem[]
+  items: NSSourceRepository.ListItem[]
 }> = ({ fetchThumb, items }) => (
   <FlexWrapper>
     <List>

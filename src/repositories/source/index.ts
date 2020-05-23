@@ -1,17 +1,18 @@
 import { Repository } from '../__internal__'
-import { PromisifiedAxiosResponse } from '../types'
+import type { PromisifiedAxiosResponse } from '../types'
+import type { NSSourceRepository } from './types'
 
 export class SourceRepository extends Repository {
   private readonly PATH = '/source'
 
-  list<T = SourceRepository.ListResponse>(
-    params: SourceRepository.ListParams
+  list<T = NSSourceRepository.ListResponse>(
+    params: NSSourceRepository.ListParams
   ): PromisifiedAxiosResponse<T> {
     return this.http.get<T>(this.PATH, { params })
   }
 
-  getThumb<T = SourceRepository.GetThumbResponse>(
-    key: SourceRepository.GetThumbParams
+  getThumb<T = NSSourceRepository.GetThumbResponse>(
+    key: NSSourceRepository.GetThumbParams
   ): PromisifiedAxiosResponse<T> {
     return this.http.get<T>(`${this.PATH}/${key}`, {
       params: { size: 'thumb' },
