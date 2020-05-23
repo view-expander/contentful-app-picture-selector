@@ -15,18 +15,15 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
       console.log(
         'DialogReducer',
         DIALOG_REDUCER_ACTION_TYPES.MOUNT_THUMB,
-        state.items.reduce<typeof state.items>((memo, item) => {
+        state.items.map((item) => {
           if (item.objectKey === action.payload.objectKey) {
-            return [
-              ...memo,
-              {
-                ...item,
-                img: action.payload.img,
-              },
-            ]
+            return {
+              ...item,
+              img: action.payload.img,
+            }
           }
-          return memo
-        }, [])
+          return item
+        })
       )
       // return {
       //   ...state,
