@@ -2,7 +2,7 @@ import { DialogExtensionSDK } from 'contentful-ui-extensions-sdk'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { FlexWrapper } from '../components'
-import { PictureList } from '../components/PictureList'
+import { SourceList } from '../components/SourceList'
 import { useAutoResize } from '../hooks/useAutoResize'
 import { sourceRepository } from '../repositories'
 // import type { RepositoryResponseData } from '../repositories/types'
@@ -44,7 +44,7 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
 
   return (
     <FlexWrapper>
-      <PictureList onMountItem={onMountItem} items={itemList} />
+      <SourceList onMountItem={onMountItem} items={itemList} />
       <SelectedPictureOnRight>
         <ul>
           {selectedItemList.map(({ key }) => (

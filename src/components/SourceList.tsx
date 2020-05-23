@@ -11,7 +11,7 @@ const List = styled.ul`
   padding: 0;
 `
 
-export const PictureList: React.FC<{
+export const SourceList: React.FC<{
   onMountItem: onMountPictureItem
   items: SourceItemProps[]
 }> = ({ items, onMountItem }) => (
