@@ -25,13 +25,13 @@ const Skeleton: React.FC<{ height?: number; width?: number }> = ({
   </svg>
 )
 
-export const PictureItem: React.FC<{
+export const SourceItem: React.FC<{
   objectKey: string
   onMount: onMountPictureItem
   src: string | void
 }> = ({ objectKey, onMount, src }) => {
   useEffect(() => onMount(objectKey), [objectKey])
-  useEffect(() => console.log('<PictureItem />', 'src:', src), [src])
+  useEffect(() => console.log('<SourceItem />', 'src:', src), [src])
 
   return (
     <li>

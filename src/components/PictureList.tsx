@@ -1,7 +1,7 @@
 import React from 'react'
 import styled from 'styled-components'
 import { FlexWrapper } from './index'
-import { PictureItem } from './PictureItem'
+import { SourceItem } from './SourceItem'
 
 const List = styled.ul`
   list-style: none;
@@ -18,7 +18,7 @@ export const PictureList: React.FC<{
   <FlexWrapper>
     <List>
       {items.map(({ objectKey, src }) => (
-        <PictureItem
+        <SourceItem
           key={objectKey}
           onMount={onMountItem}
           objectKey={objectKey}
