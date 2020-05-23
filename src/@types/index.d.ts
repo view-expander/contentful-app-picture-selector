@@ -15,10 +15,7 @@ type ConfiguringResponse = {
   }
 }
 
-type SourceItemProps = {
-  objectKey: string
-  src?: string
-}
+type ReducerCreator<S, A> = () => [S, React.Dispatch<A>]
 
 type SelectedItem = {
   key: string

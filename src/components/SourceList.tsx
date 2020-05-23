@@ -1,5 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
+import { NSDialogReducer } from '../@types/types'
 import { FlexWrapper } from './index'
 import { SourceItem } from './SourceItem'
 
@@ -13,7 +14,7 @@ const List = styled.ul`
 
 export const SourceList: React.FC<{
   onMountItem: onMountPictureItem
-  items: SourceItemProps[]
+  items: NSDialogReducer.StateItem[]
 }> = ({ items, onMountItem }) => (
   <FlexWrapper>
     <List>

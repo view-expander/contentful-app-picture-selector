@@ -4,31 +4,30 @@ import styled from 'styled-components'
 import { FlexWrapper } from '../components'
 import { SourceList } from '../components/SourceList'
 import { useAutoResize } from '../hooks/useAutoResize'
+import { useDialogReducer } from '../reducers/dialog'
+import { DIALOG_REDUCER_ACTION_TYPES } from '../reducers/dialog/action-types'
 import { sourceRepository } from '../repositories'
-// import type { RepositoryResponseData } from '../repositories/types'
 
 const SelectedPictureOnRight = styled(FlexWrapper)`
   flex: 0 0 160px;
 `
 
-// const fetchThumb = (key: string): RepositoryResponseData<ArrayBuffer> =>
-//   sourceRepository.getThumb(key)
-
 export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
-  const [itemList, setItemList] = useState<SourceItemProps[]>([])
+  const [state, dispatch] = useDialogReducer()
   const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
 
   const onMountItem: onMountPictureItem = (key: string) =>
     console.log('<Dialog />', 'onMountItem() =>', key)
 
   useEffect(() => {
-    const fetch = async (): Promise<void> => {
+    const fetchList = async (): Promise<void> => {
       const res = await sourceRepository.list()
-      setItemList(res.data.Contents.map(({ Key }) => ({ objectKey: Key })))
+      dispatch({ type: DIALOG_REDUCER_ACTION_TYPES.RECEIVE, payload: res.data })
+      console.log('<Dialog />', 'fetch()', 'res:', res)
     }
 
-    fetch()
-  }, [])
+    fetchList()
+  }, [dispatch])
 
   useEffect(() => {
     const value = sdk.parameters.invocation as { items?: SelectedItemList }
@@ -44,7 +43,7 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
 
   return (
     <FlexWrapper>
-      <SourceList onMountItem={onMountItem} items={itemList} />
+      <SourceList onMountItem={onMountItem} items={state.items} />
       <SelectedPictureOnRight>
         <ul>
           {selectedItemList.map(({ key }) => (
