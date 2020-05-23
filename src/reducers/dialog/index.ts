@@ -10,10 +10,13 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
   state,
   action
 ) => {
-  console.log('DialogReducer', action)
-
   switch (action.type) {
     case DIALOG_REDUCER_ACTION_TYPES.MOUNT_THUMB:
+      console.log(
+        'DialogReducer',
+        DIALOG_REDUCER_ACTION_TYPES.MOUNT_THUMB,
+        state.items.find((item) => item.objectKey === action.payload.objectKey)
+      )
       return {
         ...state,
         items: state.items.reduce<typeof state.items>((memo, item) => {
