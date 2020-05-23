@@ -39,7 +39,7 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
 
   return (
     <FlexWrapper>
-      <SourceList dispatch={dispatch} items={state.items} />
+      <SourceList items={state.items} />
       <SelectedPictureOnRight>
         <ul>
           {selectedItemList.map(({ key }) => (

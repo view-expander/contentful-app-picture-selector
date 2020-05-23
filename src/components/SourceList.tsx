@@ -13,15 +13,12 @@ const List = styled.ul`
 `
 
 export const SourceList: React.FC<{
-  dispatch: React.Dispatch<NSDialogReducer.Action>
   items: NSDialogReducer.StateItem[]
-}> = ({ dispatch, items }) => (
+}> = ({ items }) => (
   <FlexWrapper>
     <List>
-      {items.map(({ objectKey, img }) => (
+      {items.map(({ objectKey }) => (
         <SourceItem
-          dispatch={dispatch}
-          img={img}
           key={objectKey}
           objectKey={objectKey}
         />

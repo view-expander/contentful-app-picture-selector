@@ -1,20 +1,24 @@
-import React, { useEffect } from 'react'
+import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { DIALOG_REDUCER_ACTION_TYPES } from '../reducers/dialog/action-types'
-import { NSDialogReducer } from '../reducers/dialog/types'
 import { sourceRepository } from '../repositories'
 
-const THUMB = {
+type ThumbState = {
+  src: string | undefined
+  width: number | undefined
+  height: number | undefined
+}
+
+const THUMB_RECT = {
   height: 128,
   width: 128,
 } as const
 
 const ThumbWrapper = styled.div`
-  width: ${THUMB.width}px;
-  height: ${THUMB.height}px;
+  width: ${THUMB_RECT.width}px;
+  height: ${THUMB_RECT.height}px;
 `
 
-const Thumb = styled.img`
+const ThumbImage = styled.img`
   background-color: #ccc;
   max-height: 100%;
   max-width: 100%;
@@ -22,8 +26,8 @@ const Thumb = styled.img`
 `
 
 const Skeleton: React.FC<{ height?: number; width?: number }> = ({
-  height = THUMB.height,
-  width = THUMB.width,
+  height = THUMB_RECT.height,
+  width = THUMB_RECT.width,
 }) => (
   <svg viewBox="0 0 1 1" width={width} height={height}>
     <rect x={0} y={0} width={1} height={1} fill="#ccc" />
@@ -60,11 +64,13 @@ const createImage = (src: string): Promise<HTMLImageElement> =>
     img.src = src
   })
 
-export const SourceItem: React.FC<{
-  dispatch: React.Dispatch<NSDialogReducer.Action>
-  img: HTMLImageElement | void
-  objectKey: string
-}> = ({ dispatch, img, objectKey }) => {
+export const SourceItem: React.FC<{ objectKey: string }> = ({ objectKey }) => {
+  const [thumb, setThumb] = useState<ThumbState>({
+    src: undefined,
+    width: undefined,
+    height: undefined,
+  })
+
   useEffect(() => {
     const fetchThumb = async (): Promise<void> => {
       const res = await sourceRepository.getObjectThumb(objectKey)
@@ -73,25 +79,27 @@ export const SourceItem: React.FC<{
           throw err
         }
       )
-      const img = await createImage(uri).catch((err) => {
+      const { src, width, height } = await createImage(uri).catch((err) => {
         throw err
       })
 
-      dispatch({
-        type: DIALOG_REDUCER_ACTION_TYPES.MOUNT_THUMB,
-        payload: { objectKey, img },
-      })
+      setThumb({ src, width, height })
     }
+
     fetchThumb()
-  }, [dispatch, objectKey])
+  }, [objectKey])
 
   return (
     <li>
       <ThumbWrapper>
-        {img === undefined ? (
+        {thumb.src === undefined ? (
           <Skeleton />
         ) : (
-          <Thumb src={img.src} width={img.width} height={img.height} />
+          <ThumbImage
+            src={thumb.src}
+            width={thumb.width}
+            height={thumb.height}
+          />
         )}
       </ThumbWrapper>
     </li>

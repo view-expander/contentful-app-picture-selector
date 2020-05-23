@@ -11,20 +11,6 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
   action
 ) => {
   switch (action.type) {
-    case DIALOG_REDUCER_ACTION_TYPES.MOUNT_THUMB:
-      return {
-        ...state,
-        items: state.items.map((item) => {
-          if (item.objectKey === action.payload.objectKey) {
-            return {
-              ...item,
-              img: action.payload.img,
-            }
-          }
-          return item
-        }),
-      }
-
     case DIALOG_REDUCER_ACTION_TYPES.RECEIVE:
       return {
         ...state,
