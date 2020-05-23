@@ -38,12 +38,27 @@ export const SourceItem: React.FC<{
   useEffect(() => {
     const fetchThumb = async (): Promise<void> => {
       const res = await sourceRepository.getObjectThumb(objectKey)
-      const createImage = (
+      const createURI = (
         arrayBuffer: ArrayBuffer,
         type = 'application/octet-stream'
-      ): Promise<HTMLImageElement> =>
+      ): Promise<string> =>
         new Promise((resolve, reject) => {
-          const src = URL.createObjectURL(new Blob([arrayBuffer], { type }))
+          const blob = new Blob([arrayBuffer], { type })
+          const reader = new FileReader()
+
+          reader.onload = () => {
+            if (typeof reader.result === 'string') {
+              resolve(reader.result)
+              return
+            }
+            reject(new Error('unexpected file'))
+          }
+          reader.onerror = (err) => reject(err)
+
+          reader.readAsDataURL(blob)
+        })
+      const createImage = (src: string): Promise<HTMLImageElement> =>
+        new Promise((resolve, reject) => {
           const img = new Image()
 
           img.onload = (): void => resolve(img)
@@ -51,7 +66,12 @@ export const SourceItem: React.FC<{
 
           img.src = src
         })
-      const img = await createImage(res.data).catch((err) => {
+      const uri = await createURI(res.data, res.headers['content-type']).catch(
+        (err) => {
+          throw err
+        }
+      )
+      const img = await createImage(uri).catch((err) => {
         throw err
       })
 
