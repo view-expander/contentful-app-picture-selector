@@ -1,6 +1,6 @@
 import { Reducer, useReducer } from 'react'
-import { NSDialogReducer } from './types'
 import { DIALOG_REDUCER_ACTION_TYPES } from './action-types'
+import { NSDialogReducer } from './types'
 
 const initialState: NSDialogReducer.State = {
   items: [],
@@ -18,15 +18,17 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
         ...state,
         items: state.items.reduce<typeof state.items>((memo, item) => {
           if (item.objectKey === action.payload.objectKey) {
+            const blob = new Blob([action.payload.response.data], {
+              type:
+                action.payload.response.headers.responseType ||
+                'application/octet-stream',
+            })
+            console.log('Blob', blob)
             return [
               ...memo,
               {
                 ...item,
-                src: URL.createObjectURL(
-                  new Blob([action.payload.response.data], {
-                    type: 'application/octet-stream',
-                  })
-                ),
+                src: URL.createObjectURL(blob),
               },
             ]
           }
