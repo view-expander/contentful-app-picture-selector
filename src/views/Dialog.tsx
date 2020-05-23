@@ -19,7 +19,7 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
   const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
 
   const onMountItem: onMountPictureItem = (key: string) =>
-    console.log('<Dialog />, onMountItem()', key)
+    console.log('<Dialog />', 'onMountItem() =>', key)
 
   useEffect(() => {
     const fetch = async (): Promise<void> => {
