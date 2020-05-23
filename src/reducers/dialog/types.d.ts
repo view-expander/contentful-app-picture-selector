@@ -14,10 +14,17 @@ export declare namespace NSDialogReducer {
         payload: NSSourceRepository.Response
       }
 
-  type StateItem = {
-    objectKey: string
-    src?: string
-  }
+  type StateItem =
+    | {
+        objectKey: string
+        src?: string
+      }
+    | {
+        objectKey: string
+        src: string
+        height: number
+        width: number
+      }
 
   type State = {
     items: StateItem[]

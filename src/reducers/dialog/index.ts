@@ -15,7 +15,10 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
       console.log(
         'DialogReducer',
         DIALOG_REDUCER_ACTION_TYPES.MOUNT_THUMB,
-        action.payload
+        'index:',
+        state.items.findIndex(
+          (item) => item.objectKey === action.payload.objectKey
+        )
       )
       return state
 
@@ -26,7 +29,6 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
           ...state.items,
           ...action.payload.Contents.map(({ Key }) => ({
             objectKey: Key,
-            src: undefined,
           })),
         ],
       }
