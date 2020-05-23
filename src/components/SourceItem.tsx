@@ -30,6 +30,36 @@ const Skeleton: React.FC<{ height?: number; width?: number }> = ({
   </svg>
 )
 
+const createURI = (
+  arrayBuffer: ArrayBuffer,
+  type = 'application/octet-stream'
+): Promise<string> =>
+  new Promise((resolve, reject) => {
+    const blob = new Blob([arrayBuffer], { type })
+    const reader = new FileReader()
+
+    reader.onload = (): void => {
+      if (typeof reader.result === 'string') {
+        resolve(reader.result)
+        return
+      }
+      reject(new Error('unexpected file'))
+    }
+    reader.onerror = (err): void => reject(err)
+
+    reader.readAsDataURL(blob)
+  })
+
+const createImage = (src: string): Promise<HTMLImageElement> =>
+  new Promise((resolve, reject) => {
+    const img = new Image()
+
+    img.onload = (): void => resolve(img)
+    img.onerror = (err): void => reject(err)
+
+    img.src = src
+  })
+
 export const SourceItem: React.FC<{
   dispatch: React.Dispatch<NSDialogReducer.Action>
   objectKey: string
@@ -38,34 +68,6 @@ export const SourceItem: React.FC<{
   useEffect(() => {
     const fetchThumb = async (): Promise<void> => {
       const res = await sourceRepository.getObjectThumb(objectKey)
-      const createURI = (
-        arrayBuffer: ArrayBuffer,
-        type = 'application/octet-stream'
-      ): Promise<string> =>
-        new Promise((resolve, reject) => {
-          const blob = new Blob([arrayBuffer], { type })
-          const reader = new FileReader()
-
-          reader.onload = (): void => {
-            if (typeof reader.result === 'string') {
-              resolve(reader.result)
-              return
-            }
-            reject(new Error('unexpected file'))
-          }
-          reader.onerror = (err): void => reject(err)
-
-          reader.readAsDataURL(blob)
-        })
-      const createImage = (src: string): Promise<HTMLImageElement> =>
-        new Promise((resolve, reject) => {
-          const img = new Image()
-
-          img.onload = (): void => resolve(img)
-          img.onerror = (err): void => reject(err)
-
-          img.src = src
-        })
       const uri = await createURI(res.data, res.headers['content-type']).catch(
         (err) => {
           throw err
