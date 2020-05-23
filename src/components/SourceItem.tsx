@@ -37,10 +37,27 @@ export const SourceItem: React.FC<{
 }> = ({ dispatch, objectKey, src }) => {
   useEffect(() => {
     const fetchThumb = async (): Promise<void> => {
-      const response = await sourceRepository.getObjectThumb(objectKey)
+      const res = await sourceRepository.getObjectThumb(objectKey)
+      const createImage = (
+        arrayBuffer: ArrayBuffer,
+        type = 'application/octet-stream'
+      ): Promise<HTMLImageElement> =>
+        new Promise((resolve, reject) => {
+          const src = URL.createObjectURL(new Blob([arrayBuffer], { type }))
+          const img = new Image()
+
+          img.onload = (): void => resolve(img)
+          img.onerror = (err): void => reject(err)
+
+          img.src = src
+        })
+      const img = await createImage(res.data).catch((err) => {
+        throw err
+      })
+
       dispatch({
         type: DIALOG_REDUCER_ACTION_TYPES.MOUNT_THUMB,
-        payload: { objectKey, response },
+        payload: { objectKey, img },
       })
     }
     fetchThumb()

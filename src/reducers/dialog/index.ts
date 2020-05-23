@@ -15,30 +15,9 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
       console.log(
         'DialogReducer',
         DIALOG_REDUCER_ACTION_TYPES.MOUNT_THUMB,
-        state.items.find((item) => item.objectKey === action.payload.objectKey)
+        action.payload
       )
-      return {
-        ...state,
-        items: state.items.reduce<typeof state.items>((memo, item) => {
-          if (item.objectKey === action.payload.objectKey) {
-            const blob = new Blob([action.payload.response.data], {
-              type:
-                action.payload.response.headers['content-type'] ||
-                'application/octet-stream',
-            })
-            console.log('Blob', blob)
-            return [
-              ...memo,
-              {
-                ...item,
-                src: URL.createObjectURL(blob),
-              },
-            ]
-          }
-
-          return memo
-        }, []),
-      }
+      return state
 
     case DIALOG_REDUCER_ACTION_TYPES.RECEIVE:
       return {
