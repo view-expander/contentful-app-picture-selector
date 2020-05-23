@@ -6,7 +6,7 @@ import { PictureList } from '../components/PictureList'
 import { useAutoResize } from '../hooks/useAutoResize'
 import { RepositoryFactory } from '../repositories'
 import type { NSSourceRepository } from '../repositories/source/types'
-import type { PromisifiedAxiosResponse } from '../repositories/types'
+import type { RepositoryResponseData } from '../repositories/types'
 
 const sourceRepository = RepositoryFactory.get('source')
 
@@ -14,7 +14,7 @@ const SelectedPictureOnRight = styled(FlexWrapper)`
   flex: 0 0 160px;
 `
 
-const fetchThumb = (key: string): PromisifiedAxiosResponse<ArrayBuffer> =>
+const fetchThumb = (key: string): RepositoryResponseData<ArrayBuffer> =>
   sourceRepository.getThumb(key)
 
 export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {

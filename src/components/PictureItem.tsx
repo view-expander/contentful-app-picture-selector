@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { PromisifiedAxiosResponse } from '../repositories/types'
+import { RepositoryResponseData } from '../repositories/types'
 
 const ListItem = styled.li`
   width: 128px;
@@ -12,7 +12,7 @@ const Image = styled.img`
 `
 
 export const PictureItem: React.FC<{
-  fetchThumb: (key: string) => PromisifiedAxiosResponse<ArrayBuffer>
+  fetchThumb: (key: string) => RepositoryResponseData<ArrayBuffer>
   pictureKey: string
 }> = ({ pictureKey }) => {
   const [src] = useState<string>(
