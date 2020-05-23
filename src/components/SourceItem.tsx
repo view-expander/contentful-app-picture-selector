@@ -9,15 +9,17 @@ const THUMB = {
   width: 128,
 } as const
 
-const Thumb = styled.div`
+const ThumbWrapper = styled.div`
   width: ${THUMB.width}px;
   height: ${THUMB.height}px;
 `
 
-// const Image = styled.img`
-//   background-color: #ccc;
-//   object-fit: contain;
-// `
+const Thumb = styled.img`
+  background-color: #ccc;
+  max-height: 100%;
+  max-width: 100%;
+  object-fit: contain;
+`
 
 const Skeleton: React.FC<{ height?: number; width?: number }> = ({
   height = THUMB.height,
@@ -47,9 +49,9 @@ export const SourceItem: React.FC<{
 
   return (
     <li>
-      <Thumb>
-        <Skeleton />
-      </Thumb>
+      <ThumbWrapper>
+        {typeof src === 'string' ? <Thumb src={src} /> : <Skeleton />}
+      </ThumbWrapper>
     </li>
   )
 }
