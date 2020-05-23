@@ -5,13 +5,11 @@ import type { NSSourceRepository as This } from './types'
 export class SourceRepository extends Repository {
   private readonly PATH = '/source'
 
-  list<T = This.Response>(
-    params: This.Params
-  ): RepositoryResponseData<T> {
+  list<T = This.Response>(params: This.Params): RepositoryResponseData<T> {
     return this.http.get<T>(this.PATH, { params })
   }
 
-  getThumb<T = This.Object.GetResponse>(
+  getObjectThumb<T = This.Object.GetResponse>(
     objectKey: This.Object.GetParams
   ): RepositoryResponseData<T> {
     return this.http.get<T>(`${this.PATH}/${objectKey}`, {
