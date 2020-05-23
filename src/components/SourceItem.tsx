@@ -10,6 +10,8 @@ type ThumbState = {
 
 const ListItem = styled.li`
   margin-top: 0.5rem;
+  padding: 0.5rem;
+  border: 1px solid #333;
 `
 
 const THUMB_RECT = {
