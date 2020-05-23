@@ -84,11 +84,6 @@ export const SourceItem: React.FC<{
     }
     fetchThumb()
   }, [dispatch, objectKey])
-  useEffect(() => {
-    if (img) {
-      console.log('<SourceItem />', 'img:', img)
-    }
-  }, [img])
 
   return (
     <li>
