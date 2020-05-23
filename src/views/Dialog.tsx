@@ -16,7 +16,7 @@ const SelectedPictureOnRight = styled(FlexWrapper)`
 //   sourceRepository.getThumb(key)
 
 export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
-  const [itemList, setItemList] = useState<NSSourceRepository.ListItem[]>([])
+  const [itemList, setItemList] = useState<NSSourceRepository.Item[]>([])
   const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
 
   const onMountItem: onMountPictureItem = (key: string) =>

@@ -39,7 +39,6 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
     const fetchParameters = async (): Promise<void> => {
       const definedParameters: AppConfig | null = await sdk.app.getParameters()
       await sdk.app.setReady()
-      console.log('fetchParameters()', definedParameters)
       setParameters((parameters) => definedParameters || parameters)
     }
     fetchParameters()
