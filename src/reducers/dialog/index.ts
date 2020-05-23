@@ -22,8 +22,9 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
           })),
         ],
       }
+    default:
+      throw new Error('unknown action')
   }
-  return state
 }
 
 export const useDialogReducer: ReducerCreator<
