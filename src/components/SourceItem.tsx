@@ -8,6 +8,10 @@ type ThumbState = {
   height: number | undefined
 }
 
+const ListItem = styled.li`
+  margin-top: 0.5rem;
+`
+
 const THUMB_RECT = {
   height: 128,
   width: 128,
@@ -19,7 +23,6 @@ const ThumbWrapper = styled.div`
 `
 
 const ThumbImage = styled.img`
-  background-color: #ccc;
   max-height: 100%;
   max-width: 100%;
   object-fit: contain;
@@ -90,7 +93,7 @@ export const SourceItem: React.FC<{ objectKey: string }> = ({ objectKey }) => {
   }, [objectKey])
 
   return (
-    <li>
+    <ListItem>
       <ThumbWrapper>
         {thumb.src === undefined ? (
           <Skeleton />
@@ -102,6 +105,6 @@ export const SourceItem: React.FC<{ objectKey: string }> = ({ objectKey }) => {
           />
         )}
       </ThumbWrapper>
-    </li>
+    </ListItem>
   )
 }

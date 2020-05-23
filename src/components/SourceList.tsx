@@ -8,7 +8,10 @@ const List = styled.ul`
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  margin: 0;
+  margin-top: 0.5rem;
+  margin-bottom: 1rem;
+  margin-left: 1rem;
+  margin-right: 1rem;
   padding: 0;
 `
 
