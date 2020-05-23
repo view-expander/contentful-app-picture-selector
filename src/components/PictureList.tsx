@@ -13,7 +13,7 @@ const List = styled.ul`
 
 export const PictureList: React.FC<{
   onMountItem: onMountPictureItem
-  items: PictureItem[]
+  items: SourceItemProps[]
 }> = ({ items, onMountItem }) => (
   <FlexWrapper>
     <List>

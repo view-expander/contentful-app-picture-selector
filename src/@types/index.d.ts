@@ -15,7 +15,7 @@ type ConfiguringResponse = {
   }
 }
 
-type PictureItem = {
+type SourceItemProps = {
   objectKey: string
   src?: string
 }
