@@ -11,13 +11,15 @@ const ListItem = styled.li`
 // `
 
 export const PictureItem: React.FC<{
-  key: string
+  objectKey: string
   onMount: onMountPictureItem
-}> = ({ key, onMount }) => {
+  src: string | void
+}> = ({ objectKey, onMount, src }) => {
   // const [src] = useState<string>(
   //   'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw=='
   // )
-  useEffect(() => onMount(key))
+  useEffect(() => onMount(objectKey), [objectKey])
+  useEffect(() => console.log('<PictureItem />', src), [src])
 
-  return <ListItem>{key}</ListItem>
+  return <ListItem>{objectKey}</ListItem>
 }

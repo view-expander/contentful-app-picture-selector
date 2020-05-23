@@ -1,6 +1,5 @@
 import React from 'react'
 import styled from 'styled-components'
-import type { NSSourceRepository } from '../repositories/source/types'
 import { FlexWrapper } from './index'
 import { PictureItem } from './PictureItem'
 
@@ -14,12 +13,17 @@ const List = styled.ul`
 
 export const PictureList: React.FC<{
   onMountItem: onMountPictureItem
-  items: NSSourceRepository.ListItem[]
+  items: PictureItem[]
 }> = ({ items, onMountItem }) => (
   <FlexWrapper>
     <List>
-      {items.map(({ Key }) => (
-        <PictureItem onMount={onMountItem} key={Key} />
+      {items.map(({ objectKey, src }) => (
+        <PictureItem
+          key={objectKey}
+          onMount={onMountItem}
+          objectKey={objectKey}
+          src={src}
+        />
       ))}
     </List>
   </FlexWrapper>

@@ -15,6 +15,11 @@ type ConfiguringResponse = {
   }
 }
 
+type PictureItem = {
+  objectKey: string
+  src?: string
+}
+
 type SelectedItem = {
   key: string
 }

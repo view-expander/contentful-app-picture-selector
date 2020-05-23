@@ -5,7 +5,6 @@ import { FlexWrapper } from '../components'
 import { PictureList } from '../components/PictureList'
 import { useAutoResize } from '../hooks/useAutoResize'
 import { sourceRepository } from '../repositories'
-import type { NSSourceRepository } from '../repositories/source/types'
 // import type { RepositoryResponseData } from '../repositories/types'
 
 const SelectedPictureOnRight = styled(FlexWrapper)`
@@ -16,17 +15,16 @@ const SelectedPictureOnRight = styled(FlexWrapper)`
 //   sourceRepository.getThumb(key)
 
 export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
-  const [itemList, setItemList] = useState<NSSourceRepository.Item[]>([])
+  const [itemList, setItemList] = useState<PictureItem[]>([])
   const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
 
   const onMountItem: onMountPictureItem = (key: string) =>
-    console.log('onMountItem', key)
+    console.log('<Dialog />, onMountItem()', key)
 
   useEffect(() => {
     const fetch = async (): Promise<void> => {
       const res = await sourceRepository.list()
-      console.log('res', res)
-      setItemList(res.data.Contents)
+      setItemList(res.data.Contents.map(({ Key }) => ({ objectKey: Key })))
     }
 
     fetch()
