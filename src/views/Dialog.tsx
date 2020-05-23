@@ -4,11 +4,9 @@ import styled from 'styled-components'
 import { FlexWrapper } from '../components'
 import { PictureList } from '../components/PictureList'
 import { useAutoResize } from '../hooks/useAutoResize'
-import { RepositoryFactory } from '../repositories'
+import { sourceRepository } from '../repositories'
 import type { NSSourceRepository } from '../repositories/source/types'
 import type { RepositoryResponseData } from '../repositories/types'
-
-const sourceRepository = RepositoryFactory.get('source')
 
 const SelectedPictureOnRight = styled(FlexWrapper)`
   flex: 0 0 160px;
