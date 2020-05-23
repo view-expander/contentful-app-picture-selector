@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import { PromisifiedAxiosResponse } from '../@types/repositories'
+import { PromisifiedAxiosResponse } from '../repositories'
 
 const ListItem = styled.li`
   width: 128px;

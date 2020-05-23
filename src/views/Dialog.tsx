@@ -1,11 +1,10 @@
 import { DialogExtensionSDK } from 'contentful-ui-extensions-sdk'
 import React, { useEffect, useState } from 'react'
 import styled from 'styled-components'
-import { PromisifiedAxiosResponse } from '../@types/repositories'
 import { FlexWrapper } from '../components'
 import { PictureList } from '../components/PictureList'
 import { useAutoResize } from '../hooks/useAutoResize'
-import { RepositoryFactory } from '../repositories'
+import { PromisifiedAxiosResponse, RepositoryFactory } from '../repositories'
 
 const sourceRepository = RepositoryFactory.get('source')
 
