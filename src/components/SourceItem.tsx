@@ -62,9 +62,9 @@ const createImage = (src: string): Promise<HTMLImageElement> =>
 
 export const SourceItem: React.FC<{
   dispatch: React.Dispatch<NSDialogReducer.Action>
+  img: HTMLImageElement | void
   objectKey: string
-  src: string | void
-}> = ({ dispatch, objectKey, src }) => {
+}> = ({ dispatch, img, objectKey }) => {
   useEffect(() => {
     const fetchThumb = async (): Promise<void> => {
       const res = await sourceRepository.getObjectThumb(objectKey)
@@ -84,12 +84,20 @@ export const SourceItem: React.FC<{
     }
     fetchThumb()
   }, [dispatch, objectKey])
-  useEffect(() => console.log('<SourceItem />', 'src:', src), [src])
+  useEffect(() => {
+    if (img) {
+      console.log('<SourceItem />', 'img:', img)
+    }
+  }, [img])
 
   return (
     <li>
       <ThumbWrapper>
-        {typeof src === 'string' ? <Thumb src={src} /> : <Skeleton />}
+        {img === undefined ? (
+          <Skeleton />
+        ) : (
+          <Thumb src={img.src} width={img.width} height={img.height} />
+        )}
       </ThumbWrapper>
     </li>
   )

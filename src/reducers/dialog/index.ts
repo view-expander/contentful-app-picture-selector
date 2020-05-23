@@ -20,7 +20,21 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
           (item) => item.objectKey === action.payload.objectKey
         )
       )
-      return state
+      return {
+        ...state,
+        items: state.items.reduce<typeof state.items>((memo, item) => {
+          if (item.objectKey === action.payload.objectKey) {
+            return [
+              ...memo,
+              {
+                ...item,
+                img: action.payload.img,
+              },
+            ]
+          }
+          return memo
+        }, []),
+      }
 
     case DIALOG_REDUCER_ACTION_TYPES.RECEIVE:
       return {

@@ -18,12 +18,12 @@ export const SourceList: React.FC<{
 }> = ({ dispatch, items }) => (
   <FlexWrapper>
     <List>
-      {items.map(({ objectKey, src }) => (
+      {items.map(({ objectKey, img }) => (
         <SourceItem
           dispatch={dispatch}
+          img={img}
           key={objectKey}
           objectKey={objectKey}
-          src={src}
         />
       ))}
     </List>
