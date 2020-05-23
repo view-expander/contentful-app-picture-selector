@@ -40,12 +40,12 @@ export const Config: React.FC<{ sdk: AppExtensionSDK }> = ({ sdk }) => {
     })
 
   useEffect(() => {
-    // const fetchParameters = async (): Promise<void> => {
-    //   const definedParameters: AppConfig | null = await sdk.app.getParameters()
-    //   setParameters((parameters) => definedParameters || parameters)
-    // }
-    // fetchParameters()
-    sdk.app.setReady()
+    const fetchParameters = async (): Promise<void> => {
+      const definedParameters: AppConfig | null = await sdk.app.getParameters()
+      setParameters((parameters) => definedParameters || parameters)
+      await sdk.app.setReady()
+    }
+    fetchParameters()
   }, [sdk])
 
   useEffect(() => {
