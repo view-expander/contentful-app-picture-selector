@@ -12,10 +12,9 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
 ) => {
   switch (action.type) {
     case DIALOG_REDUCER_ACTION_TYPES.MOUNT_THUMB:
-      console.log(
-        'DialogReducer',
-        DIALOG_REDUCER_ACTION_TYPES.MOUNT_THUMB,
-        state.items.map((item) => {
+      return {
+        ...state,
+        items: state.items.map((item) => {
           if (item.objectKey === action.payload.objectKey) {
             return {
               ...item,
@@ -23,24 +22,8 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
             }
           }
           return item
-        })
-      )
-      // return {
-      //   ...state,
-      //   items: state.items.reduce<typeof state.items>((memo, item) => {
-      //     if (item.objectKey === action.payload.objectKey) {
-      //       return [
-      //         ...memo,
-      //         {
-      //           ...item,
-      //           img: action.payload.img,
-      //         },
-      //       ]
-      //     }
-      //     return memo
-      //   }, []),
-      // }
-      return state
+        }),
+      }
 
     case DIALOG_REDUCER_ACTION_TYPES.RECEIVE:
       return {
