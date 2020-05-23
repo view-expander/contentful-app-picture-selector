@@ -1,6 +1,6 @@
 import React from 'react'
 import styled from 'styled-components'
-import { PromisifiedAxiosResponse } from '../repositories'
+import { PromisifiedAxiosResponse } from '../repositories/types'
 import { FlexWrapper } from './index'
 import { PictureItem } from './PictureItem'
 
