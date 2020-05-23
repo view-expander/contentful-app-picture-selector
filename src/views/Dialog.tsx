@@ -6,18 +6,21 @@ import { PictureList } from '../components/PictureList'
 import { useAutoResize } from '../hooks/useAutoResize'
 import { sourceRepository } from '../repositories'
 import type { NSSourceRepository } from '../repositories/source/types'
-import type { RepositoryResponseData } from '../repositories/types'
+// import type { RepositoryResponseData } from '../repositories/types'
 
 const SelectedPictureOnRight = styled(FlexWrapper)`
   flex: 0 0 160px;
 `
 
-const fetchThumb = (key: string): RepositoryResponseData<ArrayBuffer> =>
-  sourceRepository.getThumb(key)
+// const fetchThumb = (key: string): RepositoryResponseData<ArrayBuffer> =>
+//   sourceRepository.getThumb(key)
 
 export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
   const [itemList, setItemList] = useState<NSSourceRepository.ListItem[]>([])
   const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
+
+  const onMountItem: onMountPictureItem = (key: string) =>
+    console.log('onMountItem', key)
 
   useEffect(() => {
     const fetch = async (): Promise<void> => {
@@ -43,7 +46,7 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
 
   return (
     <FlexWrapper>
-      <PictureList fetchThumb={fetchThumb} items={itemList} />
+      <PictureList onMountItem={onMountItem} items={itemList} />
       <SelectedPictureOnRight>
         <ul>
           {selectedItemList.map(({ key }) => (

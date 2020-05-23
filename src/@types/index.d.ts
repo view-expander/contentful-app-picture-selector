@@ -20,3 +20,5 @@ type SelectedItem = {
 }
 
 type SelectedItemList = SelectedItem[]
+
+type onMountPictureItem = (key: string) => void
