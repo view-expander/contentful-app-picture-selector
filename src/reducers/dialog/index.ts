@@ -20,7 +20,7 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
           if (item.objectKey === action.payload.objectKey) {
             const blob = new Blob([action.payload.response.data], {
               type:
-                action.payload.response.headers.responseType ||
+                action.payload.response.headers['content-type'] ||
                 'application/octet-stream',
             })
             console.log('Blob', blob)
