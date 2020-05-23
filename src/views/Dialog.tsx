@@ -23,7 +23,6 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
     const fetchList = async (): Promise<void> => {
       const res = await sourceRepository.list()
       dispatch({ type: DIALOG_REDUCER_ACTION_TYPES.RECEIVE, payload: res.data })
-      console.log('<Dialog />', 'fetch()', 'res:', res)
     }
 
     fetchList()
