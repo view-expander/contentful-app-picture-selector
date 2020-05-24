@@ -24,8 +24,9 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
         type: DIALOG_REDUCER_ACTION_TYPES.RECEIVE_THUMB,
         payload: { objectKey, img },
       })
+      sdk.window.updateHeight()
     },
-    [dispatch]
+    [dispatch, sdk.window]
   )
 
   useEffect(() => {
