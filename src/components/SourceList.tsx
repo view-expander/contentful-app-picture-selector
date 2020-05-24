@@ -40,9 +40,11 @@ export const SourceList: React.FC<{
   useEffect(() => {
     const handleScroll = (ev: Event): void => {
       const target = ev.target as typeof listWrapperRef.current
-      console.log('handleScroll()', 'target', target)
-      console.log('handleScroll()', 'clientRect', target?.getBoundingClientRect())
-      console.log('handleScroll()', 'scrollTop', target?.scrollTop)
+      if (target === null) {
+        return
+      }
+      const { clientHeight, scrollHeight, scrollTop } = target
+      console.log(clientHeight, scrollHeight - scrollTop)
     }
     listWrapperRef.current?.addEventListener('scroll', handleScroll)
     return () => listWrapperRef.current?.removeEventListener('scroll', handleScroll)
