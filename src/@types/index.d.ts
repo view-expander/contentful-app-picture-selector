@@ -15,12 +15,12 @@ type ConfiguringResponse = {
   }
 }
 
-type FetchImageHandler = (objectKey: string ) => Promise<void>
+type FetchImageHandler = (objectKey: string) => Promise<void>
 
 type ReducerAction<
   T extends {
     type: string
-    payload?: any
+    payload?: unknown
   }
 > = T
 

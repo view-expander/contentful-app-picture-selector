@@ -23,11 +23,6 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
       }
 
     case DIALOG_REDUCER_ACTION_TYPES.RECEIVE_THUMB:
-      console.log(
-        'DialogReducer',
-        DIALOG_REDUCER_ACTION_TYPES.RECEIVE_THUMB,
-        action.payload
-      )
       return {
         ...state,
         items: state.items.map((item) =>
