@@ -18,13 +18,16 @@ const List = styled.ul`
 
 export const SourceList: React.FC<{
   items: NSDialogReducer.StateItem[]
-}> = ({ items }) => (
+  onMountItem: FetchImageHandler
+}> = ({ items, onMountItem }) => (
   <FlexWrapper>
     <List>
-      {items.map(({ objectKey }) => (
+      {items.map(({ img, objectKey }) => (
         <SourceItem
+          img={img}
           key={objectKey}
           objectKey={objectKey}
+          onMount={onMountItem}
         />
       ))}
     </List>

@@ -1,12 +1,5 @@
-import React, { useEffect, useState } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
-import { sourceRepository } from '../repositories'
-
-type ThumbState = {
-  src: string | undefined
-  width: number | undefined
-  height: number | undefined
-}
 
 const ListItem = styled.li`
   margin-top: 0.5rem;
@@ -39,72 +32,22 @@ const Skeleton: React.FC<{ height?: number; width?: number }> = ({
   </svg>
 )
 
-const createURI = (
-  arrayBuffer: ArrayBuffer,
-  type = 'application/octet-stream'
-): Promise<string> =>
-  new Promise((resolve, reject) => {
-    const blob = new Blob([arrayBuffer], { type })
-    const reader = new FileReader()
-
-    reader.onload = (): void => {
-      if (typeof reader.result === 'string') {
-        resolve(reader.result)
-        return
-      }
-      reject(new Error('unexpected file'))
-    }
-    reader.onerror = (err): void => reject(err)
-
-    reader.readAsDataURL(blob)
-  })
-
-const createImage = (src: string): Promise<HTMLImageElement> =>
-  new Promise((resolve, reject) => {
-    const img = new Image()
-
-    img.onload = (): void => resolve(img)
-    img.onerror = (err): void => reject(err)
-
-    img.src = src
-  })
-
-export const SourceItem: React.FC<{ objectKey: string }> = ({ objectKey }) => {
-  const [thumb, setThumb] = useState<ThumbState>({
-    src: undefined,
-    width: undefined,
-    height: undefined,
-  })
-
+export const SourceItem: React.FC<{
+  img?: HTMLImageElement
+  objectKey: string
+  onMount: FetchImageHandler
+}> = ({ img, objectKey, onMount }) => {
   useEffect(() => {
-    const fetchThumb = async (): Promise<void> => {
-      const res = await sourceRepository.getObjectThumb(objectKey)
-      const uri = await createURI(res.data, res.headers['content-type']).catch(
-        (err) => {
-          throw err
-        }
-      )
-      const { src, width, height } = await createImage(uri).catch((err) => {
-        throw err
-      })
-
-      setThumb({ src, width, height })
-    }
-
-    fetchThumb()
-  }, [objectKey])
+    onMount(objectKey)
+  }, [objectKey, onMount])
 
   return (
     <ListItem>
       <ThumbWrapper>
-        {thumb.src === undefined ? (
+        {img === undefined ? (
           <Skeleton />
         ) : (
-          <ThumbImage
-            src={thumb.src}
-            width={thumb.width}
-            height={thumb.height}
-          />
+          <ThumbImage src={img.src} width={img.width} height={img.height} />
         )}
       </ThumbWrapper>
     </ListItem>
