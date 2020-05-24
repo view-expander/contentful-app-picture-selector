@@ -2,7 +2,6 @@ import { Heading } from '@contentful/forma-36-react-components'
 import React from 'react'
 import styled from 'styled-components'
 import { NSDialogReducer } from '../reducers/dialog/types'
-import { FlexWrapper } from './index'
 import { SourceItem } from './SourceItem'
 
 const THUMB_RECT = {
@@ -11,7 +10,7 @@ const THUMB_RECT = {
 } as const
 
 const ListWrapper = styled.div`
-  overflow-y:scroll;
+  overflow-y: scroll;
   height: calc(1.5rem + ((${THUMB_RECT.height}px + 0.5rem) * 4));
   padding-top: 0.5rem;
   padding-bottom: 1rem;

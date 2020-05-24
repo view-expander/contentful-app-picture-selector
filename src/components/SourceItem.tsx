@@ -10,8 +10,8 @@ const ListItem = styled.li`
 
 const ThumbWrapper = styled.div<{ width: number; height: number }>`
   box-sizing: border-box;
-  width: ${({ width }) => width}px;
-  height: ${({ height }) => height}px;
+  width: ${({ width }): typeof width => width}px;
+  height: ${({ height }): typeof height => height}px;
   padding: 0.5rem;
   border: 1px solid #333;
 `
