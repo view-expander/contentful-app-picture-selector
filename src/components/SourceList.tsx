@@ -16,7 +16,7 @@ const Wrapper = styled.div`
 const ListWrapper = styled.div`
   overflow-y: scroll;
   height: calc(1.5rem + ((${THUMB_RECT.height}px + 1rem + 2px) * 4));
-  margin-top: 1rem;
+  margin-top: 0.5rem;
 `
 
 const List = styled.ul`
