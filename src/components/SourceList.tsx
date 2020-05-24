@@ -9,13 +9,14 @@ const THUMB_RECT = {
   width: 128,
 } as const
 
+const Wrapper = styled.div`
+  margin: 1rem;
+`
+
 const ListWrapper = styled.div`
   overflow-y: scroll;
   height: calc(1.5rem + ((${THUMB_RECT.height}px + 1rem + 2px) * 4));
-  padding-top: 0.5rem;
-  padding-bottom: 1rem;
-  padding-left: 1rem;
-  padding-right: 1rem;
+  margin-top: 1rem;
 `
 
 const List = styled.ul`
@@ -23,7 +24,10 @@ const List = styled.ul`
   display: flex;
   flex-wrap: wrap;
   justify-content: flex-start;
-  margin: 0;
+  margin-top: 0;
+  margin-bottom: 0;
+  margin-left: -0.5rem;
+  margin-right: -0.5rem;
   padding: 0;
 `
 
@@ -31,7 +35,7 @@ export const SourceList: React.FC<{
   items: NSDialogReducer.StateItem[]
   onMountItem: FetchImageHandler
 }> = ({ items, onMountItem }) => (
-  <div>
+  <Wrapper>
     <Heading element="h2">Source list</Heading>
     <ListWrapper>
       <List>
@@ -47,5 +51,5 @@ export const SourceList: React.FC<{
         ))}
       </List>
     </ListWrapper>
-  </div>
+  </Wrapper>
 )
