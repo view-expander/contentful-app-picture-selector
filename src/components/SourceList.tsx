@@ -1,5 +1,5 @@
 import { Heading } from '@contentful/forma-36-react-components'
-import React from 'react'
+import React, { useEffect, useRef } from 'react'
 import styled from 'styled-components'
 import { NSDialogReducer } from '../reducers/dialog/types'
 import { SourceItem } from './SourceItem'
@@ -34,22 +34,32 @@ const List = styled.ul`
 export const SourceList: React.FC<{
   items: NSDialogReducer.StateItem[]
   onMountItem: FetchImageHandler
-}> = ({ items, onMountItem }) => (
-  <Wrapper>
-    <Heading element="h2">Source list</Heading>
-    <ListWrapper>
-      <List>
-        {items.map(({ img, objectKey }) => (
-          <SourceItem
-            height={THUMB_RECT.height}
-            img={img}
-            key={objectKey}
-            objectKey={objectKey}
-            onMount={onMountItem}
-            width={THUMB_RECT.width}
-          />
-        ))}
-      </List>
-    </ListWrapper>
-  </Wrapper>
-)
+}> = ({ items, onMountItem }) => {
+  const listWrapperRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    const handleScroll = (ev: Event): void => console.log(ev)
+    listWrapperRef.current?.addEventListener('scroll', handleScroll)
+    return listWrapperRef.current?.removeEventListener('scroll', handleScroll)
+  }, [listWrapperRef])
+
+  return (
+    <Wrapper>
+      <Heading element="h2">Source list</Heading>
+      <ListWrapper ref={listWrapperRef}>
+        <List>
+          {items.map(({ img, objectKey }) => (
+            <SourceItem
+              height={THUMB_RECT.height}
+              img={img}
+              key={objectKey}
+              objectKey={objectKey}
+              onMount={onMountItem}
+              width={THUMB_RECT.width}
+            />
+          ))}
+        </List>
+      </ListWrapper>
+    </Wrapper>
+  )
+}
