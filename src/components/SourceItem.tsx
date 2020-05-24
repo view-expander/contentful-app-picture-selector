@@ -39,7 +39,7 @@ export const SourceItem: React.FC<{
   onChangeInView: FetchImageHandler
   onMount: MountHandler
   width: number
-}> = ({ height, img, inView, objectKey, onChangeInView, onMount, width }) => {
+}> = ({ height, img, objectKey, onChangeInView, onMount, width }) => {
   const ref = useRef<HTMLLIElement>(null)
 
   useEffect(() => {
@@ -47,10 +47,8 @@ export const SourceItem: React.FC<{
   }, [onMount])
 
   useEffect(() => {
-    if (img === undefined && inView) {
-      onChangeInView(objectKey)
-    }
-  }, [img, inView, objectKey, onChangeInView])
+    onChangeInView(objectKey)
+  }, [objectKey, onChangeInView])
 
   return (
     <ListItem ref={ref}>
