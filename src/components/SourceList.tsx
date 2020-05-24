@@ -35,8 +35,9 @@ export const SourceList: React.FC<{
   items: NSDialogReducer.StateItem[]
   onChangeItemInView: FetchImageHandler
   onMountItem: MountHandler
-}> = ({ items, onChangeItemInView, onMountItem }) => (
-  <Wrapper>
+  ref: React.RefObject<HTMLDivElement>
+}> = ({ items, onChangeItemInView, onMountItem, ref }) => (
+  <Wrapper ref={ref}>
     <Heading element="h2">Source list</Heading>
     <ListWrapper>
       <List>
