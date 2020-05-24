@@ -1,5 +1,5 @@
 import { Card } from '@contentful/forma-36-react-components'
-import React, { useEffect, useRef } from 'react'
+import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
 const ListItem = styled.li`
@@ -34,24 +34,16 @@ const Skeleton: React.FC<{ height: number; width: number }> = ({
 export const SourceItem: React.FC<{
   height: number
   img?: HTMLImageElement
-  inView: boolean
   objectKey: string
-  onChangeInView: FetchImageHandler
-  onMount: MountHandler
+  onMount: FetchImageHandler
   width: number
-}> = ({ height, img, objectKey, onChangeInView, onMount, width }) => {
-  const ref = useRef<HTMLLIElement>(null)
-
+}> = ({ height, img, objectKey, onMount, width }) => {
   useEffect(() => {
-    onMount(ref.current)
-  }, [onMount])
-
-  useEffect(() => {
-    onChangeInView(objectKey)
-  }, [objectKey, onChangeInView])
+    onMount(objectKey)
+  }, [objectKey, onMount])
 
   return (
-    <ListItem ref={ref}>
+    <ListItem>
       <ThumbCard height={height} padding="none" width={width}>
         {img === undefined ? (
           <Skeleton height={height} width={width} />

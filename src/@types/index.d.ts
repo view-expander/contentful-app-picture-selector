@@ -17,8 +17,6 @@ type ConfiguringResponse = {
 
 type FetchImageHandler = (objectKey: string) => Promise<void>
 
-type MountHandler = (element: Element | null) => void
-
 type ReducerAction<
   T extends {
     type: string
