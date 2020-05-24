@@ -1,10 +1,9 @@
 import { DialogExtensionSDK } from 'contentful-ui-extensions-sdk'
-import React, { useCallback, useEffect, useRef, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { FlexWrapper } from '../components'
 import { SourceList } from '../components/SourceList'
 import { useAutoResize } from '../hooks/useAutoResize'
-import { useIntersectionObserver } from '../hooks/useIntersectionObserver'
 import { useDialogReducer } from '../reducers/dialog'
 import { DIALOG_REDUCER_ACTION_TYPES } from '../reducers/dialog/action-types'
 import { sourceRepository } from '../repositories'
@@ -17,11 +16,6 @@ const SelectedPictureOnRight = styled(FlexWrapper)`
 export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
   const [state, dispatch] = useDialogReducer()
   const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
-  const ref = useRef<HTMLDivElement>(null)
-  const observer = useIntersectionObserver({
-    root: ref.current,
-  })
-
   const handleFetchImage: FetchImageHandler = useCallback(
     async (objectKey) => {
       const res = await sourceRepository.getObjectThumb(objectKey)
@@ -35,10 +29,7 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
     [dispatch, sdk.window]
   )
   const handleMount: MountHandler = useCallback((element) => {
-    if (element === null) {
-      return
-    }
-    observer.observe(element)
+    console.log(element)
   }, [])
 
   useEffect(() => {
@@ -68,7 +59,6 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
         items={state.items}
         onChangeItemInView={handleFetchImage}
         onMountItem={handleMount}
-        ref={ref}
       />
       <SelectedPictureOnRight>
         <ul>
