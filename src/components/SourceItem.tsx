@@ -1,3 +1,4 @@
+import { Card } from '@contentful/forma-36-react-components'
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
@@ -8,10 +9,12 @@ const ListItem = styled.li`
 `
 
 const ThumbWrapper = styled.div<{ width: number; height: number }>`
-  width: ${({ width }): typeof width => width}px;
-  height: ${({ height }): typeof height => height}px;
+  width: calc(${({ width }): typeof width => width}px + 1rem + 2px);
+  height: calc(${({ height }): typeof height => height}px + 1rem + 2px);
+`
+
+const ThumbCard = styled(Card)`
   padding: 0.5rem;
-  border: 1px solid #333;
 `
 
 const ThumbImage = styled.img`
@@ -43,11 +46,13 @@ export const SourceItem: React.FC<{
   return (
     <ListItem>
       <ThumbWrapper height={height} width={width}>
-        {img === undefined ? (
-          <Skeleton height={height} width={width} />
-        ) : (
-          <ThumbImage src={img.src} width={img.width} height={img.height} />
-        )}
+        <ThumbCard padding="none">
+          {img === undefined ? (
+            <Skeleton height={height} width={width} />
+          ) : (
+            <ThumbImage src={img.src} width={img.width} height={img.height} />
+          )}
+        </ThumbCard>
       </ThumbWrapper>
     </ListItem>
   )
