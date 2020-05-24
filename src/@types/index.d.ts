@@ -15,6 +15,11 @@ type ConfiguringResponse = {
   }
 }
 
+type ReducerAction<T extends {
+  type: string
+  payload?: any
+}> = T
+
 type ReducerCreator<S, A> = () => [S, React.Dispatch<A>]
 
 type SelectedItem = {

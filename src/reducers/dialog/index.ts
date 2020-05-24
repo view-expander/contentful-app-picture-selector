@@ -22,6 +22,19 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
         ],
       }
 
+    case DIALOG_REDUCER_ACTION_TYPES.RECEIVE_THUMB:
+      return {
+        ...state,
+        items: state.items.map((item) =>
+          item.objectKey === action.payload.objectKey
+            ? {
+                ...item,
+                img: action.payload.img,
+              }
+            : item
+        ),
+      }
+
     default:
       throw new Error('unknown action')
   }
