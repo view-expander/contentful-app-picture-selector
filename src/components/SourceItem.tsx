@@ -7,14 +7,9 @@ const ListItem = styled.li`
   border: 1px solid #333;
 `
 
-const THUMB_RECT = {
-  height: 128,
-  width: 128,
-} as const
-
-const ThumbWrapper = styled.div`
-  width: ${THUMB_RECT.width}px;
-  height: ${THUMB_RECT.height}px;
+const ThumbWrapper = styled.div<{ width: number; height: number }>`
+  width: ${({ width }) => width}px;
+  height: ${({ height }) => height}px;
 `
 
 const ThumbImage = styled.img`
@@ -23,9 +18,9 @@ const ThumbImage = styled.img`
   object-fit: contain;
 `
 
-const Skeleton: React.FC<{ height?: number; width?: number }> = ({
-  height = THUMB_RECT.height,
-  width = THUMB_RECT.width,
+const Skeleton: React.FC<{ height: number; width: number }> = ({
+  height,
+  width,
 }) => (
   <svg viewBox="0 0 1 1" width={width} height={height}>
     <rect x={0} y={0} width={1} height={1} fill="#ccc" />
@@ -33,19 +28,21 @@ const Skeleton: React.FC<{ height?: number; width?: number }> = ({
 )
 
 export const SourceItem: React.FC<{
+  height: number
   img?: HTMLImageElement
   objectKey: string
   onMount: FetchImageHandler
-}> = ({ img, objectKey, onMount }) => {
+  width: number
+}> = ({ height, img, objectKey, onMount, width }) => {
   useEffect(() => {
     onMount(objectKey)
   }, [objectKey, onMount])
 
   return (
     <ListItem>
-      <ThumbWrapper>
+      <ThumbWrapper height={height} width={width}>
         {img === undefined ? (
-          <Skeleton />
+          <Skeleton height={height} width={width} />
         ) : (
           <ThumbImage src={img.src} width={img.width} height={img.height} />
         )}

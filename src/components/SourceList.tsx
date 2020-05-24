@@ -1,8 +1,14 @@
+import { Heading } from '@contentful/forma-36-react-components'
 import React from 'react'
 import styled from 'styled-components'
 import { NSDialogReducer } from '../reducers/dialog/types'
 import { FlexWrapper } from './index'
 import { SourceItem } from './SourceItem'
+
+const THUMB_RECT = {
+  height: 128,
+  width: 128,
+} as const
 
 const List = styled.ul`
   list-style: none;
@@ -21,13 +27,16 @@ export const SourceList: React.FC<{
   onMountItem: FetchImageHandler
 }> = ({ items, onMountItem }) => (
   <FlexWrapper>
+    <Heading element="h2">Source list</Heading>
     <List>
       {items.map(({ img, objectKey }) => (
         <SourceItem
+          height={THUMB_RECT.height}
           img={img}
           key={objectKey}
           objectKey={objectKey}
           onMount={onMountItem}
+          width={THUMB_RECT.width}
         />
       ))}
     </List>
