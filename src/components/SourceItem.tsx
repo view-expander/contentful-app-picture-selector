@@ -8,12 +8,11 @@ const ListItem = styled.li`
   padding-right: 0.5rem;
 `
 
-const ThumbWrapper = styled.div<{ width: number; height: number }>`
-  width: calc(${({ width }): typeof width => width}px + 1rem + 2px);
-  height: calc(${({ height }): typeof height => height}px + 1rem + 2px);
-`
-
-const ThumbCard = styled(Card)`
+const ThumbCard = styled(Card).attrs<{ width: number; height: number }>(
+  ({ width, height }) => ({ width, height })
+)<{ width: number; height: number }>`
+  width: ${({ width }): typeof width => width}px;
+  height: ${({ height }): typeof height => height}px;
   padding: 0.5rem;
 `
 
@@ -45,15 +44,13 @@ export const SourceItem: React.FC<{
 
   return (
     <ListItem>
-      <ThumbWrapper height={height} width={width}>
-        <ThumbCard padding="none">
-          {img === undefined ? (
-            <Skeleton height={height} width={width} />
-          ) : (
-            <ThumbImage src={img.src} width={img.width} height={img.height} />
-          )}
-        </ThumbCard>
-      </ThumbWrapper>
+      <ThumbCard height={height} padding="none" width={width}>
+        {img === undefined ? (
+          <Skeleton height={height} width={width} />
+        ) : (
+          <ThumbImage src={img.src} width={img.width} height={img.height} />
+        )}
+      </ThumbCard>
     </ListItem>
   )
 }
