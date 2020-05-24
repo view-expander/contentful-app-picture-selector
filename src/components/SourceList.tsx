@@ -10,15 +10,21 @@ const THUMB_RECT = {
   width: 128,
 } as const
 
+const ListWrapper = styled.div`
+  overflow-y:scroll;
+  height: calc(1.5rem + ((${THUMB_RECT.height}px + 0.5rem) * 4));
+  padding-top: 0.5rem;
+  padding-bottom: 1rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+`
+
 const List = styled.ul`
   list-style: none;
   display: flex;
   flex-wrap: wrap;
-  justify-content: space-between;
-  margin-top: 0.5rem;
-  margin-bottom: 1rem;
-  margin-left: 1rem;
-  margin-right: 1rem;
+  justify-content: flex-start;
+  margin: 0;
   padding: 0;
 `
 
@@ -26,19 +32,21 @@ export const SourceList: React.FC<{
   items: NSDialogReducer.StateItem[]
   onMountItem: FetchImageHandler
 }> = ({ items, onMountItem }) => (
-  <FlexWrapper>
+  <div>
     <Heading element="h2">Source list</Heading>
-    <List>
-      {items.map(({ img, objectKey }) => (
-        <SourceItem
-          height={THUMB_RECT.height}
-          img={img}
-          key={objectKey}
-          objectKey={objectKey}
-          onMount={onMountItem}
-          width={THUMB_RECT.width}
-        />
-      ))}
-    </List>
-  </FlexWrapper>
+    <ListWrapper>
+      <List>
+        {items.map(({ img, objectKey }) => (
+          <SourceItem
+            height={THUMB_RECT.height}
+            img={img}
+            key={objectKey}
+            objectKey={objectKey}
+            onMount={onMountItem}
+            width={THUMB_RECT.width}
+          />
+        ))}
+      </List>
+    </ListWrapper>
+  </div>
 )

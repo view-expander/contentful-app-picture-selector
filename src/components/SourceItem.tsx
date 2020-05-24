@@ -3,13 +3,17 @@ import styled from 'styled-components'
 
 const ListItem = styled.li`
   margin-top: 0.5rem;
-  padding: 0.5rem;
-  border: 1px solid #333;
+  padding-bottom: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 `
 
 const ThumbWrapper = styled.div<{ width: number; height: number }>`
+  box-sizing: border-box;
   width: ${({ width }) => width}px;
   height: ${({ height }) => height}px;
+  padding: 0.5rem;
+  border: 1px solid #333;
 `
 
 const ThumbImage = styled.img`
