@@ -16,7 +16,7 @@ const SelectedPictureOnRight = styled(FlexWrapper)`
 export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
   const [state, dispatch] = useDialogReducer()
   const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
-  const onMountThumb: FetchImageHandler = useCallback(
+  const handleFetchImage: FetchImageHandler = useCallback(
     async (objectKey) => {
       const res = await sourceRepository.getObjectThumb(objectKey)
       const img = await createImage(res.data, res.headers['content-type'])
@@ -28,6 +28,9 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
     },
     [dispatch, sdk.window]
   )
+  const handleMount: MountHandler = useCallback((element) => {
+    console.log(element)
+  }, [])
 
   useEffect(() => {
     const fetchList = async (): Promise<void> => {
@@ -52,7 +55,11 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
 
   return (
     <FlexWrapper>
-      <SourceList items={state.items} onMountItem={onMountThumb} />
+      <SourceList
+        items={state.items}
+        onChangeItemInView={handleFetchImage}
+        onMountItem={handleMount}
+      />
       <SelectedPictureOnRight>
         <ul>
           {selectedItemList.map(({ key }) => (

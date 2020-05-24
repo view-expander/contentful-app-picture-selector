@@ -33,8 +33,9 @@ const List = styled.ul`
 
 export const SourceList: React.FC<{
   items: NSDialogReducer.StateItem[]
-  onMountItem: FetchImageHandler
-}> = ({ items, onMountItem }) => (
+  onChangeItemInView: FetchImageHandler
+  onMountItem: MountHandler
+}> = ({ items, onChangeItemInView, onMountItem }) => (
   <Wrapper>
     <Heading element="h2">Source list</Heading>
     <ListWrapper>
@@ -43,8 +44,10 @@ export const SourceList: React.FC<{
           <SourceItem
             height={THUMB_RECT.height}
             img={img}
+            inView={false}
             key={objectKey}
             objectKey={objectKey}
+            onChangeInView={onChangeItemInView}
             onMount={onMountItem}
             width={THUMB_RECT.width}
           />
