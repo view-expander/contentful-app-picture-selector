@@ -11,7 +11,7 @@ const THUMB_RECT = {
 
 const ListWrapper = styled.div`
   overflow-y: scroll;
-  height: calc(1.5rem + ((${THUMB_RECT.height}px + 0.5rem) * 4));
+  height: calc(1.5rem + ((${THUMB_RECT.height}px + 1rem + 2px) * 4));
   padding-top: 0.5rem;
   padding-bottom: 1rem;
   padding-left: 1rem;
