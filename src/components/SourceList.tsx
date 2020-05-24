@@ -39,6 +39,7 @@ export const SourceList: React.FC<{
 
   useEffect(() => {
     const handleScroll = (ev: Event): void => console.log(ev)
+    console.log(listWrapperRef.current)
     listWrapperRef.current?.addEventListener('scroll', handleScroll)
     return listWrapperRef.current?.removeEventListener('scroll', handleScroll)
   }, [listWrapperRef])
