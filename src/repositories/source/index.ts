@@ -4,8 +4,12 @@ import type { NSSourceRepository as This } from './types'
 
 export class SourceRepository extends Repository {
   private readonly PATH = '/source'
+  private next: This.Response['NextContinuationToken']
 
-  list<T = This.Response>(params: This.Params): RepositoryResponseData<T> {
+  list<T = This.Response>(reset?: boolean): RepositoryResponseData<T> {
+    const params: This.Params | undefined = Boolean(reset)
+      ? undefined
+      : { ContinuationToken: this.next }
     return this.http.get<T>(this.PATH, { params })
   }
 

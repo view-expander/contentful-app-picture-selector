@@ -16,7 +16,8 @@ const SelectedPictureOnRight = styled(FlexWrapper)`
 export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
   const [state, dispatch] = useDialogReducer()
   const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
-  const handleFetchImage: FetchImageHandler = useCallback(
+
+  const fetchThumb: FetchImageHandler = useCallback(
     async (objectKey) => {
       const res = await sourceRepository.getObjectThumb(objectKey)
       const img = await createImage(res.data, res.headers['content-type'])
@@ -52,7 +53,7 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
 
   return (
     <FlexWrapper>
-      <SourceList items={state.items} onInViewItem={handleFetchImage} />
+      <SourceList items={state.items} onInViewItem={fetchThumb} />
       <SelectedPictureOnRight>
         <ul>
           {selectedItemList.map(({ key }) => (
