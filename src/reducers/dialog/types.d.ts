@@ -24,6 +24,5 @@ export declare namespace NSDialogReducer {
 
   type State = {
     items: StateItem[]
-    next?: NSSourceRepository.Response['NextContinuationToken']
   }
 }
