@@ -40,8 +40,8 @@ const ListItem = styled.li`
 
 export const SourceList: React.FC<{
   items: NSDialogReducer.StateItem[]
-  onInViewItem: FetchImageHandler
-}> = ({ items, onInViewItem }) => (
+  onItemInView: ItemInViewHandler
+}> = ({ items, onItemInView }) => (
   <Wrapper>
     <Heading element="h2">Source list</Heading>
     <ListWrapper>
@@ -56,7 +56,7 @@ export const SourceList: React.FC<{
                   inView={inView}
                   isLast={isLast}
                   objectKey={objectKey}
-                  onInView={onInViewItem}
+                  onInView={onItemInView}
                   width={THUMB_RECT.width}
                 />
               </ListItem>

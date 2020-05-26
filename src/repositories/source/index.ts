@@ -7,7 +7,7 @@ export class SourceRepository extends Repository {
   private next: This.Response['NextContinuationToken']
 
   list<T = This.Response>(reset?: boolean): RepositoryResponseData<T> {
-    const params: This.Params | undefined = Boolean(reset)
+    const params: This.Params | undefined = reset
       ? undefined
       : { ContinuationToken: this.next }
     return this.http.get<T>(this.PATH, { params })

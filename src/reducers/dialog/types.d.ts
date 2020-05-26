@@ -4,6 +4,9 @@ import { DIALOG_REDUCER_ACTION_TYPES } from './action-types'
 export declare namespace NSDialogReducer {
   type Action = ReducerAction<
     | {
+        type: typeof DIALOG_REDUCER_ACTION_TYPES.NEXT
+      }
+    | {
         type: typeof DIALOG_REDUCER_ACTION_TYPES.RECEIVE
         payload: NSSourceRepository.Response
       }
@@ -23,6 +26,7 @@ export declare namespace NSDialogReducer {
   }
 
   type State = {
+    hasNext: boolean
     items: StateItem[]
     page: number
   }

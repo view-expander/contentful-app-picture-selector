@@ -17,17 +17,19 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
   const [state, dispatch] = useDialogReducer()
   const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
 
-  const fetchThumb: FetchImageHandler = useCallback(
-    async (objectKey) => {
+  const onItemInView: ItemInViewHandler = useCallback(
+    async (objectKey, isLast) => {
       const res = await sourceRepository.getObjectThumb(objectKey)
       const img = await createImage(res.data, res.headers['content-type'])
       dispatch({
         type: DIALOG_REDUCER_ACTION_TYPES.RECEIVE_THUMB,
         payload: { objectKey, img },
       })
-      sdk.window.updateHeight()
+      if (isLast) {
+        dispatch({ type: DIALOG_REDUCER_ACTION_TYPES.NEXT })
+      }
     },
-    [dispatch, sdk.window]
+    [dispatch]
   )
 
   useEffect(() => {
@@ -53,7 +55,7 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
 
   return (
     <FlexWrapper>
-      <SourceList items={state.items} onInViewItem={fetchThumb} />
+      <SourceList items={state.items} onItemInView={onItemInView} />
       <SelectedPictureOnRight>
         <ul>
           {selectedItemList.map(({ key }) => (

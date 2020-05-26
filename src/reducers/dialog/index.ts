@@ -3,8 +3,9 @@ import { DIALOG_REDUCER_ACTION_TYPES } from './action-types'
 import { NSDialogReducer } from './types'
 
 const initialState: NSDialogReducer.State = {
+  hasNext: true,
   items: [],
-  page: 0
+  page: 0,
 }
 
 const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
@@ -12,9 +13,17 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
   action
 ) => {
   switch (action.type) {
+    case DIALOG_REDUCER_ACTION_TYPES.NEXT:
+      return state.hasNext
+        ? {
+            ...state,
+            page: state.page + 1,
+          }
+        : state
     case DIALOG_REDUCER_ACTION_TYPES.RECEIVE:
       return {
         ...state,
+        hasNext: typeof action.payload.NextContinuationToken === 'string',
         items: [
           ...state.items,
           ...action.payload.Contents.map(({ Key }, index) => ({

@@ -1,4 +1,5 @@
 export const DIALOG_REDUCER_ACTION_TYPES = {
+  NEXT: 'NEXT',
   RECEIVE: 'RECEIVE',
   RECEIVE_THUMB: 'RECEIVE_THUMB',
 } as const
