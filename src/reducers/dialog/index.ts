@@ -5,7 +5,7 @@ import { NSDialogReducer } from './types'
 const initialState: NSDialogReducer.State = {
   hasNext: true,
   items: [],
-  page: 0,
+  page: undefined,
 }
 
 const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
