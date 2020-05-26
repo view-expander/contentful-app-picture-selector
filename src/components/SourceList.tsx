@@ -46,7 +46,7 @@ export const SourceList: React.FC<{
     <Heading element="h2">Source list</Heading>
     <ListWrapper>
       <List>
-        {items.map(({ img, objectKey }) => (
+        {items.map(({ img, isLast, objectKey }) => (
           <InView key={objectKey} triggerOnce={true}>
             {({ inView, ref }): React.ReactElement => (
               <ListItem ref={ref}>
@@ -54,7 +54,7 @@ export const SourceList: React.FC<{
                   height={THUMB_RECT.height}
                   img={img}
                   inView={inView}
-                  isLast={false}
+                  isLast={isLast}
                   objectKey={objectKey}
                   onInView={onInViewItem}
                   width={THUMB_RECT.width}
