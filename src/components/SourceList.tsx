@@ -30,12 +30,12 @@ const List = styled.ul`
   margin-left: -0.5rem;
   margin-right: -0.5rem;
   padding: 0;
+`
 
-  li {
-    margin-top: 0.5rem;
-    padding-left: 0.5rem;
-    padding-right: 0.5rem;
-  }
+const ListItem = styled.li`
+  margin-top: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
 `
 
 export const SourceList: React.FC<{
@@ -47,17 +47,19 @@ export const SourceList: React.FC<{
     <ListWrapper>
       <List>
         {items.map(({ img, objectKey }) => (
-          <InView as="li" key={objectKey} triggerOnce={true}>
-            {({ inView }): React.ReactElement => (
-              <SourceItem
-                height={THUMB_RECT.height}
-                img={img}
-                inView={inView}
-                isLast={false}
-                objectKey={objectKey}
-                onInView={onInViewItem}
-                width={THUMB_RECT.width}
-              />
+          <InView key={objectKey} triggerOnce={true}>
+            {({ inView, ref }): React.ReactElement => (
+              <ListItem ref={ref}>
+                <SourceItem
+                  height={THUMB_RECT.height}
+                  img={img}
+                  inView={inView}
+                  isLast={false}
+                  objectKey={objectKey}
+                  onInView={onInViewItem}
+                  width={THUMB_RECT.width}
+                />
+              </ListItem>
             )}
           </InView>
         ))}
