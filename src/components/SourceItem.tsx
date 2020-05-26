@@ -49,7 +49,6 @@ export const SourceItem: React.FC<{
   width: number
 }> = ({ height, img, inView, objectKey, onInView, width }) => {
   useEffect(() => {
-    console.log('<SourceItem />', objectKey, inView)
     if (inView) {
       onInView(objectKey)
     }

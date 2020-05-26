@@ -47,22 +47,22 @@ export const SourceList: React.FC<{
     <Heading element="h2">Source list</Heading>
     <ListWrapper>
       <List>
-        {/* {items.map(({ img, objectKey }) => ( */}
-        {/*  <InView key={objectKey} triggerOnce={true}> */}
-        {/*    {({ inView, ref }): React.ReactElement => ( */}
-        {/*      <ListItem ref={ref}> */}
-        {/*        <SourceItem */}
-        {/*          height={THUMB_RECT.height} */}
-        {/*          img={img} */}
-        {/*          inView={inView} */}
-        {/*          objectKey={objectKey} */}
-        {/*          onInView={onItemInView} */}
-        {/*          width={THUMB_RECT.width} */}
-        {/*        /> */}
-        {/*      </ListItem> */}
-        {/*    )} */}
-        {/*  </InView> */}
-        {/* ))} */}
+        {items.map(({ img, objectKey }) => (
+          <InView key={objectKey} triggerOnce={true}>
+            {({ inView, ref }): React.ReactElement => (
+              <ListItem ref={ref}>
+                <SourceItem
+                  height={THUMB_RECT.height}
+                  img={img}
+                  inView={inView}
+                  objectKey={objectKey}
+                  onInView={onItemInView}
+                  width={THUMB_RECT.width}
+                />
+              </ListItem>
+            )}
+          </InView>
+        ))}
         {hasNext && (
           <InView>
             {({ inView, ref }): React.ReactElement => (

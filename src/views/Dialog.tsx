@@ -19,7 +19,6 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
 
   const onItemInView: ItemInViewHandler = useCallback(
     async (objectKey) => {
-      console.log('<Dialog />', 'onItemInView()', 'objectKey:', objectKey)
       if (typeof objectKey === 'string') {
         const res = await sourceRepository.getObjectThumb(objectKey)
         const img = await createImage(res.data, res.headers['content-type'])
@@ -41,7 +40,6 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
   )
 
   useEffect(() => {
-    console.log('<Dialog />', 'page:', state.page)
     const fetchList = async (): Promise<void> => {
       const reset = state.page === 0
       const res = await sourceRepository.list(reset)

@@ -13,7 +13,6 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
   state,
   action
 ) => {
-  console.log('DialogReducer', action)
   switch (action.type) {
     case DIALOG_REDUCER_ACTION_TYPES.NEXT:
       return state.hasNext
