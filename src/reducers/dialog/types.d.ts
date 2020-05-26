@@ -19,6 +19,7 @@ export declare namespace NSDialogReducer {
   type StateItem = {
     objectKey: string
     img?: HTMLImageElement
+    isLast: boolean
   }
 
   type State = {

@@ -2,12 +2,6 @@ import { Card } from '@contentful/forma-36-react-components'
 import React, { useEffect } from 'react'
 import styled from 'styled-components'
 
-const ListItem = styled.li`
-  margin-top: 0.5rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-`
-
 const ThumbCard = styled(Card).attrs<{ width: number; height: number }>(
   ({ width, height }) => ({ width, height })
 )<{ width: number; height: number }>`
@@ -34,23 +28,26 @@ const Skeleton: React.FC<{ height: number; width: number }> = ({
 export const SourceItem: React.FC<{
   height: number
   img?: HTMLImageElement
+  inView: boolean
+  isLast: boolean
   objectKey: string
-  onMount: FetchImageHandler
+  onInView: FetchImageHandler
   width: number
-}> = ({ height, img, objectKey, onMount, width }) => {
+}> = ({ height, img, inView, isLast, objectKey, onInView, width }) => {
   useEffect(() => {
-    onMount(objectKey)
-  }, [objectKey, onMount])
+    onInView(objectKey)
+  }, [inView, objectKey, onInView])
+  useEffect(() => {
+    console.log('<SourceItem />', objectKey, 'isLast:', isLast)
+  }, [isLast, objectKey])
 
   return (
-    <ListItem>
-      <ThumbCard height={height} padding="none" width={width}>
-        {img === undefined ? (
-          <Skeleton height={height} width={width} />
-        ) : (
-          <ThumbImage src={img.src} width={img.width} height={img.height} />
-        )}
-      </ThumbCard>
-    </ListItem>
+    <ThumbCard height={height} padding="none" width={width}>
+      {img === undefined ? (
+        <Skeleton height={height} width={width} />
+      ) : (
+        <ThumbImage src={img.src} width={img.width} height={img.height} />
+      )}
+    </ThumbCard>
   )
 }

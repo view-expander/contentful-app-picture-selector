@@ -1,5 +1,6 @@
 import { Heading } from '@contentful/forma-36-react-components'
-import React, { useEffect, useRef } from 'react'
+import React from 'react'
+import { InView } from 'react-intersection-observer'
 import styled from 'styled-components'
 import { NSDialogReducer } from '../reducers/dialog/types'
 import { SourceItem } from './SourceItem'
@@ -29,44 +30,38 @@ const List = styled.ul`
   margin-left: -0.5rem;
   margin-right: -0.5rem;
   padding: 0;
+
+  li {
+    margin-top: 0.5rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+  }
 `
 
 export const SourceList: React.FC<{
   items: NSDialogReducer.StateItem[]
-  onMountItem: FetchImageHandler
-}> = ({ items, onMountItem }) => {
-  const listWrapperRef = useRef<HTMLDivElement>(null)
-
-  useEffect(() => {
-    const handleScroll = (ev: Event): void => {
-      const target = ev.target as typeof listWrapperRef.current
-      if (target === null) {
-        return
-      }
-      const { clientHeight, scrollHeight, scrollTop } = target
-      console.log(clientHeight, scrollHeight - scrollTop)
-    }
-    listWrapperRef.current?.addEventListener('scroll', handleScroll)
-    return () => listWrapperRef.current?.removeEventListener('scroll', handleScroll)
-  }, [listWrapperRef])
-
-  return (
-    <Wrapper>
-      <Heading element="h2">Source list</Heading>
-      <ListWrapper ref={listWrapperRef}>
-        <List>
-          {items.map(({ img, objectKey }) => (
-            <SourceItem
-              height={THUMB_RECT.height}
-              img={img}
-              key={objectKey}
-              objectKey={objectKey}
-              onMount={onMountItem}
-              width={THUMB_RECT.width}
-            />
-          ))}
-        </List>
-      </ListWrapper>
-    </Wrapper>
-  )
-}
+  onInViewItem: FetchImageHandler
+}> = ({ items, onInViewItem }) => (
+  <Wrapper>
+    <Heading element="h2">Source list</Heading>
+    <ListWrapper>
+      <List>
+        {items.map(({ img, objectKey }) => (
+          <InView as="li" key={objectKey} triggerOnce={true}>
+            {({ inView }): React.ReactElement => (
+              <SourceItem
+                height={THUMB_RECT.height}
+                img={img}
+                inView={inView}
+                isLast={false}
+                objectKey={objectKey}
+                onInView={onInViewItem}
+                width={THUMB_RECT.width}
+              />
+            )}
+          </InView>
+        ))}
+      </List>
+    </ListWrapper>
+  </Wrapper>
+)

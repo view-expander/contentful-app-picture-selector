@@ -16,8 +16,9 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
         ...state,
         items: [
           ...state.items,
-          ...action.payload.Contents.map(({ Key }) => ({
+          ...action.payload.Contents.map(({ Key }, index) => ({
             objectKey: Key,
+            isLast: index === action.payload.Contents.length - 1,
           })),
         ],
       }
