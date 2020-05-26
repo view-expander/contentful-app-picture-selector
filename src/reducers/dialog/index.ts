@@ -12,6 +12,7 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
   state,
   action
 ) => {
+  console.log('DialogReducer', action)
   switch (action.type) {
     case DIALOG_REDUCER_ACTION_TYPES.NEXT:
       return state.hasNext
@@ -26,9 +27,8 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
         hasNext: typeof action.payload.NextContinuationToken === 'string',
         items: [
           ...state.items,
-          ...action.payload.Contents.map(({ Key }, index) => ({
+          ...action.payload.Contents.map(({ Key }) => ({
             objectKey: Key,
-            isLast: index === action.payload.Contents.length - 1,
           })),
         ],
       }
