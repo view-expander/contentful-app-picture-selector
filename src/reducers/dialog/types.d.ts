@@ -17,6 +17,9 @@ export declare namespace NSDialogReducer {
           img: HTMLImageElement
         }
       }
+    | {
+        type: typeof DIALOG_REDUCER_ACTION_TYPES.REQUEST
+      }
   >
 
   type StateItem = {
@@ -27,6 +30,7 @@ export declare namespace NSDialogReducer {
   type State = {
     hasNext: boolean
     items: StateItem[]
+    isLoading: boolean
     page: number | undefined
   }
 }

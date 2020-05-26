@@ -5,6 +5,7 @@ import { NSDialogReducer } from './types'
 const initialState: NSDialogReducer.State = {
   hasNext: true,
   items: [],
+  isLoading: false,
   page: undefined,
 }
 
@@ -31,6 +32,7 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
             objectKey: Key,
           })),
         ],
+        isLoading: false,
       }
 
     case DIALOG_REDUCER_ACTION_TYPES.RECEIVE_THUMB:
@@ -44,6 +46,12 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
               }
             : item
         ),
+      }
+
+    case DIALOG_REDUCER_ACTION_TYPES.REQUEST:
+      return {
+        ...state,
+        isLoading: true,
       }
 
     default:

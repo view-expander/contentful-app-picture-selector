@@ -31,9 +31,13 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
         return
       }
 
+      if (state.isLoading) {
+        return
+      }
+
       dispatch({ type: DIALOG_REDUCER_ACTION_TYPES.NEXT })
     },
-    [dispatch]
+    [dispatch, state.isLoading]
   )
 
   useEffect(() => {
