@@ -37,11 +37,11 @@ export const SourceItem: React.FC<{
   useEffect(() => {
     if (inView) {
       onInView(objectKey)
+      if (isLast) {
+        console.log('<SourceItem />', 'last item', objectKey)
+      }
     }
-  }, [inView, objectKey, onInView])
-  useEffect(() => {
-    console.log('<SourceItem />', objectKey, 'isLast:', isLast)
-  }, [isLast, objectKey])
+  }, [inView, isLast, objectKey, onInView])
 
   return (
     <ThumbCard height={height} padding="none" width={width}>
