@@ -17,7 +17,7 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
       return state.hasNext
         ? {
             ...state,
-            page: state.page + 1,
+            page: state.page === undefined ? 0 : state.page + 1,
           }
         : state
     case DIALOG_REDUCER_ACTION_TYPES.RECEIVE:

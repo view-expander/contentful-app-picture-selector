@@ -28,6 +28,6 @@ export declare namespace NSDialogReducer {
   type State = {
     hasNext: boolean
     items: StateItem[]
-    page: number
+    page: number | undefined
   }
 }
