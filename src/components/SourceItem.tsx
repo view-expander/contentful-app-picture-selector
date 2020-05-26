@@ -26,7 +26,7 @@ const loading = keyframes`
 `
 
 const SkeletonWrapper = styled.div`
-  animation: ${loading} 2s alternate;
+  animation: ${loading} 2s alternate infinite;
 `
 
 const Skeleton: React.FC<{ height: number; width: number }> = ({
