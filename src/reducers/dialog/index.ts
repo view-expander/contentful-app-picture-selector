@@ -21,6 +21,7 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
             isLast: index === action.payload.Contents.length - 1,
           })),
         ],
+        next: action.payload.NextContinuationToken,
       }
 
     case DIALOG_REDUCER_ACTION_TYPES.RECEIVE_THUMB:
