@@ -1,6 +1,6 @@
 import { Card } from '@contentful/forma-36-react-components'
 import React, { useEffect } from 'react'
-import styled from 'styled-components'
+import styled, { keyframes } from 'styled-components'
 
 const ThumbCard = styled(Card).attrs<{ width: number; height: number }>(
   ({ width, height }) => ({ width, height })
@@ -16,13 +16,28 @@ const ThumbImage = styled.img`
   object-fit: contain;
 `
 
+const loading = keyframes`
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+`
+
+const SkeletonWrapper = styled.div`
+  animation: ${loading} 2s alternate;
+`
+
 const Skeleton: React.FC<{ height: number; width: number }> = ({
   height,
   width,
 }) => (
-  <svg viewBox="0 0 1 1" width={width} height={height}>
-    <rect x={0} y={0} width={1} height={1} fill="#ccc" />
-  </svg>
+  <SkeletonWrapper>
+    <svg viewBox="0 0 1 1" width={width} height={height}>
+      <rect x={0} y={0} width={1} height={1} fill="#ccc" />
+    </svg>
+  </SkeletonWrapper>
 )
 
 export const SourceItem: React.FC<{
