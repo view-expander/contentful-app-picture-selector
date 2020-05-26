@@ -35,7 +35,9 @@ export const SourceItem: React.FC<{
   width: number
 }> = ({ height, img, inView, isLast, objectKey, onInView, width }) => {
   useEffect(() => {
-    onInView(objectKey)
+    if (inView) {
+      onInView(objectKey)
+    }
   }, [inView, objectKey, onInView])
   useEffect(() => {
     console.log('<SourceItem />', objectKey, 'isLast:', isLast)
