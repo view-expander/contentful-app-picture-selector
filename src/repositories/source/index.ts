@@ -6,17 +6,22 @@ export class SourceRepository extends Repository {
   private readonly PATH = '/source'
   private next: This.Response['NextContinuationToken']
 
-  list<T = This.Response>(reset?: boolean): RepositoryResponseData<T> {
+  list(reset?: boolean): RepositoryResponseData<This.Response> {
     const params: This.Params | undefined = reset
       ? undefined
       : { ContinuationToken: this.next }
-    return this.http.get<T>(this.PATH, { params })
+    return this.http
+      .get<This.Response>(this.PATH, { params })
+      .then((res) => {
+        this.next = res.data.NextContinuationToken
+        return res
+      })
   }
 
-  getObjectThumb<T = This.Object.GetResponse>(
+  getObjectThumb(
     objectKey: This.Object.GetParams
-  ): RepositoryResponseData<T> {
-    return this.http.get<T>(`${this.PATH}/${objectKey}`, {
+  ): RepositoryResponseData<This.Object.GetResponse> {
+    return this.http.get<This.Object.GetResponse>(`${this.PATH}/${objectKey}`, {
       params: { size: 'thumb' },
       responseType: 'arraybuffer',
     })
