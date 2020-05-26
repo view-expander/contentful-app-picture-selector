@@ -24,5 +24,6 @@ export declare namespace NSDialogReducer {
 
   type State = {
     items: StateItem[]
+    page: number
   }
 }

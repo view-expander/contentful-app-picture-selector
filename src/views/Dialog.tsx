@@ -32,12 +32,12 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
 
   useEffect(() => {
     const fetchList = async (): Promise<void> => {
-      const res = await sourceRepository.list()
+      const res = await sourceRepository.list(state.page === 0)
       dispatch({ type: DIALOG_REDUCER_ACTION_TYPES.RECEIVE, payload: res.data })
     }
 
     fetchList()
-  }, [dispatch])
+  }, [dispatch, state.page])
 
   useEffect(() => {
     const value = sdk.parameters.invocation as { items?: SelectedItemList }

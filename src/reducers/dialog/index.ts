@@ -4,6 +4,7 @@ import { NSDialogReducer } from './types'
 
 const initialState: NSDialogReducer.State = {
   items: [],
+  page: 0
 }
 
 const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
