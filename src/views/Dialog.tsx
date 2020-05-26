@@ -18,16 +18,19 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
   const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
 
   const onItemInView: ItemInViewHandler = useCallback(
-    async (objectKey, isLast) => {
-      const res = await sourceRepository.getObjectThumb(objectKey)
-      const img = await createImage(res.data, res.headers['content-type'])
-      dispatch({
-        type: DIALOG_REDUCER_ACTION_TYPES.RECEIVE_THUMB,
-        payload: { objectKey, img },
-      })
-      if (isLast) {
-        dispatch({ type: DIALOG_REDUCER_ACTION_TYPES.NEXT })
+    async (objectKey) => {
+      if (typeof objectKey === 'string') {
+        const res = await sourceRepository.getObjectThumb(objectKey)
+        const img = await createImage(res.data, res.headers['content-type'])
+        dispatch({
+          type: DIALOG_REDUCER_ACTION_TYPES.RECEIVE_THUMB,
+          payload: { objectKey, img },
+        })
+
+        return
       }
+
+      dispatch({ type: DIALOG_REDUCER_ACTION_TYPES.NEXT })
     },
     [dispatch]
   )
@@ -37,6 +40,10 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
       console.log(state.page)
       const res = await sourceRepository.list(state.page === 0)
       dispatch({ type: DIALOG_REDUCER_ACTION_TYPES.RECEIVE, payload: res.data })
+    }
+
+    if (state.page === undefined) {
+      return
     }
 
     fetchList()
@@ -56,7 +63,11 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
 
   return (
     <FlexWrapper>
-      <SourceList items={state.items} onItemInView={onItemInView} />
+      <SourceList
+        items={state.items}
+        hasNext={state.hasNext}
+        onItemInView={onItemInView}
+      />
       <SelectedPictureOnRight>
         <ul>
           {selectedItemList.map(({ key }) => (

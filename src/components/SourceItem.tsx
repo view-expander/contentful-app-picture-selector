@@ -44,16 +44,15 @@ export const SourceItem: React.FC<{
   height: number
   img?: HTMLImageElement
   inView: boolean
-  isLast: boolean
-  objectKey: string
+  objectKey?: string
   onInView: ItemInViewHandler
   width: number
-}> = ({ height, img, inView, isLast, objectKey, onInView, width }) => {
+}> = ({ height, img, inView, objectKey, onInView, width }) => {
   useEffect(() => {
-    if (img === undefined && inView) {
-      onInView(objectKey, isLast)
+    if (inView) {
+      onInView(objectKey)
     }
-  }, [img, inView, isLast, objectKey, onInView])
+  }, [inView, objectKey, onInView])
 
   return (
     <ThumbCard height={height} padding="none" width={width}>

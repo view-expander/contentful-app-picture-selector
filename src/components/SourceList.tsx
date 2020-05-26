@@ -39,14 +39,15 @@ const ListItem = styled.li`
 `
 
 export const SourceList: React.FC<{
+  hasNext: boolean
   items: NSDialogReducer.StateItem[]
   onItemInView: ItemInViewHandler
-}> = ({ items, onItemInView }) => (
+}> = ({ hasNext, items, onItemInView }) => (
   <Wrapper>
     <Heading element="h2">Source list</Heading>
     <ListWrapper>
       <List>
-        {items.map(({ img, isLast, objectKey }) => (
+        {items.map(({ img, objectKey }) => (
           <InView key={objectKey} triggerOnce={true}>
             {({ inView, ref }): React.ReactElement => (
               <ListItem ref={ref}>
@@ -54,7 +55,6 @@ export const SourceList: React.FC<{
                   height={THUMB_RECT.height}
                   img={img}
                   inView={inView}
-                  isLast={isLast}
                   objectKey={objectKey}
                   onInView={onItemInView}
                   width={THUMB_RECT.width}
@@ -63,6 +63,20 @@ export const SourceList: React.FC<{
             )}
           </InView>
         ))}
+        {hasNext && (
+          <InView>
+            {({ inView, ref }): React.ReactElement => (
+              <ListItem ref={ref}>
+                <SourceItem
+                  height={THUMB_RECT.height}
+                  inView={inView}
+                  onInView={onItemInView}
+                  width={THUMB_RECT.width}
+                />
+              </ListItem>
+            )}
+          </InView>
+        )}
       </List>
     </ListWrapper>
   </Wrapper>

@@ -15,7 +15,7 @@ type ConfiguringResponse = {
   }
 }
 
-type ItemInViewHandler = (objectKey: string, isLast: boolean) => Promise<void>
+type ItemInViewHandler = (objectKey?: string) => Promise<void>
 
 type ReducerAction<
   T extends {
