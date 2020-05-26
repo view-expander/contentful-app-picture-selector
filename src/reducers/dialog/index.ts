@@ -15,12 +15,13 @@ const reducer: Reducer<NSDialogReducer.State, NSDialogReducer.Action> = (
 ) => {
   switch (action.type) {
     case DIALOG_REDUCER_ACTION_TYPES.NEXT:
-      return state.hasNext
+      return state.hasNext && !state.isLoading
         ? {
             ...state,
             page: state.page === undefined ? 0 : state.page + 1,
           }
         : state
+
     case DIALOG_REDUCER_ACTION_TYPES.RECEIVE:
       return {
         ...state,

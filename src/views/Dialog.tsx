@@ -30,17 +30,14 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
         return
       }
 
-      if (state.isLoading) {
-        return
-      }
-
       dispatch({ type: DIALOG_REDUCER_ACTION_TYPES.NEXT })
     },
-    [dispatch, state.isLoading]
+    [dispatch]
   )
 
   useEffect(() => {
     const fetchList = async (): Promise<void> => {
+      dispatch({ type: DIALOG_REDUCER_ACTION_TYPES.REQUEST })
       const res = await sourceRepository.list(state.page === 0)
       dispatch({ type: DIALOG_REDUCER_ACTION_TYPES.RECEIVE, payload: res.data })
     }
