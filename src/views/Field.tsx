@@ -15,8 +15,7 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
   const onClickDialogOpener = (): Promise<void> =>
     sdk.dialogs.openCurrentApp({
       title: 'Picture Selector',
-      width: 'fullWidth',
-      parameters: sdk.field.getValue(),
+      width: 'medium',
     })
 
   useEffect(() => {

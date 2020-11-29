@@ -1,6 +1,5 @@
 import { DialogExtensionSDK } from 'contentful-ui-extensions-sdk'
-import React, { useCallback, useEffect, useState } from 'react'
-import styled from 'styled-components'
+import React, { useCallback, useEffect } from 'react'
 import { FlexWrapper } from '../components'
 import { SourceList } from '../components/SourceList'
 import { useAutoResize } from '../hooks/useAutoResize'
@@ -9,13 +8,8 @@ import { DIALOG_REDUCER_ACTION_TYPES } from '../reducers/dialog/action-types'
 import { sourceRepository } from '../repositories'
 import { createImage } from '../utilities/create-image'
 
-const SelectedPictureOnRight = styled(FlexWrapper)`
-  flex: 0 0 160px;
-`
-
 export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
   const [state, dispatch] = useDialogReducer()
-  const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
 
   const onItemInView: ItemInViewHandler = useCallback(
     async (objectKey) => {
@@ -49,16 +43,6 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
     fetchList()
   }, [dispatch, state.page])
 
-  useEffect(() => {
-    const value = sdk.parameters.invocation as { items?: SelectedItemList }
-
-    if (value.items === undefined) {
-      return
-    }
-
-    setSelectedItemList(value.items)
-  }, [sdk.parameters])
-
   useAutoResize(sdk)
 
   return (
@@ -68,13 +52,6 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
         hasNext={state.hasNext}
         onItemInView={onItemInView}
       />
-      <SelectedPictureOnRight>
-        <ul>
-          {selectedItemList.map(({ key }) => (
-            <li key={key}>{key}</li>
-          ))}
-        </ul>
-      </SelectedPictureOnRight>
     </FlexWrapper>
   )
 }

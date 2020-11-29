@@ -1,4 +1,3 @@
-import { Heading } from '@contentful/forma-36-react-components'
 import React from 'react'
 import { InView } from 'react-intersection-observer'
 import styled from 'styled-components'
@@ -44,7 +43,6 @@ export const SourceList: React.FC<{
   onItemInView: ItemInViewHandler
 }> = ({ hasNext, items, onItemInView }) => (
   <Wrapper>
-    <Heading element="h2">Source list</Heading>
     <ListWrapper>
       <List>
         {items.map(({ img, objectKey }) => (
