@@ -26,7 +26,14 @@ export declare namespace NSSourceRepository {
 
   namespace Object {
     type GetParams = string
-
     type GetResponse = ArrayBuffer
+
+    namespace Meta {
+      type GetParams = string
+      type GetResponse = {
+        PixelHeight?: number
+        PixelWidth?: number
+      }
+    }
   }
 }
