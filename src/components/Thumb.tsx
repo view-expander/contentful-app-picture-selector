@@ -48,7 +48,9 @@ export const Thumb: React.FC<{
   onClick: ItemClickHandler
   onInView: ItemInViewHandler
 }> = ({ img, inView, objectKey, onClick, onInView }) => {
-  const _onClick = objectKey ? () => onClick(objectKey) : () => void 0
+  const _onClick: () => void = objectKey
+    ? (): void => onClick(objectKey)
+    : (): void => undefined
 
   useEffect(() => {
     if (inView) {
