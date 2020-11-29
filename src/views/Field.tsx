@@ -13,10 +13,12 @@ const ButtonLabel = styled.div`
 export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
   const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
   const onClickDialogOpener = (): Promise<void> =>
-    sdk.dialogs.openCurrentApp({
-      title: 'Picture Selector',
-      width: 'medium',
-    })
+    sdk.dialogs
+      .openCurrentApp({
+        title: 'Picture Selector',
+        width: 'medium',
+      })
+      .then(({ objectKey }: { objectKey: string }) => console.log(objectKey))
 
   useEffect(() => {
     const value = sdk.field.getValue() as

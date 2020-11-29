@@ -10,12 +10,7 @@ import { createImage } from '../utilities/create-image'
 export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
   const [state, dispatch] = useDialogReducer()
 
-  const onClickItem: ItemClickHandler = (objectKey) => {
-    console.log('objectKey', objectKey)
-    console.dir(sdk)
-
-    sdk.close()
-  }
+  const onClickItem: ItemClickHandler = (objectKey) => sdk.close({ objectKey })
 
   const onItemInView: ItemInViewHandler = useCallback(
     async (objectKey) => {
