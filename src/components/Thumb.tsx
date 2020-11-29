@@ -1,6 +1,7 @@
 import { Card } from '@contentful/forma-36-react-components'
 import React, { useEffect } from 'react'
 import styled, { keyframes } from 'styled-components'
+import { THUMB_RECT } from '../constants'
 
 const ThumbCard = styled(Card).attrs<{ width: number; height: number }>(
   ({ width, height }) => ({ width, height })
@@ -41,14 +42,12 @@ const Skeleton: React.FC<{ height: number; width: number }> = ({
 )
 
 export const Thumb: React.FC<{
-  height: number
   img?: HTMLImageElement
   inView: boolean
   objectKey?: string
   onClick: ItemClickHandler
   onInView: ItemInViewHandler
-  width: number
-}> = ({ height, img, inView, objectKey, onClick, onInView, width }) => {
+}> = ({ img, inView, objectKey, onClick, onInView }) => {
   const _onClick = objectKey ? () => onClick(objectKey) : () => void 0
 
   useEffect(() => {
@@ -58,9 +57,14 @@ export const Thumb: React.FC<{
   }, [inView, objectKey, onInView])
 
   return (
-    <ThumbCard height={height} padding="none" width={width} onClick={_onClick}>
+    <ThumbCard
+      height={THUMB_RECT.height}
+      padding="none"
+      width={THUMB_RECT.width}
+      onClick={_onClick}
+    >
       {img === undefined ? (
-        <Skeleton height={height} width={width} />
+        <Skeleton height={THUMB_RECT.height} width={THUMB_RECT.width} />
       ) : (
         <ThumbImage src={img.src} width={img.width} height={img.height} />
       )}
