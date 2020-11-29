@@ -1,6 +1,6 @@
 import { Button, Icon } from '@contentful/forma-36-react-components'
 import { FieldExtensionSDK } from 'contentful-ui-extensions-sdk'
-import React, { useEffect, useState } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
 import { useAutoResize } from '../hooks/useAutoResize'
 
@@ -12,13 +12,18 @@ const ButtonLabel = styled.div`
 
 export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
   const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
-  const onClickDialogOpener = (): Promise<void> =>
-    sdk.dialogs
-      .openCurrentApp({
-        title: 'Picture Selector',
-        width: 'medium',
-      })
-      .then(({ objectKey }: { objectKey: string }) => console.log(objectKey))
+  const onClickDialogOpener = useCallback(
+    (): Promise<void> =>
+      sdk.dialogs
+        .openCurrentApp({
+          title: 'Picture Selector',
+          width: 'medium',
+        })
+        .then(({ objectKey }: { objectKey: string }) =>
+          setSelectedItemList([...selectedItemList, { key: objectKey }])
+        ),
+    [selectedItemList, setSelectedItemList, sdk]
+  )
 
   useEffect(() => {
     const value = sdk.field.getValue() as
