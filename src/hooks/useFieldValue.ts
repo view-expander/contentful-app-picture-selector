@@ -1,13 +1,12 @@
 import { FieldExtensionSDK } from 'contentful-ui-extensions-sdk'
 import { useCallback, useEffect, useState } from 'react'
 
+type PushItem = (item: Item) => Promise<ItemList>
+type RemoveItem = (key: string) => Promise<ItemList>
+
 export const useFieldValue = (
   sdk: FieldExtensionSDK
-): [
-  ItemList,
-  (key: string) => Promise<ItemList>,
-  (key: string) => Promise<ItemList>
-] => {
+): [ItemList, PushItem, RemoveItem] => {
   const getValidValue = (value: ItemList | undefined): ItemList =>
     Array.isArray(value) ? value : []
 
@@ -15,11 +14,12 @@ export const useFieldValue = (
   const [value, setValue] = useState<ItemList>(getValidValue(currentValue))
 
   const pushItem = useCallback(
-    (key: string) => sdk.field.setValue([...value, key]),
+    (item: Item) => sdk.field.setValue([...value, item]),
     [sdk, value]
   )
   const removeItem = useCallback(
-    (key: string) => sdk.field.setValue(value.filter((k) => k !== key)),
+    (key: string) =>
+      sdk.field.setValue(value.filter((item) => item.key !== key)),
     [sdk, value]
   )
 
