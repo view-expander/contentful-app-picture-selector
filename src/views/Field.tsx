@@ -1,9 +1,12 @@
 import { Button, Icon } from '@contentful/forma-36-react-components'
 import { FieldExtensionSDK } from 'contentful-ui-extensions-sdk'
-import React, { useCallback } from 'react'
+import React, { useCallback, useEffect, useState } from 'react'
 import styled from 'styled-components'
+import { SelectedList } from '../components/SelectedList'
 import { useAutoResize } from '../hooks/useAutoResize'
 import { useFieldValue } from '../hooks/useFieldValue'
+import { sourceRepository } from '../repositories'
+import { createImage } from '../utilities/create-image'
 
 const ButtonLabel = styled.div`
   display: inline-flex;
@@ -11,8 +14,29 @@ const ButtonLabel = styled.div`
   vertical-align: top;
 `
 
+const useItems = (keys: ItemList): [Item[]] => {
+  const [items, setItems] = useState<Item[]>([])
+
+  useEffect(() => {
+    Promise.all(
+      keys.map(async (key) => {
+        const res = await sourceRepository.getObjectThumb(key)
+        const img = await createImage(res.data, res.headers['content-type'])
+
+        return {
+          objectKey: key,
+          img,
+        }
+      })
+    ).then((items: Item[]) => setItems(items))
+  }, [keys])
+
+  return [items]
+}
+
 export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
   const [value, pushValue] = useFieldValue(sdk)
+  const [items] = useItems(value)
   const onClickDialogOpener = useCallback(
     () =>
       sdk.dialogs
@@ -33,6 +57,7 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
           <li key={key}>{key}</li>
         ))}
       </ul>
+      <SelectedList items={items} />
       <Button buttonType="muted" size="small" onClick={onClickDialogOpener}>
         <ButtonLabel>
           <Icon color="muted" icon="Asset" />
