@@ -38,8 +38,9 @@ const ListItem = styled.li`
 export const SourceList: React.FC<{
   hasNext: boolean
   items: NSDialogReducer.StateItem[]
+  onClickItem: any
   onItemInView: ItemInViewHandler
-}> = ({ hasNext, items, onItemInView }) => (
+}> = ({ hasNext, items, onClickItem, onItemInView }) => (
   <Wrapper>
     <ListWrapper>
       <List>
@@ -52,6 +53,7 @@ export const SourceList: React.FC<{
                   img={img}
                   inView={inView}
                   objectKey={objectKey}
+                  onClick={onClickItem}
                   onInView={onItemInView}
                   width={THUMB_RECT.width}
                 />
@@ -66,6 +68,7 @@ export const SourceList: React.FC<{
                 <SourceItem
                   height={THUMB_RECT.height}
                   inView={inView}
+                  onClick={onClickItem}
                   onInView={onItemInView}
                   width={THUMB_RECT.width}
                 />

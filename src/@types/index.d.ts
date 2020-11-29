@@ -15,6 +15,8 @@ type ConfiguringResponse = {
   }
 }
 
+type ItemClickHandler = (objectKey: string) => void
+
 type ItemInViewHandler = (objectKey?: string) => Promise<void>
 
 type ReducerAction<

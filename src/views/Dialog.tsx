@@ -10,6 +10,8 @@ import { createImage } from '../utilities/create-image'
 export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
   const [state, dispatch] = useDialogReducer()
 
+  const onClickItem: ItemClickHandler = (objectKey) => console.log(objectKey)
+
   const onItemInView: ItemInViewHandler = useCallback(
     async (objectKey) => {
       if (typeof objectKey === 'string') {
@@ -48,6 +50,7 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
     <SourceList
       items={state.items}
       hasNext={state.hasNext}
+      onClickItem={onClickItem}
       onItemInView={onItemInView}
     />
   )

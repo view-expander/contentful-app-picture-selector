@@ -45,9 +45,12 @@ export const SourceItem: React.FC<{
   img?: HTMLImageElement
   inView: boolean
   objectKey?: string
+  onClick: ItemClickHandler
   onInView: ItemInViewHandler
   width: number
-}> = ({ height, img, inView, objectKey, onInView, width }) => {
+}> = ({ height, img, inView, objectKey, onClick, onInView, width }) => {
+  const _onClick = objectKey ? () => onClick(objectKey) : () => void 0
+
   useEffect(() => {
     if (inView) {
       onInView(objectKey)
@@ -55,7 +58,7 @@ export const SourceItem: React.FC<{
   }, [inView, objectKey, onInView])
 
   return (
-    <ThumbCard height={height} padding="none" width={width}>
+    <ThumbCard height={height} padding="none" width={width} onClick={_onClick}>
       {img === undefined ? (
         <Skeleton height={height} width={width} />
       ) : (
