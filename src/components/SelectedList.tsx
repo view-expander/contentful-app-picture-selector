@@ -13,7 +13,7 @@ export const SelectedList: React.FC<{
           inView={true}
           objectKey={objectKey}
           onClick={() => undefined}
-          onInView={(key) => new Promise(() => console.log(key))}
+          onInView={Promise.resolve}
         />
       </ThumbItem>
     ))}
