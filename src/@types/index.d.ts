@@ -15,6 +15,11 @@ type ConfiguringResponse = {
   }
 }
 
+type Item = {
+  objectKey: string
+  img?: HTMLImageElement
+}
+
 type ItemClickHandler = (objectKey: string) => void
 
 type ItemInViewHandler = (objectKey?: string) => Promise<void>

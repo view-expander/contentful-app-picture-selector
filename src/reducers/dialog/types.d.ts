@@ -22,10 +22,7 @@ export declare namespace NSDialogReducer {
       }
   >
 
-  type StateItem = {
-    objectKey: string
-    img?: HTMLImageElement
-  }
+  type StateItem = Item
 
   type State = {
     hasNext: boolean
