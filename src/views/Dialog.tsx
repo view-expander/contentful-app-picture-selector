@@ -12,9 +12,13 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
 
   const onClickItem: ItemClickHandler = async (objectKey) => {
     const res = await sourceRepository.getObjectMeta(objectKey)
-    console.log(res.data)
+    const { PixelHeight, PixelWidth } = res.data
 
-    sdk.close({ objectKey })
+    sdk.close({
+      height: PixelHeight,
+      objectKey,
+      width: PixelWidth,
+    })
   }
 
   const onItemInView: ItemInViewHandler = useCallback(
