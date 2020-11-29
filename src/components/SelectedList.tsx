@@ -14,7 +14,7 @@ export const SelectedList: React.FC<{
           inView={true}
           objectKey={objectKey}
           onClick={onClickItem}
-          onInView={Promise.resolve}
+          onInView={() => Promise.resolve()}
         />
       </ThumbItem>
     ))}
