@@ -57,11 +57,14 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
           title: 'Picture Selector',
           width: 'medium',
         })
-        .then(({ height, objectKey, width }: DialogResponse) => {
+        .then(async ({ objectKey }: Pick<DialogResponse, 'objectKey'>) => {
+          const res = await sourceRepository.getObjectMeta(objectKey)
+          const { PixelHeight, PixelWidth } = res.data
+
           return pushValue({
-            height: height || 0,
+            height: PixelHeight || 0,
             key: objectKey,
-            width: width || 0,
+            width: PixelWidth || 0,
           })
         }),
     [sdk, pushValue]
