@@ -19,6 +19,8 @@ type ItemClickHandler = (objectKey: string) => void
 
 type ItemInViewHandler = (objectKey?: string) => Promise<void>
 
+type ItemList = string[]
+
 type ReducerAction<
   T extends {
     type: string
@@ -27,5 +29,3 @@ type ReducerAction<
 > = T
 
 type ReducerCreator<S, A> = () => [S, React.Dispatch<A>]
-
-type SelectedItemList = string[]
