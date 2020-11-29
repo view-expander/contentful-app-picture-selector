@@ -7,7 +7,7 @@ export const SelectedList: React.FC<{
 }> = ({ items }) => (
   <ThumbList>
     {items.map(({ img, objectKey }) => (
-      <ThumbItem>
+      <ThumbItem key={objectKey}>
         <Thumb
           img={img}
           inView={true}

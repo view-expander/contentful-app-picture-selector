@@ -8,6 +8,10 @@ import { useFieldValue } from '../hooks/useFieldValue'
 import { sourceRepository } from '../repositories'
 import { createImage } from '../utilities/create-image'
 
+const ButtonToAdd = styled(Button)`
+  margin-top: 1rem;
+`
+
 const ButtonLabel = styled.div`
   display: inline-flex;
   align-items: center;
@@ -52,19 +56,14 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
 
   return (
     <React.Fragment>
-      <ul>
-        {value.map((key) => (
-          <li key={key}>{key}</li>
-        ))}
-      </ul>
       <SelectedList items={items} />
-      <Button buttonType="muted" size="small" onClick={onClickDialogOpener}>
+      <ButtonToAdd buttonType="muted" size="small" onClick={onClickDialogOpener}>
         <ButtonLabel>
           <Icon color="muted" icon="Asset" />
           &nbsp;
           <span>Add a picture</span>
         </ButtonLabel>
-      </Button>
+      </ButtonToAdd>
     </React.Fragment>
   )
 }
