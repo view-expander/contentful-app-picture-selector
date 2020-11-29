@@ -2,7 +2,7 @@ import React from 'react'
 import { InView } from 'react-intersection-observer'
 import styled from 'styled-components'
 import { NSDialogReducer } from '../reducers/dialog/types'
-import { ThumbList } from './index'
+import { ThumbItem, ThumbList } from './index'
 import { Thumb } from './Thumb'
 
 const THUMB_RECT = {
@@ -20,12 +20,6 @@ const ListWrapper = styled.div`
   margin-top: 0.5rem;
 `
 
-const ListItem = styled.li`
-  margin-top: 0.5rem;
-  padding-left: 0.5rem;
-  padding-right: 0.5rem;
-`
-
 export const SourceList: React.FC<{
   hasNext: boolean
   items: NSDialogReducer.StateItem[]
@@ -38,7 +32,7 @@ export const SourceList: React.FC<{
         {items.map(({ img, objectKey }) => (
           <InView key={objectKey} triggerOnce={true}>
             {({ inView, ref }): React.ReactElement => (
-              <ListItem ref={ref}>
+              <ThumbItem ref={ref}>
                 <Thumb
                   height={THUMB_RECT.height}
                   img={img}
@@ -48,7 +42,7 @@ export const SourceList: React.FC<{
                   onInView={onItemInView}
                   width={THUMB_RECT.width}
                 />
-              </ListItem>
+              </ThumbItem>
             )}
           </InView>
         ))}

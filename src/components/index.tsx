@@ -13,3 +13,9 @@ export const ThumbList = styled.ul`
   margin-bottom: 0;
   padding: 0;
 `
+
+export const ThumbItem = styled.li`
+  margin-top: 0.5rem;
+  padding-left: 0.5rem;
+  padding-right: 0.5rem;
+`
