@@ -8,6 +8,12 @@ import { useFieldValue } from '../hooks/useFieldValue'
 import { sourceRepository } from '../repositories'
 import { createImage } from '../utilities/create-image'
 
+type DialogResponse = {
+  height: number | undefined
+  objectKey: string
+  width: number | undefined
+}
+
 const ButtonToAdd = styled(Button)`
   margin-top: 1rem;
 `
@@ -51,7 +57,10 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
           title: 'Picture Selector',
           width: 'medium',
         })
-        .then(({ objectKey }: { objectKey: string }) => pushValue(objectKey)),
+        .then(({ height, objectKey, width }: DialogResponse) => {
+          console.log(width, height)
+          return pushValue(objectKey)
+        }),
     [sdk, pushValue]
   )
 
