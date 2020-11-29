@@ -15,11 +15,17 @@ type ConfiguringResponse = {
   }
 }
 
+type Item = {
+  height: number
+  key: string
+  width: number
+}
+
 type ItemClickHandler = (objectKey: string) => void
 
 type ItemInViewHandler = (objectKey?: string) => Promise<void>
 
-type ItemList = string[]
+type ItemList = Item[]
 
 type PreviewItem = {
   objectKey: string
