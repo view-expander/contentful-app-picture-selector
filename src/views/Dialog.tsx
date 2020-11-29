@@ -1,6 +1,5 @@
 import { DialogExtensionSDK } from 'contentful-ui-extensions-sdk'
 import React, { useCallback, useEffect } from 'react'
-import { FlexWrapper } from '../components'
 import { SourceList } from '../components/SourceList'
 import { useAutoResize } from '../hooks/useAutoResize'
 import { useDialogReducer } from '../reducers/dialog'
@@ -46,12 +45,10 @@ export const Dialog: React.FC<{ sdk: DialogExtensionSDK }> = ({ sdk }) => {
   useAutoResize(sdk)
 
   return (
-    <FlexWrapper>
-      <SourceList
-        items={state.items}
-        hasNext={state.hasNext}
-        onItemInView={onItemInView}
-      />
-    </FlexWrapper>
+    <SourceList
+      items={state.items}
+      hasNext={state.hasNext}
+      onItemInView={onItemInView}
+    />
   )
 }

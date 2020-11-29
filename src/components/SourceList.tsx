@@ -26,8 +26,6 @@ const List = styled.ul`
   justify-content: flex-start;
   margin-top: 0;
   margin-bottom: 0;
-  margin-left: -0.5rem;
-  margin-right: -0.5rem;
   padding: 0;
 `
 
