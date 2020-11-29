@@ -27,7 +27,11 @@ export class SourceRepository extends Repository {
     })
   }
 
-  getObjectMeta(objectKey: This.Object.Meta.GetParams): RepositoryResponseData<This.Object.Meta.GetResponse> {
-    return this.http.get<This.Object.Meta.GetResponse>(`${this.PATH}/${objectKey}/meta`)
+  getObjectMeta(
+    objectKey: This.Object.Meta.GetParams
+  ): RepositoryResponseData<This.Object.Meta.GetResponse> {
+    return this.http.get<This.Object.Meta.GetResponse>(
+      `${this.PATH}/${objectKey}/meta`
+    )
   }
 }
