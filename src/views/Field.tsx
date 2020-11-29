@@ -24,8 +24,8 @@ const ButtonLabel = styled.div`
   vertical-align: top;
 `
 
-const useItems = (keys: ItemList): [Item[]] => {
-  const [items, setItems] = useState<Item[]>([])
+const useItems = (keys: ItemList): [PreviewItem[]] => {
+  const [items, setItems] = useState<PreviewItem[]>([])
 
   useEffect(() => {
     Promise.all(
@@ -38,7 +38,7 @@ const useItems = (keys: ItemList): [Item[]] => {
           img,
         }
       })
-    ).then((items: Item[]) => setItems(items))
+    ).then((items: PreviewItem[]) => setItems(items))
   }, [keys])
 
   return [items]

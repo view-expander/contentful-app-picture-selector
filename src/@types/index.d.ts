@@ -15,16 +15,16 @@ type ConfiguringResponse = {
   }
 }
 
-type Item = {
-  objectKey: string
-  img?: HTMLImageElement
-}
-
 type ItemClickHandler = (objectKey: string) => void
 
 type ItemInViewHandler = (objectKey?: string) => Promise<void>
 
 type ItemList = string[]
+
+type PreviewItem = {
+  objectKey: string
+  img?: HTMLImageElement
+}
 
 type ReducerAction<
   T extends {

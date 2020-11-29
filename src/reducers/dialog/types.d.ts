@@ -22,7 +22,7 @@ export declare namespace NSDialogReducer {
       }
   >
 
-  type StateItem = Item
+  type StateItem = PreviewItem
 
   type State = {
     hasNext: boolean

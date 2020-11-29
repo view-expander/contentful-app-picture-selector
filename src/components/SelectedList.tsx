@@ -3,7 +3,7 @@ import { ThumbItem, ThumbList } from './index'
 import { Thumb } from './Thumb'
 
 export const SelectedList: React.FC<{
-  items: Item[]
+  items: PreviewItem[]
   onClickItem: ItemClickHandler
 }> = ({ items, onClickItem }) => (
   <ThumbList>
