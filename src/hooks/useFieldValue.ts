@@ -8,7 +8,7 @@ export const useFieldValue = (
   (key: string) => Promise<ItemList>,
   (key: string) => Promise<ItemList>
 ] => {
-  const getValidValue = (value: ItemList | undefined) =>
+  const getValidValue = (value: ItemList | undefined): ItemList =>
     Array.isArray(value) ? value : []
 
   const currentValue = sdk.field.getValue() as ItemList | undefined
