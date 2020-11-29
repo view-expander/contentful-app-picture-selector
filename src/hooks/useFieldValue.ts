@@ -3,15 +3,18 @@ import { useEffect, useState } from 'react'
 
 export const useFieldValue = (
   sdk: FieldExtensionSDK
-): [SelectedItemList, (item: SelectedItem) => Promise<SelectedItemList>] => {
+): [SelectedItemList, (key: string) => Promise<SelectedItemList>] => {
+  const getValidValue = (value: SelectedItemList | undefined) => Array.isArray(value) ? value : []
+
   const currentValue = sdk.field.getValue() as SelectedItemList | undefined
-  const [value] = useState<SelectedItemList>(
-    Array.isArray(currentValue) ? currentValue : []
-  )
+  const [value, setValue] = useState<SelectedItemList>(getValidValue(currentValue))
 
   useEffect(() => {
-    sdk.field.onValueChanged((value: SelectedItemList) => console.log(value))
+    sdk.field.onValueChanged((value: SelectedItemList) => {
+      console.log('onValueChanged', value)
+      setValue(getValidValue(value))
+    })
   }, [sdk])
 
-  return [value, (item: SelectedItem) => sdk.field.setValue([...value, item])]
+  return [value, (key: string) => sdk.field.setValue([...value, key])]
 }

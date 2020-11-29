@@ -32,4 +32,4 @@ type SelectedItem = {
   key: string
 }
 
-type SelectedItemList = SelectedItem[]
+type SelectedItemList = string[]

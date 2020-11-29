@@ -20,9 +20,7 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
           title: 'Picture Selector',
           width: 'medium',
         })
-        .then(({ objectKey }: { objectKey: string }) => {
-          pushValue({ key: objectKey })
-        }),
+        .then(({ objectKey }: { objectKey: string }) => pushValue(objectKey)),
     [sdk, pushValue]
   )
 
@@ -33,7 +31,7 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
   return (
     <React.Fragment>
       <ul>
-        {value.map(({ key }) => (
+        {value.map((key) => (
           <li key={key}>{key}</li>
         ))}
       </ul>
