@@ -4,7 +4,8 @@ import { Thumb } from './Thumb'
 
 export const SelectedList: React.FC<{
   items: Item[]
-}> = ({ items }) => (
+  onClickItem: ItemClickHandler
+}> = ({ items, onClickItem }) => (
   <ThumbList>
     {items.map(({ img, objectKey }) => (
       <ThumbItem key={objectKey}>
@@ -12,7 +13,7 @@ export const SelectedList: React.FC<{
           img={img}
           inView={true}
           objectKey={objectKey}
-          onClick={() => undefined}
+          onClick={onClickItem}
           onInView={Promise.resolve}
         />
       </ThumbItem>

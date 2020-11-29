@@ -39,8 +39,11 @@ const useItems = (keys: ItemList): [Item[]] => {
 }
 
 export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
-  const [value, pushValue] = useFieldValue(sdk)
+  const [value, pushValue, removeValue] = useFieldValue(sdk)
   const [items] = useItems(value)
+  const onClickSelectedItem: ItemClickHandler = useCallback(removeValue, [
+    removeValue,
+  ])
   const onClickDialogOpener = useCallback(
     () =>
       sdk.dialogs
@@ -56,8 +59,12 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
 
   return (
     <React.Fragment>
-      <SelectedList items={items} />
-      <ButtonToAdd buttonType="muted" size="small" onClick={onClickDialogOpener}>
+      <SelectedList items={items} onClickItem={onClickSelectedItem} />
+      <ButtonToAdd
+        buttonType="muted"
+        size="small"
+        onClick={onClickDialogOpener}
+      >
         <ButtonLabel>
           <Icon color="muted" icon="Asset" />
           &nbsp;
