@@ -38,7 +38,7 @@ const ListItem = styled.li`
 export const SourceList: React.FC<{
   hasNext: boolean
   items: NSDialogReducer.StateItem[]
-  onClickItem: any
+  onClickItem: ItemClickHandler
   onItemInView: ItemInViewHandler
 }> = ({ hasNext, items, onClickItem, onItemInView }) => (
   <Wrapper>

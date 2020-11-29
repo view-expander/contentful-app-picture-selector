@@ -37,7 +37,7 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
         <ButtonLabel>
           <Icon color="muted" icon="Asset" />
           &nbsp;
-          <span>Select pictures</span>
+          <span>Add a picture</span>
         </ButtonLabel>
       </Button>
     </React.Fragment>
