@@ -28,8 +28,4 @@ type ReducerAction<
 
 type ReducerCreator<S, A> = () => [S, React.Dispatch<A>]
 
-type SelectedItem = {
-  key: string
-}
-
 type SelectedItemList = string[]
