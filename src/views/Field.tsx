@@ -1,6 +1,6 @@
 import { Button, Icon } from '@contentful/forma-36-react-components'
 import { FieldExtensionSDK } from 'contentful-ui-extensions-sdk'
-import React, { useCallback, useEffect, useState } from 'react'
+import React from 'react'
 import styled from 'styled-components'
 import { useAutoResize } from '../hooks/useAutoResize'
 
@@ -11,41 +11,20 @@ const ButtonLabel = styled.div`
 `
 
 export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
-  const [selectedItemList, setSelectedItemList] = useState<SelectedItemList>([])
-  const onClickDialogOpener = useCallback(
-    (): Promise<void> =>
-      sdk.dialogs
-        .openCurrentApp({
-          title: 'Picture Selector',
-          width: 'medium',
-        })
-        .then(({ objectKey }: { objectKey: string }) =>
-          setSelectedItemList([...selectedItemList, { key: objectKey }])
-        ),
-    [selectedItemList, setSelectedItemList, sdk]
-  )
-
-  useEffect(() => {
-    const value = sdk.field.getValue() as
-      | { items: SelectedItemList }
-      | undefined
-
-    if (value === undefined) {
-      return
-    }
-
-    setSelectedItemList(value.items)
-  }, [selectedItemList, sdk.field])
+  const onClickDialogOpener = (): Promise<void> =>
+    sdk.dialogs
+      .openCurrentApp({
+        title: 'Picture Selector',
+        width: 'medium',
+      })
+      .then(({ objectKey }: { objectKey: string }) => console.log(objectKey))
 
   useAutoResize(sdk)
 
+  console.log('current value', sdk.field.getValue())
+
   return (
     <React.Fragment>
-      <ul>
-        {selectedItemList.map(({ key }) => (
-          <li key={key}>{key}</li>
-        ))}
-      </ul>
       <Button buttonType="muted" size="small" onClick={onClickDialogOpener}>
         <ButtonLabel>
           <Icon color="muted" icon="Asset" />
