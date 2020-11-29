@@ -29,7 +29,7 @@ const useItems = (keys: ItemList): [PreviewItem[]] => {
 
   useEffect(() => {
     Promise.all(
-      keys.map(async (key) => {
+      keys.map(async ({ key }) => {
         const res = await sourceRepository.getObjectThumb(key)
         const img = await createImage(res.data, res.headers['content-type'])
 
@@ -58,8 +58,11 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
           width: 'medium',
         })
         .then(({ height, objectKey, width }: DialogResponse) => {
-          console.log(width, height)
-          return pushValue(objectKey)
+          return pushValue({
+            height: height || 0,
+            key: objectKey,
+            width: width || 0,
+          })
         }),
     [sdk, pushValue]
   )
