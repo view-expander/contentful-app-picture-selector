@@ -40,7 +40,7 @@ const Skeleton: React.FC<{ height: number; width: number }> = ({
   </SkeletonWrapper>
 )
 
-export const SourceItem: React.FC<{
+export const Thumb: React.FC<{
   height: number
   img?: HTMLImageElement
   inView: boolean

@@ -2,7 +2,7 @@ import React from 'react'
 import { InView } from 'react-intersection-observer'
 import styled from 'styled-components'
 import { NSDialogReducer } from '../reducers/dialog/types'
-import { SourceItem } from './SourceItem'
+import { Thumb } from './Thumb'
 
 const THUMB_RECT = {
   height: 128,
@@ -48,7 +48,7 @@ export const SourceList: React.FC<{
           <InView key={objectKey} triggerOnce={true}>
             {({ inView, ref }): React.ReactElement => (
               <ListItem ref={ref}>
-                <SourceItem
+                <Thumb
                   height={THUMB_RECT.height}
                   img={img}
                   inView={inView}
@@ -65,7 +65,7 @@ export const SourceList: React.FC<{
           <InView>
             {({ inView, ref }): React.ReactElement => (
               <ListItem ref={ref}>
-                <SourceItem
+                <Thumb
                   height={THUMB_RECT.height}
                   inView={inView}
                   onClick={onClickItem}
