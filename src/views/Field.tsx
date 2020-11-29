@@ -26,8 +26,6 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
 
   useAutoResize(sdk)
 
-  console.log('value', value)
-
   return (
     <React.Fragment>
       <ul>

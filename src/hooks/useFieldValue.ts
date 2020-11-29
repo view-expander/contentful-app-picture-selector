@@ -10,10 +10,7 @@ export const useFieldValue = (
   const [value, setValue] = useState<ItemList>(getValidValue(currentValue))
 
   useEffect(() => {
-    sdk.field.onValueChanged((value: ItemList) => {
-      console.log('onValueChanged', value)
-      setValue(getValidValue(value))
-    })
+    sdk.field.onValueChanged((value: ItemList) => setValue(getValidValue(value)))
   }, [sdk])
 
   return [value, (key: string) => sdk.field.setValue([...value, key])]
