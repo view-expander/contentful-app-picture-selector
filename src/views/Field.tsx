@@ -29,9 +29,11 @@ const useItems = (keys: ItemList): [PreviewItem[]] => {
 
   useEffect(() => {
     Promise.all(
-      keys.map(async ({ key }) => {
+      keys.map(async ({ featured, key }) => {
         const res = await sourceRepository.getObjectThumb(key)
         const img = await createImage(res.data, res.headers['content-type'])
+
+        console.log(key, featured)
 
         return {
           objectKey: key,
