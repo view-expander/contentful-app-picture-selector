@@ -31,6 +31,7 @@ type ItemList = Item[]
 type PreviewItem = {
   objectKey: string
   img?: HTMLImageElement
+  featured?: boolean
 }
 
 type ReducerAction<
