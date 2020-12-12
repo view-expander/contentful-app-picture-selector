@@ -16,6 +16,7 @@ type ConfiguringResponse = {
 }
 
 type Item = {
+  featured: boolean
   height: number
   key: string
   width: number

@@ -62,12 +62,13 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
           const { PixelHeight, PixelWidth } = res.data
 
           return pushValue({
+            featured: items.length === 0,
             height: PixelHeight || 0,
             key: objectKey,
             width: PixelWidth || 0,
           })
         }),
-    [sdk, pushValue]
+    [sdk, pushValue, items]
   )
 
   useAutoResize(sdk)
