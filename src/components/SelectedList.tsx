@@ -1,4 +1,4 @@
-import { RadioButton } from '@contentful/forma-36-react-components'
+import { IconButton } from '@contentful/forma-36-react-components'
 import React from 'react'
 import styled from 'styled-components'
 import { ThumbItem, ThumbList } from './index'
@@ -8,9 +8,16 @@ const SelectedThumbItem = styled(ThumbItem)`
   position: relative;
 `
 
-const StyledRadioButton = styled(RadioButton)`
+const RemoveIconButton = styled(IconButton).attrs((attrs) => ({
+  ...attrs,
+  iconProps: {
+    icon: 'Delete'
+  },
+  buttonType: 'negative'
+}))`
   position: absolute;
-  bottom: 0;
+  top: 0;
+  right: 0;
 `
 
 export const SelectedList: React.FC<{
@@ -22,17 +29,14 @@ export const SelectedList: React.FC<{
     {items.map(({ featured, img, objectKey }) => (
       <SelectedThumbItem key={objectKey}>
         <Thumb
+          featured={featured}
           img={img}
           inView={true}
           objectKey={objectKey}
-          onClick={onClickItem}
+          onClick={() => onChangeFeatured(objectKey, !Boolean(featured))}
           onInView={(): Promise<void> => Promise.resolve()}
         />
-        <StyledRadioButton
-          checked={Boolean(featured)}
-          name="featured"
-          onChange={(ev) => onChangeFeatured(objectKey, ev.target.checked)}
-        />
+        <RemoveIconButton onClick={() => onClickItem(objectKey)} />
       </SelectedThumbItem>
     ))}
   </ThumbList>
