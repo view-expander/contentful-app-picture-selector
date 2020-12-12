@@ -16,8 +16,10 @@ const RemoveIconButton = styled(IconButton).attrs((attrs) => ({
   buttonType: 'negative'
 }))`
   position: absolute;
-  top: 0;
-  right: 0;
+  bottom: 2px;
+  right: calc(1rem + 2px);
+  background-color: rgba(255, 255, 255, 0.67);
+  border-radius: 2px
 `
 
 export const SelectedList: React.FC<{
