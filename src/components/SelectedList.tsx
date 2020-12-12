@@ -25,7 +25,7 @@ const RemoveIconButton = styled(IconButton).attrs((attrs) => ({
 export const SelectedList: React.FC<{
   items: PreviewItem[]
   onClickItem: ItemClickHandler
-  onChangeFeatured: (objectKey: string, featured: boolean) => unknown
+  onChangeFeatured: (objectKey: string) => unknown
 }> = ({ items, onClickItem, onChangeFeatured }) => (
   <ThumbList>
     {items.map(({ featured, img, objectKey }) => (
@@ -35,7 +35,7 @@ export const SelectedList: React.FC<{
           img={img}
           inView={true}
           objectKey={objectKey}
-          onClick={() => onChangeFeatured(objectKey, !Boolean(featured))}
+          onClick={() => onChangeFeatured(objectKey)}
           onInView={(): Promise<void> => Promise.resolve()}
         />
         <RemoveIconButton onClick={() => onClickItem(objectKey)} />

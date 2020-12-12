@@ -3,10 +3,11 @@ import { useCallback, useEffect, useState } from 'react'
 
 type PushItem = (item: Item) => Promise<ItemList>
 type RemoveItem = (key: string) => Promise<ItemList>
+type SetFeaturedItem = (key: string) => Promise<ItemList>
 
 export const useFieldValue = (
   sdk: FieldExtensionSDK
-): [ItemList, PushItem, RemoveItem] => {
+): [ItemList, PushItem, RemoveItem, SetFeaturedItem] => {
   const getValidValue = (value: ItemList | undefined): ItemList =>
     Array.isArray(value) ? value : []
 
@@ -22,6 +23,16 @@ export const useFieldValue = (
       sdk.field.setValue(value.filter((item) => item.key !== key)),
     [sdk, value]
   )
+  const setFeaturedItem = useCallback(
+    (key: string) =>
+      sdk.field.setValue(
+        value.map((item) => ({
+          ...item,
+          featured: item.key === key
+        }))
+      ),
+    [sdk, value]
+  )
 
   useEffect(() => {
     sdk.field.onValueChanged((value: ItemList) =>
@@ -29,5 +40,5 @@ export const useFieldValue = (
     )
   }, [sdk])
 
-  return [value, pushItem, removeItem]
+  return [value, pushItem, removeItem, setFeaturedItem]
 }

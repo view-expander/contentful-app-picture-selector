@@ -47,7 +47,7 @@ const useItems = (keys: ItemList): [PreviewItem[]] => {
 }
 
 export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
-  const [value, pushValue, removeValue] = useFieldValue(sdk)
+  const [value, pushValue, removeValue, setFeaturedItem] = useFieldValue(sdk)
   const [items] = useItems(value)
   const onClickSelectedItem: ItemClickHandler = useCallback(removeValue, [
     removeValue,
@@ -73,9 +73,7 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
     [sdk, pushValue, items]
   )
   const onChangeFeatured = useCallback(
-    (objectKey: string, featured: boolean) => {
-      console.log(objectKey, featured)
-    },
+    (objectKey: string) => setFeaturedItem(objectKey),
     [sdk]
   )
 
