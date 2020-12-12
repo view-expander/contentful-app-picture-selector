@@ -33,8 +33,6 @@ const useItems = (keys: ItemList): [PreviewItem[]] => {
         const res = await sourceRepository.getObjectThumb(key)
         const img = await createImage(res.data, res.headers['content-type'])
 
-        console.log(key, featured)
-
         return {
           objectKey: key,
           img,

@@ -16,7 +16,7 @@ const RemoveIconButton = styled(IconButton).attrs((attrs) => ({
   buttonType: 'negative'
 }))`
   position: absolute;
-  bottom: 2px;
+  bottom: calc(0.5rem + 2px);
   right: calc(1rem + 2px);
   background-color: rgba(255, 255, 255, 0.67);
   border-radius: 2px
