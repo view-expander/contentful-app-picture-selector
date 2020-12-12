@@ -72,12 +72,22 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
         }),
     [sdk, pushValue, items]
   )
+  const onChangeFeatured = useCallback(
+    (objectKey: string, featured: boolean) => {
+      console.log(objectKey, featured)
+    },
+    [sdk]
+  )
 
   useAutoResize(sdk)
 
   return (
     <React.Fragment>
-      <SelectedList items={items} onClickItem={onClickSelectedItem} />
+      <SelectedList
+        items={items}
+        onClickItem={onClickSelectedItem}
+        onChangeFeatured={onChangeFeatured}
+      />
       <ButtonToAdd
         buttonType="muted"
         size="small"
