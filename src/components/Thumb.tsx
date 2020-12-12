@@ -4,7 +4,7 @@ import styled, { keyframes } from 'styled-components'
 import { THUMB_RECT } from '../constants'
 
 const ThumbCard = styled(Card).attrs<{ width: number; height: number }>(
-  ({ width, height }) => ({ width, height })
+  (attrs) => attrs
 )<{ width: number; height: number }>`
   width: ${({ width }): typeof width => width}px;
   height: ${({ height }): typeof height => height}px;
@@ -42,12 +42,13 @@ const Skeleton: React.FC<{ height: number; width: number }> = ({
 )
 
 export const Thumb: React.FC<{
+  featured?: boolean
   img?: HTMLImageElement
   inView: boolean
   objectKey?: string
   onClick: ItemClickHandler
   onInView: ItemInViewHandler
-}> = ({ img, inView, objectKey, onClick, onInView }) => {
+}> = ({ featured, img, inView, objectKey, onClick, onInView }) => {
   const _onClick: () => void = objectKey
     ? (): void => onClick(objectKey)
     : (): void => undefined
@@ -64,6 +65,7 @@ export const Thumb: React.FC<{
       padding="none"
       width={THUMB_RECT.width}
       onClick={_onClick}
+      selected={Boolean(featured)}
     >
       {img === undefined ? (
         <Skeleton height={THUMB_RECT.height} width={THUMB_RECT.width} />
