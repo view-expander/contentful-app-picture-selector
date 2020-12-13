@@ -34,6 +34,7 @@ const useItems = (keys: ItemList): [PreviewItem[]] => {
         const img = await createImage(res.data, res.headers['content-type'])
 
         return {
+          featured,
           objectKey: key,
           img,
         }
@@ -73,7 +74,6 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
   const onChangeFeatured = useCallback(setFeaturedItem, [setFeaturedItem])
 
   useAutoResize(sdk)
-  console.log('Field items', items)
 
   return (
     <React.Fragment>
