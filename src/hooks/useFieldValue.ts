@@ -24,13 +24,15 @@ export const useFieldValue = (
     [sdk, value]
   )
   const setFeaturedItem = useCallback(
-    (key: string) =>
-      sdk.field.setValue(
-        value.map((item) => ({
-          ...item,
-          featured: item.key === key
-        }))
-      ),
+    (key: string) => {
+      const newValue = value.map((item) => ({
+        ...item,
+        featured: item.key === key
+      }))
+      console.log(newValue)
+      return sdk.field.setValue(newValue)
+    }
+      ,
     [sdk, value]
   )
 
