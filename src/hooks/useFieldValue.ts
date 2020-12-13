@@ -29,7 +29,7 @@ export const useFieldValue = (
         ...item,
         featured: item.key === key
       }))
-      console.log(newValue)
+      console.log('setFeaturedItem', newValue)
       return sdk.field.setValue(newValue)
     }
       ,
