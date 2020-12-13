@@ -73,6 +73,7 @@ export const Field: React.FC<{ sdk: FieldExtensionSDK }> = ({ sdk }) => {
   const onChangeFeatured = useCallback(setFeaturedItem, [setFeaturedItem])
 
   useAutoResize(sdk)
+  console.log('Field items', items)
 
   return (
     <React.Fragment>
